@@ -1,2 +1,2 @@
 # regex4dummies
-A pattern finder for strings implemented in Python
+A pattern finder for strings, implemented in Python
