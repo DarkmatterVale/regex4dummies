@@ -33,7 +33,7 @@ The output of the program is an array of tuples, contained like the following:
 [ [ 0, 0, "" ], [ 0, 0, "" ] ]
 ```
 
-Each element of the above array contains a reliability score, an applicability score, and a pattern ( which is a string ). They are placed in the order reliability score, applicability score, pattern. The reliability score attempts to judge how reliable/correct this pattern is. For example, if the pattern was found in two strings ouf of a thousand, then it would have a reliability score of 0. The applicability score attempts to judge how applicable the pattern is to the keyword/phrase. If there is no phrase, this will always be 0. The pattern was the pattern was found when comparing all of the strings. An example of a pattern, with a reliability score of 50 and an applicability score of 80, is shown below.
+Each element of the above array contains a reliability score, an applicability score, and a pattern ( which is a string ). They are placed in the order reliabili9ty score, applicability score, pattern. The reliability score attempts to judge how reliable/correct this pattern is. For example, if the pattern was found in two strings ouf of a thousand, then it would have a reliability score of 0. The applicability score attempts to judge how applicable the pattern is to the keyword/phrase. If there is no phrase, this will always be 0. The pattern was the pattern was found when comparing all of the strings. An example of a pattern, with a reliability score of 50 and an applicability score of 80, is shown below.
 
 ```
 [ [ 50, 80, "pattern" ] ]
