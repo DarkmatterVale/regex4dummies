@@ -8,18 +8,27 @@ import re
 # Other
 import compare
 
+# Main class that handles all interaction between the user/programmer and the compare class which does all of the heavy lifting
 class regex4dummies:
+
+    # Empty constructor method
     def init( self, *args, **kwargs ):
         pass
 
+    # Function that is integral in communicating between a compare object and the user
+    # This function returns a 3-tuple array containing reliability score, applicability score, and pattern
     def compare_strings( self, strings_to_process ):
-        pass
-
         # Create a compare object
+        string_compare = compare()
 
         # Call compare_strings of compare object
-
         # Return the output from compare_strings
+        return string_compare.compare_strings( strings_to_process )
 
+# If a user mistakingly runs this library believing it is a program, inform the user that it is not a program
 if __name__ == '__main__':
-    pass
+    print ""
+    print "This program is a library, and therefore is not meant to be run as a separate application"
+    print "If you would like to use a GUI of this library, please see the examples folder of the github repo."
+    print "http://github.com/DarkmatterVale/regex4dummes"
+    print ""
