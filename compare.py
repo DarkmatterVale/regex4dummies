@@ -38,7 +38,7 @@ class compare:
                 keyword = re.sub( 'keyword=', '', string )
 
         # Call find_patterns( strings )
-        patterns = self.find_patterns( strings )
+        patterns = self.find_patterns( strings, 0 )
 
         # After patterns are identified in strings, complete final processing
         #   1. Find reliability score
@@ -46,7 +46,7 @@ class compare:
         #   3. If there is a keyword
         #       a. pare down pattern list to only those that have the keyword in them
 
-        compiled_patterns = {}
+        compiled_patterns = []
         for pattern in patterns:
             if keyword != '':
                 if keyword in pattern:
@@ -57,8 +57,8 @@ class compare:
         return compiled_patterns
 
     # Recursive function that compares all strings and determins reliability score, applicability score, and pattern
-    def find_patterns( self strings, current_index ):
-        patterns = {}
+    def find_patterns( self, strings, current_index ):
+        patterns = []
 
         if current_index < len( strings ) - 1:
             patterns = self.find_patterns( strings, current_index + 1 )
@@ -72,9 +72,9 @@ class compare:
         return patterns
 
     # This function identifies patterns in 2 strings
-    def identify_patterns( base_string, test_string ):
+    def identify_patterns( self, base_string, test_string ):
         # patterns = {}
-        patterns = {}
+        patterns = []
 
         # Compare substrings of base_string to test_string
         #   1. Split based on "." to find substrings
@@ -89,13 +89,16 @@ class compare:
             words = line.split( ' ' )
 
             for sentence in test_string.split( '.' ):
-                word_count = 0
+                word_count = 0.00
                 for word in words:
                     if word in sentence:
-                        word_count += 1
+                        word_count += 1.00
+
+                print word_count / len( words )
 
                 if word_count / len( words ) > 0.50:
-                    patterns += line
+                    if line not in patterns and line != '':
+                        patterns += [ line ]
 
                     break
 
@@ -112,13 +115,14 @@ class compare:
             words = line.split( ' ' )
 
             for sentence in base_string.split( '.' ):
-                word_count = 0
+                word_count = 0.00
                 for word in words:
                     if word in sentence:
-                        word_count += 1
+                        word_count += 1.00
 
                 if word_count / len( words ) > 0.50:
-                    patterns += line
+                    if line not in patterns and line != '':
+                        patterns += [ line ]
 
                     break
 

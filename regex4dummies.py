@@ -6,7 +6,7 @@ import sys
 import re
 
 # Other
-import compare
+from compare import compare
 
 # Main class that handles all interaction between the user/programmer and the compare class which does all of the heavy lifting
 class regex4dummies:
@@ -30,5 +30,9 @@ if __name__ == '__main__':
     print ""
     print "This program is a library, and therefore is not meant to be run as a separate application"
     print "If you would like to use a GUI version of this library, please see the examples folder in the github repo."
-    print "http://github.com/DarkmatterVale/regex4dummes"
+    print "http://github.com/DarkmatterVale/regex4dummies"
     print ""
+
+    regex = regex4dummies()
+
+    print regex.compare_strings( [ "how are you doing on this fine day.", "are you doing well on this fine day." ] )
