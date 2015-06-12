@@ -32,8 +32,13 @@ class compare:
     # This method is called by the main regex4dummies class, and calls all further methods to find strings
     def compare_strings( self, strings ):
         # Find the keyword
+        keyword = ""
+        for string in strings:
+            if 'keyword=' in string:
+                keyword = re.sub( 'keyword=', '', string )
 
         # Call find_patterns( strings )
+        patterns = self.find_patterns( strings )
 
         # After patterns are identified in strings, complete final processing
         #   1. Find reliability score
@@ -41,21 +46,35 @@ class compare:
         #   3. If there is a keyword
         #       a. pare down pattern list to only those that have the keyword in them
 
-        pass
+        compiled_patterns = {}
+        for pattern in patterns:
+            if keyword != '':
+                if keyword in pattern:
+                    compiled_patterns += [ self.find_reliability_score( pattern ), self.find_applicability_score( pattern ), pattern ]
+            else:
+                compiled_patterns += [ self.find_reliability_score( pattern ), self.find_applicability_score( pattern ), pattern ]
+
+        return compiled_patterns
 
     # Recursive function that compares all strings and determins reliability score, applicability score, and pattern
     def find_patterns( self strings, current_index ):
+        patterns = {}
+
         if current_index < len( strings ) - 1:
-            patterns = find_patters( strings, current_index + 1 )
+            patterns = self.find_patterns( strings, current_index + 1 )
 
         # for index in range( current_index, len( strings ) - 1 ):
+        for index in range( current_index, len( strings ) - 1 ):
             # patterns += identify_patterns( strings[ index ], strings[ index + 1 ] )
+            patterns += self.identify_patterns( strings[ index ], strings[ index + 1 ] )
 
         # return patterns
+        return patterns
 
     # This function identifies patterns in 2 strings
     def identify_patterns( base_string, test_string ):
         # patterns = {}
+        patterns = {}
 
         # Compare substrings of base_string to test_string
         #   1. Split based on "." to find substrings
@@ -65,6 +84,21 @@ class compare:
         #           i. add substring to patterns object
         #   4. Repeat for remainder of substrings in file
 
+        lines = base_string.split( '.' )
+        for line in lines:
+            words = line.split( ' ' )
+
+            for sentence in test_string.split( '.' ):
+                word_count = 0
+                for word in words:
+                    if word in sentence:
+                        word_count += 1
+
+                if word_count / len( words ) > 0.50:
+                    patterns += line
+
+                    break
+
         # Compare substrings of test_string to base_string
         #   1. Split based on "." to find substrings
         #   2. Split based on " " to find individual words in a substring
@@ -73,4 +107,26 @@ class compare:
         #           i. add substring to patterns object
         #   4. Repeat for remainder of substrings
 
+        lines = test_string.split( '.' )
+        for line in lines:
+            words = line.split( ' ' )
+
+            for sentence in base_string.split( '.' ):
+                word_count = 0
+                for word in words:
+                    if word in sentence:
+                        word_count += 1
+
+                if word_count / len( words ) > 0.50:
+                    patterns += line
+
+                    break
+
         # return patterns
+        return patterns
+
+    def find_reliability_score( self, pattern ):
+        return 0
+
+    def find_applicability_score( self, pattern ):
+        return 0

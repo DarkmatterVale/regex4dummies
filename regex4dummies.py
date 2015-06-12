@@ -29,6 +29,6 @@ class regex4dummies:
 if __name__ == '__main__':
     print ""
     print "This program is a library, and therefore is not meant to be run as a separate application"
-    print "If you would like to use a GUI of this library, please see the examples folder of the github repo."
+    print "If you would like to use a GUI version of this library, please see the examples folder in the github repo."
     print "http://github.com/DarkmatterVale/regex4dummes"
     print ""
