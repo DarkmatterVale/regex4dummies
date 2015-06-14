@@ -7,6 +7,9 @@ import re
 
 # Parsing related libraries
 import re
+from textblob import TextBlob
+from textblob.parsers import PatternParser
+from pattern.en import parse
 
 """
 
@@ -31,6 +34,9 @@ class compare:
 
     # This method is called by the main regex4dummies class, and calls all further methods to find strings
     def compare_strings( self, strings ):
+        # Reset patterns variable
+        patterns = []
+
         # Find the keyword
         keyword = ""
         for string in strings:
@@ -38,7 +44,7 @@ class compare:
                 keyword = re.sub( 'keyword=', '', string )
 
         # Call find_patterns( strings )
-        patterns = self.find_patterns( strings, 0 )
+        patterns = self.find_patterns( strings, 0, [] )
 
         # After patterns are identified in strings, complete final processing
         #   1. Find reliability score
@@ -57,74 +63,113 @@ class compare:
         return compiled_patterns
 
     # Recursive function that compares all strings and determins reliability score, applicability score, and pattern
-    def find_patterns( self, strings, current_index ):
-        patterns = []
+    def find_patterns( self, strings, current_index, patterns_arg ):
+        patterns = patterns_arg
 
         if current_index < len( strings ) - 1:
-            patterns = self.find_patterns( strings, current_index + 1 )
+            patterns = self.find_patterns( strings, current_index + 1, patterns_arg )
 
         # for index in range( current_index, len( strings ) - 1 ):
         for index in range( current_index, len( strings ) - 1 ):
             # patterns += identify_patterns( strings[ index ], strings[ index + 1 ] )
-            patterns += self.identify_patterns( strings[ index ], strings[ index + 1 ] )
+            print patterns
+            patterns += self.identify_patterns( strings[ index ], strings[ index + 1 ], patterns )
 
         # return patterns
         return patterns
 
     # This function identifies patterns in 2 strings
-    def identify_patterns( self, base_string, test_string ):
+    def identify_patterns( self, base_string, test_string, pattern_arg ):
         # patterns = {}
-        patterns = []
+        patterns = pattern_arg
 
-        # Compare substrings of base_string to test_string
-        #   1. Split based on "." to find substrings
-        #   2. Split based on " " to find individual words in a substring
-        #   3. Compare words in substring to all substrings of test_string
-        #       a. If over 75% of words in substring is in other string
-        #           i. add substring to patterns object
-        #   4. Repeat for remainder of substrings in file
+        # Creating string textblob for analysis & analyzing the base_string's sentences
+        base_blob = TextBlob( base_string, parser=PatternParser() )
+        base_sentence_info = []
 
-        lines = base_string.split( '.' )
-        for line in lines:
-            words = line.split( ' ' )
+        for base_sentence in base_blob.sentences:
+            subject               = ""
+            verb                  = ""
+            object                = ""
+            prepositional_phrases = ""
+            raw_data              = parse( str( base_sentence ), relations=True )
 
-            for sentence in test_string.split( '.' ):
-                word_count = 0.00
-                for word in words:
-                    if word in sentence:
-                        word_count += 1.00
+            for word in parse( str( base_sentence ), relations=True ).split( ' ' ):
+                if "SBJ-" in word:
+                    subject += re.sub( r'/.*', '', word ) + " "
+                elif "OBJ-" in word:
+                    object += re.sub( r'/.*', '', word ) + " "
+                elif "VP-" in word:
+                    verb += re.sub( r'/.*', '', word ) + " "
+                elif "PNP" in word:
+                    prepositional_phrases += re.sub( r'/.*', '', word ) + " "
+                elif "PNP" not in word and prepositional_phrases[len( prepositional_phrases ) - 3:] != "...":
+                    prepositional_phrases += "..."
 
-                print word_count / len( words )
+            #print "[ Subject ]: " + subject
+            #print "[ Object ]: " + object
+            #print "[ Verb ]: " + verb
+            #print "[ Prepositional Phrases ]: " + str( prepositional_phrases.split( '...' )[ 1:len(prepositional_phrases.split( '...' )) ] )
+            #print "[ Raw Data ]: " + raw_data
 
-                if word_count / len( words ) > 0.50:
-                    if line not in patterns and line != '':
-                        patterns += [ line ]
+            add_sentence = True
+            for sentence in base_sentence_info:
+                if sentence != []:
+                    if sentence[ len( sentence ) ] == str( base_sentence ):
+                        add_sentence = False
 
-                    break
+                        break
 
-        # Compare substrings of test_string to base_string
-        #   1. Split based on "." to find substrings
-        #   2. Split based on " " to find individual words in a substring
-        #   3. Compare words in substring to all substrings of base_string
-        #       a. If over 75% of words in substring is in other string
-        #           i. add substring to patterns object
-        #   4. Repeat for remainder of substrings
+            if add_sentence:
+                base_sentence_info += [ subject, verb, object, prepositional_phrases.split( '...' )[ 1:len(prepositional_phrases.split( '...' )) ], str( base_sentence ) ]
 
-        lines = test_string.split( '.' )
-        for line in lines:
-            words = line.split( ' ' )
+        print base_sentence_info
+        print "[ Finished Displaying Base Sentence Info ]"
 
-            for sentence in base_string.split( '.' ):
-                word_count = 0.00
-                for word in words:
-                    if word in sentence:
-                        word_count += 1.00
+        # Creating string textblob for analysis & analyzing the base_string's sentences
+        test_blob = TextBlob( test_string, parser=PatternParser() )
+        test_sentence_info = []
 
-                if word_count / len( words ) > 0.50:
-                    if line not in patterns and line != '':
-                        patterns += [ line ]
+        for test_sentence in test_blob.sentences:
+            subject               = ""
+            verb                  = ""
+            object                = ""
+            prepositional_phrases = ""
+            raw_data              = parse( str( test_sentence ), relations=True )
 
-                    break
+            for word in parse( str( test_sentence ), relations=True ).split( ' ' ):
+                if "SBJ-" in word:
+                    subject += re.sub( r'/.*', '', word ) + " "
+                elif "OBJ-" in word:
+                    object += re.sub( r'/.*', '', word ) + " "
+                elif "VP-" in word:
+                    verb += re.sub( r'/.*', '', word ) + " "
+                elif "PNP" in word:
+                    prepositional_phrases += re.sub( r'/.*', '', word ) + " "
+                elif "PNP" not in word and prepositional_phrases[len( prepositional_phrases ) - 3:] != "...":
+                    prepositional_phrases += "..."
+
+            #print "[ Subject ]: " + subject
+            #print "[ Object ]: " + object
+            #print "[ Verb ]: " + verb
+            #print "[ Prepositional Phrases ]: " + str( prepositional_phrases.split( '...' )[ 1:len(prepositional_phrases.split( '...' )) ] )
+            #print "[ Raw Data ]: " + raw_data
+
+            add_sentence = True
+            for sentence in test_sentence_info:
+                if sentence != []:
+                    if sentence[ len( sentence ) ] == str( test_sentence ):
+                        add_sentence = False
+
+                        break
+
+            if add_sentence:
+                test_sentence_info += [ subject, verb, object, prepositional_phrases.split( '...' )[ 1:len(prepositional_phrases.split( '...' )) ], str( test_sentence ) ]
+
+        print test_sentence_info
+        print "[ Finished Displaying Test Sentence Info ]"
+
+        # Comparing the two sets of strings together & finding patterns
 
         # return patterns
         return patterns
