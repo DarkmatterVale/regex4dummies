@@ -75,7 +75,13 @@ class compare:
                 # patterns += identify_patterns( strings[ index ], strings[ index + 1 ] )
                 patterns = self.identify_patterns( strings[ index ], strings[ index + 1 ], patterns )
         else:
-            patterns = self.find_literal_patterns()
+            if current_index < len( strings ) - 1:
+                patterns = self.find_patterns( strings, current_index + 1, True, patterns_arg )
+
+            # for index in range( current_index, len( strings ) - 1 ):
+            for index in range( current_index, len( strings ) - 1 ):
+                # patterns += identify_patterns( strings[ index ], strings[ index + 1 ] )
+                patterns = self.find_literal_patterns( strings[ index ], strings[ index + 1 ], patterns )
 
         # return patterns
         return patterns
@@ -192,8 +198,53 @@ class compare:
         # return patterns
         return patterns
 
-    def find_literal_patterns( self ):
-        pass
+    def find_literal_patterns( self, base_string, test_string, pattern_arg ):
+        # Getting the current patterns already found
+        patterns = pattern_arg
+
+        # Literal translation from base_string -> test_string
+        base_blob = TextBlob( base_string )
+        base_sentence_info = []
+
+        # Find patterns
+        for sentence in base_blob.sentences:
+            words = sentence.split( ' ' )
+
+            for length in xrange( len( words ), 1, -1 ):
+                for end in xrange( len( words ), 0, -1 ):
+                    if end - length < 0:
+                        break
+
+                    pattern = words[ end - length: end ]
+
+                    if ' '.join( pattern ) in str( test_string ):
+                        if ' '.join( pattern ) not in patterns:
+                            base_sentence_info += [ str( ' '.join( pattern ) ) ]
+
+        patterns += base_sentence_info
+
+        # Literal translation from base_string -> test_string
+        test_blob = TextBlob( test_string )
+        test_sentence_info = []
+
+        # Find patterns
+        for sentence in test_blob.sentences:
+            words = sentence.split( ' ' )
+
+            for length in xrange( len( words ), 1, -1 ):
+                for end in xrange( len( words ), 0, -1 ):
+                    if end - length < 0:
+                        break
+
+                    pattern = words[ end - length: end ]
+
+                    if ' '.join( pattern ) in str( base_string ):
+                        if ' '.join( pattern ) not in patterns:
+                            test_sentence_info += [ str( ' '.join( pattern ) ) ]
+
+        patterns += test_sentence_info
+
+        return patterns
 
     def find_reliability_score( self, pattern ):
         return 0
