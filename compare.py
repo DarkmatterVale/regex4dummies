@@ -172,12 +172,19 @@ class compare:
         for base_sentence in base_sentence_info:
             for test_sentence in test_sentence_info:
                 if base_sentence != [] and test_sentence != []:
-                    if base_sentence[ len( base_sentence ) - 1 ] == test_sentence[ len( test_sentence ) - 1 ]:
-                        if patterns != []:
-                            if test_sentence[ len( test_sentence ) - 1 ] not in patterns:
+                    if base_sentence[0] == test_sentence[0] and base_sentence[1] == test_sentence[1] and base_sentence[2] == test_sentence[2]:
+                        if len( base_sentence[ len( base_sentence ) - 1 ].split( ' ' ) ) > len( test_sentence[ len( test_sentence ) - 1 ].split( ' ' ) ):
+                            if patterns != []:
+                                if test_sentence[ len( test_sentence ) - 1 ] not in patterns and base_sentence[ len( base_sentence ) - 1 ] not in patterns:
+                                    patterns += [ base_sentence[ len( base_sentence ) - 1 ] ]
+                            elif patterns == []:
+                                patterns += [ base_sentence[ len( base_sentence ) - 1 ] ]
+                        else:
+                            if patterns != []:
+                                if test_sentence[ len( test_sentence ) - 1 ] not in patterns and base_sentence[ len( base_sentence ) - 1 ] not in patterns:
+                                    patterns += [ test_sentence[ len( test_sentence ) - 1 ] ]
+                            elif patterns == []:
                                 patterns += [ test_sentence[ len( test_sentence ) - 1 ] ]
-                        elif patterns == []:
-                            patterns += [ test_sentence[ len( test_sentence ) - 1 ] ]
 
         # return patterns
         return patterns

@@ -35,7 +35,4 @@ if __name__ == '__main__':
 
     regex = regex4dummies()
 
-    print regex.compare_strings( [ "the cat is sitting, in the house, on the mat", "what time is it?", "what time is it?", "This is the cat's hat" ] )
-    exit( 0 )
-
-    print regex.compare_strings( [ "This is the cat's hat", "the cat is sitting the mat and the hat", "the cat sat on the mat.", "the cat in the house sat on the mat" ] )
+    print regex.compare_strings( [ "the cat is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
