@@ -33,7 +33,7 @@ class compare:
         pass
 
     # This method is called by the main regex4dummies class, and calls all further methods to find strings
-    def compare_strings( self, strings ):
+    def compare_strings( self, strings, literal ):
         # Reset patterns variable
         patterns = []
 
@@ -44,7 +44,7 @@ class compare:
                 keyword = re.sub( 'keyword=', '', string )
 
         # Call find_patterns( strings )
-        patterns = self.find_patterns( strings, 0, [] )
+        patterns = self.find_patterns( strings, 0, literal, [] )
 
         # After patterns are identified in strings, complete final processing
         #   1. Find reliability score
@@ -63,16 +63,19 @@ class compare:
         return compiled_patterns
 
     # Recursive function that compares all strings and determins reliability score, applicability score, and pattern
-    def find_patterns( self, strings, current_index, patterns_arg ):
+    def find_patterns( self, strings, current_index, literal_find, patterns_arg ):
         patterns = patterns_arg
 
-        if current_index < len( strings ) - 1:
-            patterns = self.find_patterns( strings, current_index + 1, patterns_arg )
+        if not literal_find:
+            if current_index < len( strings ) - 1:
+                patterns = self.find_patterns( strings, current_index + 1, False, patterns_arg )
 
-        # for index in range( current_index, len( strings ) - 1 ):
-        for index in range( current_index, len( strings ) - 1 ):
-            # patterns += identify_patterns( strings[ index ], strings[ index + 1 ] )
-            patterns = self.identify_patterns( strings[ index ], strings[ index + 1 ], patterns )
+            # for index in range( current_index, len( strings ) - 1 ):
+            for index in range( current_index, len( strings ) - 1 ):
+                # patterns += identify_patterns( strings[ index ], strings[ index + 1 ] )
+                patterns = self.identify_patterns( strings[ index ], strings[ index + 1 ], patterns )
+        else:
+            patterns = self.find_literal_patterns()
 
         # return patterns
         return patterns
@@ -188,6 +191,9 @@ class compare:
 
         # return patterns
         return patterns
+
+    def find_literal_patterns( self ):
+        pass
 
     def find_reliability_score( self, pattern ):
         return 0

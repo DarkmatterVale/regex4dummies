@@ -17,13 +17,13 @@ class regex4dummies:
 
     # Function that is integral in communicating between a compare object and the user
     # This function returns a 3-tuple array containing reliability score, applicability score, and pattern
-    def compare_strings( self, strings_to_process ):
+    def compare_strings( self, literal_find, strings_to_process ):
         # Create a compare object
         string_compare = compare()
 
         # Call compare_strings of compare object
         # Return the output from compare_strings
-        return string_compare.compare_strings( strings_to_process )
+        return string_compare.compare_strings( strings_to_process, literal_find )
 
 # If a user mistakingly runs this library believing it is a program, inform the user that it is not a program
 if __name__ == '__main__':
@@ -35,4 +35,4 @@ if __name__ == '__main__':
 
     regex = regex4dummies()
 
-    print regex.compare_strings( [ "the cat is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
+    print regex.compare_strings( False, [ "the cat is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
