@@ -72,8 +72,7 @@ class compare:
         # for index in range( current_index, len( strings ) - 1 ):
         for index in range( current_index, len( strings ) - 1 ):
             # patterns += identify_patterns( strings[ index ], strings[ index + 1 ] )
-            print patterns
-            patterns += self.identify_patterns( strings[ index ], strings[ index + 1 ], patterns )
+            patterns = self.identify_patterns( strings[ index ], strings[ index + 1 ], patterns )
 
         # return patterns
         return patterns
@@ -121,10 +120,10 @@ class compare:
                         break
 
             if add_sentence:
-                base_sentence_info += [ subject, verb, object, prepositional_phrases.split( '...' )[ 1:len(prepositional_phrases.split( '...' )) ], str( base_sentence ) ]
+                base_sentence_info.append( [ subject, verb, object, prepositional_phrases.split( '...' )[ 1:len(prepositional_phrases.split( '...' )) ], str( base_sentence ) ] )
 
-        print base_sentence_info
-        print "[ Finished Displaying Base Sentence Info ]"
+        #print base_sentence_info
+        #print "[ Finished Displaying Base Sentence Info ]"
 
         # Creating string textblob for analysis & analyzing the base_string's sentences
         test_blob = TextBlob( test_string, parser=PatternParser() )
@@ -164,12 +163,21 @@ class compare:
                         break
 
             if add_sentence:
-                test_sentence_info += [ subject, verb, object, prepositional_phrases.split( '...' )[ 1:len(prepositional_phrases.split( '...' )) ], str( test_sentence ) ]
+                test_sentence_info.append( [ subject, verb, object, prepositional_phrases.split( '...' )[ 1:len(prepositional_phrases.split( '...' )) ], str( test_sentence ) ] )
 
-        print test_sentence_info
-        print "[ Finished Displaying Test Sentence Info ]"
+        #print test_sentence_info
+        #print "[ Finished Displaying Test Sentence Info ]"
 
         # Comparing the two sets of strings together & finding patterns
+        for base_sentence in base_sentence_info:
+            for test_sentence in test_sentence_info:
+                if base_sentence != [] and test_sentence != []:
+                    if base_sentence[ len( base_sentence ) - 1 ] == test_sentence[ len( test_sentence ) - 1 ]:
+                        if patterns != []:
+                            if test_sentence[ len( test_sentence ) - 1 ] not in patterns:
+                                patterns += [ test_sentence[ len( test_sentence ) - 1 ] ]
+                        elif patterns == []:
+                            patterns += [ test_sentence[ len( test_sentence ) - 1 ] ]
 
         # return patterns
         return patterns
