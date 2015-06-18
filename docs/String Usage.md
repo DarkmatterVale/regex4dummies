@@ -1,4 +1,10 @@
-As is stated in the name of this library, it is designed for dumb and lazy people to be able to use without getting stuck. That being said, it does not mean that this library is not versatile or useful. When you compare a set of strings ( see below for examples ), you must use the following format:
+# Rules for comparing strings
+
+To compare strings, they must be formatted in a specific way. If they are not formatted correctly, the parser will return skewed results. To successfully format your string array, please read the following documentation.
+
+## Formatting Rules
+
+As is stated in the name of this library, it is designed for dumb and lazy people to be able to use without getting stuck. That being said, it does not mean that this library is not versatile or useful. When you compare a set of strings ( see below for examples ), you must use the following format to get proper results from the parser:
 
 ```
 { "String 1", "String 2", "String 3", "keyword=Your keyword" }
@@ -49,5 +55,3 @@ When the program is run, only one pattern will be printed. Below is the output. 
 ```
 [[100, 100, "John"]]
 ```
-
-NOTE: THIS FILE WILL BE REMOVED IN THE FUTURE. IT IS JUST A PLACE HOLDER FOR THE CURRENT DOCUMENTATION
