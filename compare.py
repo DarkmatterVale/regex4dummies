@@ -29,7 +29,7 @@ from pattern.en import parse
 class compare:
 
     # Empty constructor
-    def init( self, *args, **kwargs ):
+    def __init__( self, *args, **kwargs ):
         pass
 
     # This method is called by the main regex4dummies class, and calls all further methods to find strings

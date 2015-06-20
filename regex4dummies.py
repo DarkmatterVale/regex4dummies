@@ -12,7 +12,7 @@ from compare import compare
 class regex4dummies:
 
     # Empty constructor method
-    def init( self, *args, **kwargs ):
+    def __init__( self, *args, **kwargs ):
         pass
 
     # Function that is integral in communicating between a compare object and the user
