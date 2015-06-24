@@ -1,9 +1,11 @@
 # This is the setup file for pip
 from setuptools import setup, find_packages
-import os
+import os, sys
+from os import path
 
-
-description_file = open( 'DESCRIPTION.rst', encoding='utf-8' ).read()
+here = path.abspath(path.dirname(__file__))
+with open(path.join(here, 'DESCRIPTION.rst')) as f:
+    description_file = f.read()
 
 
 setup(

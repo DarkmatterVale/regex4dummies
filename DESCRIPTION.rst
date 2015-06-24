@@ -1,4 +1,4 @@
-regex4dummies - A Simple Way To Find Patterns
+regex4dummies: A Simple Way To Find Patterns
 ============================================
 
 A pattern finder for strings, implemented in Python.
@@ -7,7 +7,7 @@ regex4dummies was made for lazy people! It allows you to easily parse strings an
 
 
 Features
----------
+----------
 
 - Automatic pattern detection
 - Keyword searching to find phrases
@@ -16,28 +16,28 @@ Features
 
 
 Usage
----------
+-------
 
 To see how to use this library, please see the Wiki part of this Github repository.
 
 
 Installation
--------------
+------------
 
 To install this library, run the following command.
 
 ::
 
-  pip install regex4dummies
+  $ pip install regex4dummies
 
 
 Contributing
--------------
+--------------
 
 If you would like to contriubte, please fork the repository and create a PR with your feature update.
 
 
 License
--------------
+---------
 
 Please see LICENSE.txt for information about the MIT license
