@@ -1,6 +1,10 @@
 # This is the setup file for pip
+from setuptools import setup, find_packages
+import os
 
-description_file = ""
+
+description_file = open( 'DESCRIPTION.rst', encoding='utf-8' ).read()
+
 
 setup(
     name = 'regex4dummies',
@@ -20,11 +24,11 @@ setup(
     classifiers = [
         'Development Status :: 3 - Alpha',
 
-        'Intended Audience :: Developers & Programmers',
+        'Intended Audience :: Developers',
 
-        'Topic :: NLP',
+        'Topic :: Text Processing :: Linguistic',
 
-        'License :: MIT',
+        'License :: OSI Approved :: MIT License',
 
         'Programming Language :: Python :: 2.7',
     ],
@@ -33,5 +37,5 @@ setup(
 
     install_requires = [ 'pattern', 'TextBlob' ],
 
-
+    keywords = [ 'TextBlob', 'NLTK', 'Pattern', 'NLP' ],
 )
