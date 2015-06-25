@@ -247,6 +247,9 @@ class compare:
         return patterns
 
     def find_literal_patterns( self, base_string, test_string, pattern_arg ):
+        # Getting global variables
+        global sentence_information
+
         # Getting the current patterns already found
         patterns = pattern_arg
 
@@ -269,6 +272,10 @@ class compare:
                         if ' '.join( pattern ) not in patterns:
                             base_sentence_info += [ str( ' '.join( pattern ) ) ]
 
+                            sentence_information[ str( ' '.join( pattern ) ) ] = [ '', '', '', 1 ]
+                        else:
+                            sentence_information[ str( ' '.join( pattern ) ) ][ 3 ] += 1
+
         patterns += base_sentence_info
 
         # Literal translation from base_string -> test_string
@@ -288,7 +295,11 @@ class compare:
 
                     if ' '.join( pattern ) in str( base_string ):
                         if ' '.join( pattern ) not in patterns:
+                            sentence_information[ str( ' '.join( pattern ) ) ] = [ '', '', '', 1 ]
+
                             test_sentence_info += [ str( ' '.join( pattern ) ) ]
+                        else:
+                            sentence_information[ str( ' '.join( pattern ) ) ][ 3 ] += 1
 
         patterns += test_sentence_info
 
