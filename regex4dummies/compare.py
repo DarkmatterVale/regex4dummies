@@ -27,6 +27,7 @@ from pattern.en import parse
 """
 
 class compare:
+    global sentence_information
 
     # Empty constructor
     def __init__( self, *args, **kwargs ):
@@ -34,8 +35,12 @@ class compare:
 
     # This method is called by the main regex4dummies class, and calls all further methods to find strings
     def compare_strings( self, strings, literal ):
-        # Reset patterns variable
+        # Getting global variables
+        global sentence_information
+
+        # Reset variables
         patterns = []
+        sentence_information = {}
 
         # Find the keyword
         keyword = ""
@@ -56,9 +61,9 @@ class compare:
         for pattern in patterns:
             if keyword != '':
                 if keyword in pattern:
-                    compiled_patterns += [ self.find_reliability_score( pattern ), self.find_applicability_score( pattern ), pattern ]
+                    compiled_patterns += [ 0, 0, pattern ]
             else:
-                compiled_patterns += [ self.find_reliability_score( pattern ), self.find_applicability_score( pattern ), pattern ]
+                compiled_patterns += [ 0, 0, pattern ]
 
         return compiled_patterns
 
@@ -89,6 +94,9 @@ class compare:
 
     # This function identifies patterns in 2 strings
     def identify_patterns( self, base_string, test_string, pattern_arg ):
+        # Getting global variables
+        global sentence_information
+
         # patterns = {}
         patterns = pattern_arg
 
@@ -181,20 +189,59 @@ class compare:
         # Comparing the two sets of strings together & finding patterns
         for base_sentence in base_sentence_info:
             for test_sentence in test_sentence_info:
+                # If there are two sentences/patterns to compare
                 if base_sentence != [] and test_sentence != []:
+                    # If the patterns' semantic "value" is the same
                     if base_sentence[0] == test_sentence[0] and base_sentence[1] == test_sentence[1] and base_sentence[2] == test_sentence[2]:
+                        # If one sentence/pattern is longer than the other, use that pattern
                         if len( base_sentence[ len( base_sentence ) - 1 ].split( ' ' ) ) > len( test_sentence[ len( test_sentence ) - 1 ].split( ' ' ) ):
+                            # If other patterns have been detected
                             if patterns != []:
+                                # If the current test patterns are not in patterns
                                 if test_sentence[ len( test_sentence ) - 1 ] not in patterns and base_sentence[ len( base_sentence ) - 1 ] not in patterns:
                                     patterns += [ base_sentence[ len( base_sentence ) - 1 ] ]
+
+                                    sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ] = base_sentence[ 0 : len( base_sentence ) - 2 ]
+                                elif base_sentence[ len( base_sentence ) - 1 ] in patterns:
+                                    # Updating reliability score
+                                    try:
+                                        sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ][ 3 ] += 1
+                                    except:
+                                        sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( 1 )
+                            # If there are no patterns currently found, add this pattern
                             elif patterns == []:
                                 patterns += [ base_sentence[ len( base_sentence ) - 1 ] ]
+
+                                sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ] = base_sentence[ 0 : len( base_sentence ) - 2 ]
+                                # Updating reliability score
+                                try:
+                                    sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ][ 3 ] += 1
+                                except:
+                                    sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( 1 )
                         else:
+                            # If there are patterns already found
                             if patterns != []:
+                                # If the test patterns are not in the already found patterns
                                 if test_sentence[ len( test_sentence ) - 1 ] not in patterns and base_sentence[ len( base_sentence ) - 1 ] not in patterns:
                                     patterns += [ test_sentence[ len( test_sentence ) - 1 ] ]
+
+                                    sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ] = test_sentence[ 0 : len( test_sentence ) - 2 ]
+                                elif test_sentence[ len( test_sentence ) - 1 ] in patterns:
+                                    # Updating reliability score
+                                    try:
+                                        sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ][ 3 ] += 1
+                                    except:
+                                        sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( 1 )
+                            # If there are no patterns currently found
                             elif patterns == []:
                                 patterns += [ test_sentence[ len( test_sentence ) - 1 ] ]
+
+                                sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ] = test_sentence[ 0 : len( test_sentence ) - 2 ]
+                                # Updating reliability score
+                                try:
+                                    sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ][ 3 ] += 1
+                                except:
+                                    sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( 1 )
 
         # return patterns
         return patterns
@@ -247,8 +294,14 @@ class compare:
 
         return patterns
 
-    def find_reliability_score( self, pattern ):
-        return 0
+    # If semantic pattern finding was implemented, the following will be returned
+    # Every sentence contains different parts of speech. This method returns those parts of speech in the following order:
+    #   1. Subject
+    #   2. Verb
+    #   3. [Direct] Object
+    # An example, might look like this:
+    #   { "The sentence here" : [ "my_subject", "my_verb", "my_object" ] }
+    def get_sentence_information( self ):
+        global sentence_information
 
-    def find_applicability_score( self, pattern ):
-        return 0
+        return sentence_information

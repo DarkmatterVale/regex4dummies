@@ -11,7 +11,7 @@ with open(path.join(here, 'DESCRIPTION.rst')) as f:
 setup(
     name = 'regex4dummies',
 
-    version = '1.0.1',
+    version = '1.0.2',
 
     description = 'A NLP library that simplifies pattern finding',
     long_description = description_file,
