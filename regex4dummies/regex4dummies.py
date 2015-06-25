@@ -36,4 +36,4 @@ if __name__ == '__main__':
 
     # Test Set
     #regex = regex4dummies()
-    #print regex.compare_strings( True, [ "the cat is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
+    #print regex.compare_strings( False, [ "the cat is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )

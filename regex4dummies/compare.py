@@ -70,18 +70,19 @@ class compare:
             if current_index < len( strings ) - 1:
                 patterns = self.find_patterns( strings, current_index + 1, False, patterns_arg )
 
-            # for index in range( current_index, len( strings ) - 1 ):
-            for index in range( current_index, len( strings ) - 1 ):
-                # patterns += identify_patterns( strings[ index ], strings[ index + 1 ] )
-                patterns = self.identify_patterns( strings[ index ], strings[ index + 1 ], patterns )
+            for index in xrange( current_index, -1, -1 ):
+                if strings[ index ] != strings[ current_index ]:
+                    # patterns += identify_patterns( strings[ index ], strings[ index + 1 ] )
+                    patterns = self.identify_patterns( strings[ current_index ], strings[ index ], patterns )
         else:
             if current_index < len( strings ) - 1:
                 patterns = self.find_patterns( strings, current_index + 1, True, patterns_arg )
 
             # for index in range( current_index, len( strings ) - 1 ):
-            for index in range( current_index, len( strings ) - 1 ):
-                # patterns += identify_patterns( strings[ index ], strings[ index + 1 ] )
-                patterns = self.find_literal_patterns( strings[ index ], strings[ index + 1 ], patterns )
+            for index in xrange( current_index, -1, -1 ):
+                if strings[ index ] != strings[ current_index ]:
+                    # patterns += identify_patterns( strings[ index ], strings[ index + 1 ] )
+                    patterns = self.find_literal_patterns( strings[ current_index ], strings[ index ], patterns )
 
         # return patterns
         return patterns
