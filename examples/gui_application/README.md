@@ -4,5 +4,5 @@ This examples provides a GUI version of the regex4dummies library. In addition t
 
 # Version Info
 
-- Version: 0.0
-- Stable : NO
+- Version: 1.0
+- Stable : YES

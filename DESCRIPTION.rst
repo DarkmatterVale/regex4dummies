@@ -20,6 +20,25 @@ Usage
 
 To see how to use this library, please see the Wiki part of this Github repository.
 
+Here is an example of how to use the library.
+
+.. code-block:: Python
+
+  # Importing the regex4dummies library
+  from regex4dummies import regex4dummies
+
+  # Identifying test strings
+  strings = [ "This is the first string.", "This is the second test string." ]
+
+  # Creating regex object & test strings
+  regex = regex4dummies()
+
+  # Identifying literal patterns in strings
+  print regex.compare_strings( True, strings )
+
+  # Identifying semantic patterns in strings
+  print regex.compare_strings( False, strings )
+
 
 Installation
 ------------
@@ -29,6 +48,15 @@ To install this library, run the following command.
 ::
 
   $ pip install regex4dummies
+
+
+Patch Notes
+-------------
+
+In the newest release ( 1.0.1 ), the following has been added/updated:
+
+- Parser update. The parser was not properly implementing recursive string parsing, causing some strings to not be compared to other strings. This has now been fixed.
+- GUI update ( Alpha version ). This is only Alpha, but it is making a lot of progress and should be smoother & better soon.
 
 
 Contributing

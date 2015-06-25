@@ -85,11 +85,13 @@ class main( tk.Tk ):
 
             if str( input_text ) != "Enter text to parse\n":
                 input_sentences = TextBlob( input_text ).sentences
+                sentences = []
 
-                print input_sentences
+                for sentence in input_sentences:
+                    sentences.append( str( sentence ) )
 
                 regex = regex4dummies()
-                final_text = regex.compare_strings( True, str( input_sentences ) )
+                final_text = regex.compare_strings( True, sentences )
 
                 self.output_text['state'] = 'normal'
                 self.output_text.delete( "1.0", tk.END )

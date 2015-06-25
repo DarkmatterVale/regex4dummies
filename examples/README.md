@@ -7,6 +7,6 @@ Current list of examples included in this project:
 
 Current list of applications included in this project:
 - GUI Application
-  - Version: 0.0
-  - Stable : No
+  - Version: 1.0
+  - Stable : Yes
   - Info   : A GUI that allows the use of this library without any programming knowledge required
