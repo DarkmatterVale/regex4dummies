@@ -11,9 +11,9 @@ with open(path.join(here, 'DESCRIPTION.rst')) as f:
 setup(
     name = 'regex4dummies',
 
-    version = '1.0.2',
+    version = '1.0.3',
 
-    description = 'A NLP library that simplifies pattern finding',
+    description = 'A NLP library that simplifies pattern finding in strings',
     long_description = description_file,
 
     url = 'https://github.com/DarkmatterVale/regex4dummies',

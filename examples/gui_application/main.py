@@ -91,11 +91,33 @@ class main( tk.Tk ):
                     sentences.append( str( sentence ) )
 
                 regex = regex4dummies()
-                final_text = regex.compare_strings( True, sentences )
+                final_literal_text = regex.compare_strings( True, sentences )
+                final_literal_information = ""
+
+                sentence_information = regex.get_sentence_information()
+                for sentence in sentence_information:
+                    final_literal_information += "[ Sentence ]         : " + sentence
+                    final_literal_information += "[ Subject ]          : " + sentence_information[ sentence ][ 0 ] + "\n"
+                    final_literal_information += "[ Verb ]             : " + sentence_information[ sentence ][ 1 ] + "\n"
+                    final_literal_information += "[ Object ]           : " + sentence_information[ sentence ][ 2 ] + "\n"
+                    final_literal_information += "[ Reliability Score ]: " + str( sentence_information[ sentence ][ 3 ] ) + "\n"
+
+                final_semantic_text = regex.compare_strings( False, sentences )
+                final_semantic_information = ""
+
+                sentence_information = regex.get_sentence_information()
+                for sentence in sentence_information:
+                    final_semantic_information += "[ Sentence ]         : " + sentence
+                    final_semantic_information += "[ Subject ]          : " + sentence_information[ sentence ][ 0 ] + "\n"
+                    final_semantic_information += "[ Verb ]             : " + sentence_information[ sentence ][ 1 ] + "\n"
+                    final_semantic_information += "[ Object ]           : " + sentence_information[ sentence ][ 2 ] + "\n"
+                    final_semantic_information += "[ Reliability Score ]: " + str( sentence_information[ sentence ][ 3 ] ) + "\n"
+
+                final_text = "Literal Parse:\n" + str( final_literal_text ) + "\n\nInformation:\n" + final_literal_information + "\n---------------------------------\n\n" + "Semantic Parse:\n" + str( final_semantic_text ) + "\n\nInformation:\n" + final_semantic_information
 
                 self.output_text['state'] = 'normal'
                 self.output_text.delete( "1.0", tk.END )
-                self.output_text.insert( "1.0", str( final_text ) )
+                self.output_text.insert( "1.0", final_text )
                 self.output_text['state'] = 'disabled'
             elif output_text != "":
                 self.output_text['state'] = 'normal'

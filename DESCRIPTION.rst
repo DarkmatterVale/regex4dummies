@@ -3,16 +3,20 @@ regex4dummies: A Simple Way To Find Patterns
 
 A pattern finder for strings, implemented in Python.
 
-regex4dummies was made for lazy people! It allows you to easily parse strings and find simple and complex patterns. In fact, one of the key features of regex4dummies is that the library will automatically find patterns if you give it a mandatory word or phrase to look for. This can be a keyword or something more complex such as a sentence.
+regex4dummies was developed with lazy people in mind! It allows you to easily parse strings and find simple and complex patterns. Since it has such a small learning curve, after a couple of times using it you will become a pro!
 
+In addition, this library is very useful to people who work with NLP ( natural language processing ) very often. This library is intended to work out-of-the-box however, so anyone can use it.
 
 Features
 ----------
 
-- Automatic pattern detection
-- Keyword searching to find phrases
-- Very versatile library, can be used to find simple and complex patterns ( semantic and literal )
+Some features include:
+
+- Automatic pattern detection ( semantic and literal )
+- Keyword searching to find phrases ( and only phrases that contain that keyword )
 - Simple to use. Just install this library, and import it into whatever scripts you would like to use it with
+
+This list is very small compared to what will be implemented, so please check back in the future.
 
 
 Usage
@@ -53,7 +57,12 @@ To install this library, run the following command.
 Patch Notes
 -------------
 
-( Latest ) In release 1.0.2, the following has been added/updated:
+( Latest ) In this release ( 1.0.3 ), a number of updates have been added:
+
+- Another GUI update. It is now more advanced and supports additional features.
+- Parser update. Reliability score is now available when you grab sentence information ( which is a new command! )
+
+In release 1.0.2, the following has been added/updated:
 
 - GUI update. Bug fix which caused a malfunction in reading in sentences.
 
