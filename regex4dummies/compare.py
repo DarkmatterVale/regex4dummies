@@ -10,6 +10,7 @@ import re
 from textblob import TextBlob
 from textblob.parsers import PatternParser
 from pattern.en import parse
+from pattern_detail import pattern_detail
 
 """
 
@@ -313,6 +314,29 @@ class compare:
     # An example, might look like this:
     #   { "The sentence here" : [ "my_subject", "my_verb", "my_object" ] }
     def get_sentence_information( self ):
+        # Getting global variables
         global sentence_information
 
-        return sentence_information
+        # Creating a variable to hold the assembled pattern information. All of the pattern data will be converted into a pattern_detail object
+        final_pattern_information = []
+
+        # Getting patterns and printing them
+        for sentence in sentence_information:
+            pattern_info = pattern_detail()
+
+            pattern_info.pattern = sentence
+            pattern_info.subject = sentence_information[ sentence ][ 0 ]
+            pattern_info.verb    = sentence_information[ sentence ][ 1 ]
+            pattern_info.object  = [ sentence_information[ sentence ][ 2 ] ]
+            pattern_info.reliability_score = sentence_information[ sentence ][ 3 ]
+
+            #print "[ Sentence ]         : " + pattern_info.pattern
+            #print "[ Subject ]          : " + pattern_info.subject
+            #print "[ Verb ]             : " + pattern_info.verb
+            #print "[ Object ]           : " + str( pattern_info.object[0] )
+            #print "[ Reliability Score ]: " + str( pattern_info.reliability_score )
+
+            final_pattern_information.append( pattern_info )
+
+        # Returning the assembled information
+        return final_pattern_information

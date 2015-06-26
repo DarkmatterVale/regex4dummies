@@ -41,7 +41,16 @@ Here is an example of how to use the library.
   print regex.compare_strings( True, strings )
 
   # Identifying semantic patterns in strings
-  print regex.compare_strings( False, strings )
+  print regex.compare_strings( False, strings )\
+
+  # Printing pattern information
+  pattern_information = regex.get_sentence_information()
+    for objects in pattern_information:
+        print "[ Pattern ]          : " + objects.pattern
+        print "[ Subject ]          : " + objects.subject
+        print "[ Verb ]             : " + objects.verb
+        print "[ Object ]           : " + objects.object[0]
+        print "[ Reliability Score ]: " + str( objects.reliability_score )
 
 
 Installation
