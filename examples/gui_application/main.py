@@ -96,22 +96,22 @@ class main( tk.Tk ):
 
                 sentence_information = regex.get_sentence_information()
                 for sentence in sentence_information:
-                    final_literal_information += "[ Sentence ]         : " + sentence
-                    final_literal_information += "[ Subject ]          : " + sentence_information[ sentence ][ 0 ] + "\n"
-                    final_literal_information += "[ Verb ]             : " + sentence_information[ sentence ][ 1 ] + "\n"
-                    final_literal_information += "[ Object ]           : " + sentence_information[ sentence ][ 2 ] + "\n"
-                    final_literal_information += "[ Reliability Score ]: " + str( sentence_information[ sentence ][ 3 ] ) + "\n"
+                    final_literal_information = "[ Pattern ]          : " + sentence.pattern
+                    final_literal_information = "[ Subject ]          : " + sentence.subject + "\n"
+                    final_literal_information = "[ Verb ]             : " + sentence.verb + "\n"
+                    final_literal_information = "[ Object ]           : " + sentence.object[0] + "\n"
+                    final_literal_information = "[ Reliability Score ]: " + str( sentence.reliability_score ) + "\n"
 
                 final_semantic_text = regex.compare_strings( False, sentences )
                 final_semantic_information = ""
 
                 sentence_information = regex.get_sentence_information()
                 for sentence in sentence_information:
-                    final_semantic_information += "[ Sentence ]         : " + sentence
-                    final_semantic_information += "[ Subject ]          : " + sentence_information[ sentence ][ 0 ] + "\n"
-                    final_semantic_information += "[ Verb ]             : " + sentence_information[ sentence ][ 1 ] + "\n"
-                    final_semantic_information += "[ Object ]           : " + sentence_information[ sentence ][ 2 ] + "\n"
-                    final_semantic_information += "[ Reliability Score ]: " + str( sentence_information[ sentence ][ 3 ] ) + "\n"
+                    final_semantic_information = "[ Pattern ]          : " + sentence.pattern
+                    final_semantic_information = "[ Subject ]          : " + sentence.subject + "\n"
+                    final_semantic_information = "[ Verb ]             : " + sentence.verb + "\n"
+                    final_semantic_information = "[ Object ]           : " + sentence.object[0] + "\n"
+                    final_semantic_information = "[ Reliability Score ]: " + str( sentence.reliability_score ) + "\n"
 
                 final_text = "Literal Parse:\n" + str( final_literal_text ) + "\n\nInformation:\n" + final_literal_information + "\n---------------------------------\n\n" + "Semantic Parse:\n" + str( final_semantic_text ) + "\n\nInformation:\n" + final_semantic_information
 

@@ -66,7 +66,13 @@ To install this library, run the following command.
 Patch Notes
 -------------
 
-( Latest ) In this release ( 1.0.3 ), a number of updates have been added:
+( Latest ) In 1.0.4, a set of functions have been updated. Below is more information on the specific changes:
+
+- get_sentence_information() function updated. Instead of returning a dictionary/list, it now returns an object with the properties shown in the above example code ( last part of the program ). If you were previously using this function, please make sure you update to use the latest version
+- GUI has been updated to reflect the function change
+- Docs update. The documentation contained within the repository has been updated and is more developed
+
+In this release ( 1.0.3 ), a number of updates have been added:
 
 - Another GUI update. It is now more advanced and supports additional features.
 - Parser update. Reliability score is now available when you grab sentence information ( which is a new command! )
