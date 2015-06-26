@@ -33,9 +33,7 @@ Each element of the above array contains a reliability score, an applicability s
 A simple example of how to use this library is to compare two strings, each containing a name. The objective is to find the name, which is in both strings.
 
 ```
-import os
-import sys
-import regex4dummies as re4dummies
+from regex4dummies import regex4dummies
 
 string_1 = """ My name is John and I like to program artificial intelligence. """
 string_2 = """ John watches his computer learn. """
@@ -45,9 +43,9 @@ if __name__ == '__main__':
     combined_list.append( string_1 )
     combined_list.append( string_2 )
 
-    name_comparer = re4dummies()
+    name_comparer = regex4dummies()
 
-    print name_comparer.compare_strings( combined_list )
+    print name_comparer.compare_strings( True, combined_list )
 ```
 
 When the program is run, only one pattern will be printed. Below is the output. As seen, there is a 100% reliability score, and a 100% applicability score, followed by the pattern which is John

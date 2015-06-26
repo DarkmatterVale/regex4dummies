@@ -7,7 +7,7 @@ Included in this library is the ability to complete literal parsing on a set of 
 To use literal parsing, you need to call the following method:
 
 ```
-compare_strings( strings, True )
+compare_strings( True, strings )
 
 # Strings: The strings to be parsed
 # 2nd arg: Determines whether literal parsing is executed
