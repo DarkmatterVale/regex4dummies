@@ -7,16 +7,17 @@ regex4dummies was developed with lazy people in mind! It allows you to easily pa
 
 In addition, this library is very useful to people who work with NLP ( natural language processing ) very often. This library is intended to work out-of-the-box however, so anyone can use it.
 
+
 Features
 ----------
 
 Some features include:
 
 - Automatic pattern detection ( semantic and literal )
-- Keyword searching to find phrases ( and only phrases that contain that keyword )
+- Keyword searching to find phrases ( and only phrases that contain said keyword )
 - Simple to use. Just install this library, and import it into whatever scripts you would like to use it with
 
-This list is very small compared to what will be implemented, so please check back in the future.
+This list is very small compared to what will be implemented, so please check back in the future for additional features.
 
 
 Usage

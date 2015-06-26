@@ -11,6 +11,8 @@ from textblob import TextBlob
 from textblob.parsers import PatternParser
 from pattern.en import parse
 from pattern_detail import pattern_detail
+from literal_parsing import literal_parsing
+from semantic_parsing import semantic_parsing
 
 """
 
@@ -79,7 +81,7 @@ class compare:
             for index in xrange( current_index, -1, -1 ):
                 if strings[ index ] != strings[ current_index ]:
                     # patterns += identify_patterns( strings[ index ], strings[ index + 1 ] )
-                    patterns = self.identify_patterns( strings[ current_index ], strings[ index ], patterns )
+                    patterns = self.find_semantic_patterns( strings[ current_index ], strings[ index ], patterns )
         else:
             if current_index < len( strings ) - 1:
                 patterns = self.find_patterns( strings, current_index + 1, True, patterns_arg )
@@ -94,155 +96,18 @@ class compare:
         return patterns
 
     # This function identifies patterns in 2 strings
-    def identify_patterns( self, base_string, test_string, pattern_arg ):
+    def find_semantic_patterns( self, base_string, test_string, pattern_arg ):
         # Getting global variables
         global sentence_information
 
-        # patterns = {}
-        patterns = pattern_arg
+        # Instantiating a new semantic_parsing class object
+        semantic_pattern_parser = semantic_parsing()
 
-        # Creating string textblob for analysis & analyzing the base_string's sentences
-        base_blob = TextBlob( base_string, parser=PatternParser() )
-        base_sentence_info = []
+        # Parsing information
+        patterns, pattern_information = semantic_pattern_parser.parse( base_string, test_string, pattern_arg )
 
-        for base_sentence in base_blob.sentences:
-            subject               = ""
-            verb                  = ""
-            object                = ""
-            prepositional_phrases = ""
-            raw_data              = parse( str( base_sentence ), relations=True )
-
-            for word in parse( str( base_sentence ), relations=True ).split( ' ' ):
-                if "SBJ-" in word:
-                    subject += re.sub( r'/.*', '', word ) + " "
-                elif "OBJ-" in word:
-                    object += re.sub( r'/.*', '', word ) + " "
-                elif "VP-" in word:
-                    verb += re.sub( r'/.*', '', word ) + " "
-                elif "PNP" in word:
-                    prepositional_phrases += re.sub( r'/.*', '', word ) + " "
-                elif "PNP" not in word and prepositional_phrases[len( prepositional_phrases ) - 3:] != "...":
-                    prepositional_phrases += "..."
-
-            #print "[ Subject ]: " + subject
-            #print "[ Object ]: " + object
-            #print "[ Verb ]: " + verb
-            #print "[ Prepositional Phrases ]: " + str( prepositional_phrases.split( '...' )[ 1:len(prepositional_phrases.split( '...' )) ] )
-            #print "[ Raw Data ]: " + raw_data
-
-            add_sentence = True
-            for sentence in base_sentence_info:
-                if sentence != []:
-                    if sentence[ len( sentence ) ] == str( base_sentence ):
-                        add_sentence = False
-
-                        break
-
-            if add_sentence:
-                base_sentence_info.append( [ subject, verb, object, prepositional_phrases.split( '...' )[ 1:len(prepositional_phrases.split( '...' )) ], str( base_sentence ) ] )
-
-        #print base_sentence_info
-        #print "[ Finished Displaying Base Sentence Info ]"
-
-        # Creating string textblob for analysis & analyzing the base_string's sentences
-        test_blob = TextBlob( test_string, parser=PatternParser() )
-        test_sentence_info = []
-
-        for test_sentence in test_blob.sentences:
-            subject               = ""
-            verb                  = ""
-            object                = ""
-            prepositional_phrases = ""
-            raw_data              = parse( str( test_sentence ), relations=True )
-
-            for word in parse( str( test_sentence ), relations=True ).split( ' ' ):
-                if "SBJ-" in word:
-                    subject += re.sub( r'/.*', '', word ) + " "
-                elif "OBJ-" in word:
-                    object += re.sub( r'/.*', '', word ) + " "
-                elif "VP-" in word:
-                    verb += re.sub( r'/.*', '', word ) + " "
-                elif "PNP" in word:
-                    prepositional_phrases += re.sub( r'/.*', '', word ) + " "
-                elif "PNP" not in word and prepositional_phrases[len( prepositional_phrases ) - 3:] != "...":
-                    prepositional_phrases += "..."
-
-            #print "[ Subject ]: " + subject
-            #print "[ Object ]: " + object
-            #print "[ Verb ]: " + verb
-            #print "[ Prepositional Phrases ]: " + str( prepositional_phrases.split( '...' )[ 1:len(prepositional_phrases.split( '...' )) ] )
-            #print "[ Raw Data ]: " + raw_data
-
-            add_sentence = True
-            for sentence in test_sentence_info:
-                if sentence != []:
-                    if sentence[ len( sentence ) ] == str( test_sentence ):
-                        add_sentence = False
-
-                        break
-
-            if add_sentence:
-                test_sentence_info.append( [ subject, verb, object, prepositional_phrases.split( '...' )[ 1:len(prepositional_phrases.split( '...' )) ], str( test_sentence ) ] )
-
-        #print test_sentence_info
-        #print "[ Finished Displaying Test Sentence Info ]"
-
-        # Comparing the two sets of strings together & finding patterns
-        for base_sentence in base_sentence_info:
-            for test_sentence in test_sentence_info:
-                # If there are two sentences/patterns to compare
-                if base_sentence != [] and test_sentence != []:
-                    # If the patterns' semantic "value" is the same
-                    if base_sentence[0] == test_sentence[0] and base_sentence[1] == test_sentence[1] and base_sentence[2] == test_sentence[2]:
-                        # If one sentence/pattern is longer than the other, use that pattern
-                        if len( base_sentence[ len( base_sentence ) - 1 ].split( ' ' ) ) > len( test_sentence[ len( test_sentence ) - 1 ].split( ' ' ) ):
-                            # If other patterns have been detected
-                            if patterns != []:
-                                # If the current test patterns are not in patterns
-                                if test_sentence[ len( test_sentence ) - 1 ] not in patterns and base_sentence[ len( base_sentence ) - 1 ] not in patterns:
-                                    patterns += [ base_sentence[ len( base_sentence ) - 1 ] ]
-
-                                    sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ] = base_sentence[ 0 : len( base_sentence ) - 2 ]
-                                elif base_sentence[ len( base_sentence ) - 1 ] in patterns:
-                                    # Updating reliability score
-                                    try:
-                                        sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ][ 3 ] += 1
-                                    except:
-                                        sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( 1 )
-                            # If there are no patterns currently found, add this pattern
-                            elif patterns == []:
-                                patterns += [ base_sentence[ len( base_sentence ) - 1 ] ]
-
-                                sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ] = base_sentence[ 0 : len( base_sentence ) - 2 ]
-                                # Updating reliability score
-                                try:
-                                    sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ][ 3 ] += 1
-                                except:
-                                    sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( 1 )
-                        else:
-                            # If there are patterns already found
-                            if patterns != []:
-                                # If the test patterns are not in the already found patterns
-                                if test_sentence[ len( test_sentence ) - 1 ] not in patterns and base_sentence[ len( base_sentence ) - 1 ] not in patterns:
-                                    patterns += [ test_sentence[ len( test_sentence ) - 1 ] ]
-
-                                    sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ] = test_sentence[ 0 : len( test_sentence ) - 2 ]
-                                elif test_sentence[ len( test_sentence ) - 1 ] in patterns:
-                                    # Updating reliability score
-                                    try:
-                                        sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ][ 3 ] += 1
-                                    except:
-                                        sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( 1 )
-                            # If there are no patterns currently found
-                            elif patterns == []:
-                                patterns += [ test_sentence[ len( test_sentence ) - 1 ] ]
-
-                                sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ] = test_sentence[ 0 : len( test_sentence ) - 2 ]
-                                # Updating reliability score
-                                try:
-                                    sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ][ 3 ] += 1
-                                except:
-                                    sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( 1 )
+        # Appending the pattern information to the global sentence_information variable
+        sentence_information.update( pattern_information )
 
         # return patterns
         return patterns
@@ -251,68 +116,19 @@ class compare:
         # Getting global variables
         global sentence_information
 
-        # Getting the current patterns already found
-        patterns = pattern_arg
+        # Instantiating a new literal_parsing class object
+        literal_pattern_parser = literal_parsing()
 
-        # Literal translation from base_string -> test_string
-        base_blob = TextBlob( base_string )
-        base_sentence_info = []
+        # Parsing information
+        patterns, pattern_information = literal_pattern_parser.parse( base_string, test_string, pattern_arg )
 
-        # Find patterns
-        for sentence in base_blob.sentences:
-            words = sentence.split( ' ' )
+        # Appending the pattern information to the global sentence_information variable
+        sentence_information.update( pattern_information )
 
-            for length in xrange( len( words ), 1, -1 ):
-                for end in xrange( len( words ), 0, -1 ):
-                    if end - length < 0:
-                        break
-
-                    pattern = words[ end - length: end ]
-
-                    if ' '.join( pattern ) in str( test_string ):
-                        if ' '.join( pattern ) not in patterns:
-                            base_sentence_info += [ str( ' '.join( pattern ) ) ]
-
-                            sentence_information[ str( ' '.join( pattern ) ) ] = [ '', '', '', 1 ]
-                        else:
-                            sentence_information[ str( ' '.join( pattern ) ) ][ 3 ] += 1
-
-        patterns += base_sentence_info
-
-        # Literal translation from base_string -> test_string
-        test_blob = TextBlob( test_string )
-        test_sentence_info = []
-
-        # Find patterns
-        for sentence in test_blob.sentences:
-            words = sentence.split( ' ' )
-
-            for length in xrange( len( words ), 1, -1 ):
-                for end in xrange( len( words ), 0, -1 ):
-                    if end - length < 0:
-                        break
-
-                    pattern = words[ end - length: end ]
-
-                    if ' '.join( pattern ) in str( base_string ):
-                        if ' '.join( pattern ) not in patterns:
-                            sentence_information[ str( ' '.join( pattern ) ) ] = [ '', '', '', 1 ]
-
-                            test_sentence_info += [ str( ' '.join( pattern ) ) ]
-                        else:
-                            sentence_information[ str( ' '.join( pattern ) ) ][ 3 ] += 1
-
-        patterns += test_sentence_info
-
+        # Returning the patterns found
         return patterns
 
-    # If semantic pattern finding was implemented, the following will be returned
-    # Every sentence contains different parts of speech. This method returns those parts of speech in the following order:
-    #   1. Subject
-    #   2. Verb
-    #   3. [Direct] Object
-    # An example, might look like this:
-    #   { "The sentence here" : [ "my_subject", "my_verb", "my_object" ] }
+    # All patterns with associated information will be returned from this method as a list of pattern_detail classes
     def get_sentence_information( self ):
         # Getting global variables
         global sentence_information
@@ -329,12 +145,6 @@ class compare:
             pattern_info.verb    = sentence_information[ sentence ][ 1 ]
             pattern_info.object  = [ sentence_information[ sentence ][ 2 ] ]
             pattern_info.reliability_score = sentence_information[ sentence ][ 3 ]
-
-            #print "[ Sentence ]         : " + pattern_info.pattern
-            #print "[ Subject ]          : " + pattern_info.subject
-            #print "[ Verb ]             : " + pattern_info.verb
-            #print "[ Object ]           : " + str( pattern_info.object[0] )
-            #print "[ Reliability Score ]: " + str( pattern_info.reliability_score )
 
             final_pattern_information.append( pattern_info )
 
