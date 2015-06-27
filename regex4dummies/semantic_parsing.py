@@ -25,11 +25,19 @@ class semantic_parsing:
             verb                  = ""
             object                = ""
             prepositional_phrases = ""
-            raw_data              = nltk.ne_chunk( nltk.pos_tag( nltk.word_tokenize( str( base_sentence ) ) ), binary=True )
+            raw_data              = str( base_sentence )
+            pos_sentence          = nltk.pos_tag( nltk.word_tokenize( str( base_sentence ) ) )
 
             #print raw_data
             #print nltk.pos_tag( nltk.word_tokenize( str( base_sentence ) ) )
             #print "[ Subject ]: " + self.find_subject( str( base_sentence ), raw_data )
+
+            print "***BASE SENTENCE***"
+            print "Raw Sentence: " + raw_data
+            print "POS Sentence: " + str( pos_sentence )
+            print "[ Subject ] : " + self.find_subject( raw_data, pos_sentence )
+            print "[ Verb ]    : " + self.find_verb( raw_data, pos_sentence )
+            print "[ Object ]  : " + str( self.find_object( raw_data, pos_sentence, pos_sentence ) )
 
         test_blob = TextBlob( test_string )
         test_sentence_info = []
@@ -42,16 +50,17 @@ class semantic_parsing:
             raw_data              = str( test_sentence )
             pos_sentence          = nltk.pos_tag( nltk.word_tokenize( str( test_sentence ) ) )
 
+            print "***TEST SENTENCE***"
             print "Raw Sentence: " + raw_data
             print "POS Sentence: " + str( pos_sentence )
             print "[ Subject ] : " + self.find_subject( raw_data, pos_sentence )
             print "[ Verb ]    : " + self.find_verb( raw_data, pos_sentence )
-            print "[ Object ]  : " + str( self.find_object( raw_data, pos_sentence ) )
+            print "[ Object ]  : " + str( self.find_object( raw_data, pos_sentence, pos_sentence ) )
 
         print ""
         print ""
 
-        return "YOLO", { "YOLONAME" : "YOLO", "YOLO2NAME" : "YOLO1" }
+        return "", {}
 
     def find_subject( self, sentence_raw, sentence_tagged ):
         # Getting full subject
@@ -78,6 +87,7 @@ class semantic_parsing:
                         break
 
                 break
+            # If there is a noun, add that noun to the subject
             elif "NN" in sentence_tagged[ index ][ 1 ] or "PRP" in sentence_tagged[ index ][ 1 ]:
                 if updated_subject == "":
                     updated_subject = sentence_tagged[ index ][ 0 ]
@@ -103,7 +113,7 @@ class semantic_parsing:
         # Returning the verb
         return updated_verb
 
-    def find_object( self, raw_sentence, tagged_sentence ):
+    def find_object( self, raw_sentence, tagged_sentence, full_tagged_sentence ):
         # Creating the variable that will hold the object(s) of the sentence
         updated_object = ""
 
@@ -111,7 +121,7 @@ class semantic_parsing:
         # Removing the subject and the verb of the sentence
         for index in range( 0, len( tagged_sentence ) ):
             if "VB" in tagged_sentence[ index ][ 1 ]:
-                return self.find_object( ' '.join( raw_sentence.split( ' ' )[ index + 1: len( raw_sentence.split( ' ' ) ) ] ), tagged_sentence[ index + 1 : len( tagged_sentence ) ] )
+                return self.find_object( ' '.join( raw_sentence.split( ' ' )[ index + 1: len( raw_sentence.split( ' ' ) ) ] ), tagged_sentence[ index + 1 : len( tagged_sentence ) ], full_tagged_sentence )
 
         # Remove excess information
         for index in range( 0, len( tagged_sentence ) ):
@@ -126,19 +136,79 @@ class semantic_parsing:
                             updated_object = ' '.join( raw_sentence.split( ' ' )[ prep_index + 1 : len( raw_sentence.split( ' ' ) ) ] )
                             updated_tag = tagged_sentence[ prep_index + 1 : len( tagged_sentence ) ]
 
-                        updated_object = self.find_object( updated_object, updated_tag )
+                        updated_object = self.find_object( updated_object, updated_tag, full_tagged_sentence )
 
                         break
 
                 break
             elif "NN" in tagged_sentence[ index ][ 1 ] or "PRP" in tagged_sentence[ index ][ 1 ]:
+                if index + 1 < len( tagged_sentence ):
+                    if "CC" in tagged_sentence[ index + 1 ][ 1 ]:
+                        compound_object = tagged_sentence[ index ][ 0 ] + " " + tagged_sentence[ index + 1 ][ 0 ]
+
+                        for compound_index in range( index + 1, len( tagged_sentence ) ):
+                            if "NN" in tagged_sentence[ compound_index ][ 1 ] or "PRP" in tagged_sentence[ compound_index ][ 1 ]:
+                                compound_object += " " + tagged_sentence[ compound_index ][ 0 ]
+
+                                break
+                        if updated_object == "":
+                            updated_object = compound_object + ", "
+                        else:
+                            updated_object += " " + compound_object
+
+                if "CC" not in tagged_sentence[ index - 1 ][ 1 ]:
+                    if updated_object == "":
+                        updated_object = tagged_sentence[ index ][ 0 ]
+                    else:
+                        add_to_updated_object, new_object = self.find_previous_instance( [ "NN", "PRP" ], full_tagged_sentence, len( full_tagged_sentence ) - ( len( tagged_sentence ) - index ), [ "VB" ], updated_object )
+
+                        updated_object = new_object
+                        """if add_to_updated_object == "True":
+                            print new_object
+                            print updated_object
+                            updated_object = new_object + tagged_sentence[ index ][ 0 ]
+                        else:
+                            updated_object = new_object
+            elif "CC" in tagged_sentence[ index ][ 1 ]:
+                compound_object = tagged_sentence[ index - 1 ][ 0 ] + " " + tagged_sentence[ index ][ 0 ]
+
+                for compound_index in range( index, len( tagged_sentence ) ):
+                    if "NN" in tagged_sentence[ compound_index ][ 1 ] or "PRP" in tagged_sentence[ compound_index ][ 1 ]:
+                        compound_object += " " + tagged_sentence[ compound_index ][ 0 ]
+
+                        break
                 if updated_object == "":
-                    updated_object = tagged_sentence[ index ][ 0 ]
+                    updated_object = compound_object + ", "
                 else:
-                    updated_object += ", " + tagged_sentence[ index ][ 0 ]
+                    updated_object += compound_object"""
 
         # Returning the objects found
         return updated_object
+
+    def find_previous_instance( self, instance_to_find, string_containing_instance, current_index, objects_to_fail, updated_object ):
+        is_word_found = "False"
+
+        for index in xrange( current_index - 1, 0, -1 ):
+            for fail in objects_to_fail:
+                if fail in string_containing_instance[ index ][ 1 ]:
+                    return is_word_found, updated_object
+
+            for find in instance_to_find:
+                if find in string_containing_instance[ index ][ 1 ]:
+                    if index + 1 > len( string_containing_instance ):
+                        if "CC" not in string_containing_instance[ index - 1 ][ 1 ]:
+                            is_word_found = "True"
+                            updated_object = re.sub( string_containing_instance[ index ][ 0 ], "", updated_object )
+                    elif index - 1 < 0:
+                        if "CC" not in string_containing_instance[ index + 1 ][ 1 ]:
+                            is_word_found = "True"
+                            updated_object = re.sub( string_containing_instance[ index ][ 0 ], "", updated_object )
+                    else:
+                        if "CC" not in string_containing_instance[ index + 1 ][ 1 ] and "CC" not in string_containing_instance[ index - 1 ][ 1 ]:
+                            is_word_found = "True"
+                            updated_object = re.sub( string_containing_instance[ index ][ 0 ], "", updated_object )
+
+        return is_word_found, updated_object
 
     def use_pattern( self, base_string, test_string, pattern_arg ):
         sentence_information = {}
