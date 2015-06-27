@@ -154,33 +154,20 @@ class semantic_parsing:
                         if updated_object == "":
                             updated_object = compound_object + ", "
                         else:
-                            updated_object += " " + compound_object
+                            add_to_updated_object, new_object = self.find_previous_instance( [ "NN", "PRP" ], full_tagged_sentence, len( full_tagged_sentence ) - ( len( tagged_sentence ) - index ), [ "VB" ], updated_object + compound_object )
+
+                            updated_object = new_object
 
                 if "CC" not in tagged_sentence[ index - 1 ][ 1 ]:
                     if updated_object == "":
                         updated_object = tagged_sentence[ index ][ 0 ]
-                    else:
+                    elif tagged_sentence[ index - 1 ][ 0 ] not in updated_object:
                         add_to_updated_object, new_object = self.find_previous_instance( [ "NN", "PRP" ], full_tagged_sentence, len( full_tagged_sentence ) - ( len( tagged_sentence ) - index ), [ "VB" ], updated_object )
 
-                        updated_object = new_object
-                        """if add_to_updated_object == "True":
-                            print new_object
-                            print updated_object
+                        if add_to_updated_object == "True":
                             updated_object = new_object + tagged_sentence[ index ][ 0 ]
                         else:
                             updated_object = new_object
-            elif "CC" in tagged_sentence[ index ][ 1 ]:
-                compound_object = tagged_sentence[ index - 1 ][ 0 ] + " " + tagged_sentence[ index ][ 0 ]
-
-                for compound_index in range( index, len( tagged_sentence ) ):
-                    if "NN" in tagged_sentence[ compound_index ][ 1 ] or "PRP" in tagged_sentence[ compound_index ][ 1 ]:
-                        compound_object += " " + tagged_sentence[ compound_index ][ 0 ]
-
-                        break
-                if updated_object == "":
-                    updated_object = compound_object + ", "
-                else:
-                    updated_object += compound_object"""
 
         # Returning the objects found
         return updated_object
@@ -195,18 +182,8 @@ class semantic_parsing:
 
             for find in instance_to_find:
                 if find in string_containing_instance[ index ][ 1 ]:
-                    if index + 1 > len( string_containing_instance ):
-                        if "CC" not in string_containing_instance[ index - 1 ][ 1 ]:
-                            is_word_found = "True"
-                            updated_object = re.sub( string_containing_instance[ index ][ 0 ], "", updated_object )
-                    elif index - 1 < 0:
-                        if "CC" not in string_containing_instance[ index + 1 ][ 1 ]:
-                            is_word_found = "True"
-                            updated_object = re.sub( string_containing_instance[ index ][ 0 ], "", updated_object )
-                    else:
-                        if "CC" not in string_containing_instance[ index + 1 ][ 1 ] and "CC" not in string_containing_instance[ index - 1 ][ 1 ]:
-                            is_word_found = "True"
-                            updated_object = re.sub( string_containing_instance[ index ][ 0 ], "", updated_object )
+                    updated_object = re.sub( string_containing_instance[ index ][ 0 ], "", updated_object )
+                    is_word_found = "True"
 
         return is_word_found, updated_object
 
