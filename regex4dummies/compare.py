@@ -37,7 +37,7 @@ class compare:
         pass
 
     # This method is called by the main regex4dummies class, and calls all further methods to find strings
-    def compare_strings( self, strings, literal ):
+    def compare_strings( self, strings, literal, parser_name ):
         # Getting global variables
         global sentence_information
 
@@ -52,7 +52,7 @@ class compare:
                 keyword = re.sub( 'keyword=', '', string )
 
         # Call find_patterns( strings )
-        patterns = self.find_patterns( strings, 0, literal, [] )
+        patterns = self.find_patterns( strings, 0, literal, [], parser_name )
 
         # After patterns are identified in strings, complete final processing
         #   1. Find reliability score
@@ -71,20 +71,20 @@ class compare:
         return compiled_patterns
 
     # Recursive function that compares all strings and determins reliability score, applicability score, and pattern
-    def find_patterns( self, strings, current_index, literal_find, patterns_arg ):
+    def find_patterns( self, strings, current_index, literal_find, patterns_arg, parser_name ):
         patterns = patterns_arg
 
         if not literal_find:
             if current_index < len( strings ) - 1:
-                patterns = self.find_patterns( strings, current_index + 1, False, patterns_arg )
+                patterns = self.find_patterns( strings, current_index + 1, False, patterns_arg, parser_name )
 
             for index in xrange( current_index, -1, -1 ):
                 if strings[ index ] != strings[ current_index ]:
                     # patterns += identify_patterns( strings[ index ], strings[ index + 1 ] )
-                    patterns = self.find_semantic_patterns( strings[ current_index ], strings[ index ], patterns )
+                    patterns = self.find_semantic_patterns( strings[ current_index ], strings[ index ], patterns, parser_name )
         else:
             if current_index < len( strings ) - 1:
-                patterns = self.find_patterns( strings, current_index + 1, True, patterns_arg )
+                patterns = self.find_patterns( strings, current_index + 1, True, patterns_arg, parser_name )
 
             # for index in range( current_index, len( strings ) - 1 ):
             for index in xrange( current_index, -1, -1 ):
@@ -96,7 +96,7 @@ class compare:
         return patterns
 
     # This function identifies patterns in 2 strings
-    def find_semantic_patterns( self, base_string, test_string, pattern_arg ):
+    def find_semantic_patterns( self, base_string, test_string, pattern_arg, parser_name ):
         # Getting global variables
         global sentence_information
 
@@ -104,7 +104,7 @@ class compare:
         semantic_pattern_parser = semantic_parsing()
 
         # Parsing information
-        patterns, pattern_information = semantic_pattern_parser.parse( base_string, test_string, pattern_arg )
+        patterns, pattern_information = semantic_pattern_parser.parse( base_string, test_string, pattern_arg, parser_name )
 
         # Appending the pattern information to the global sentence_information variable
         sentence_information.update( pattern_information )

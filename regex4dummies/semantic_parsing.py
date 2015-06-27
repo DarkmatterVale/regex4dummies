@@ -10,57 +10,78 @@ class semantic_parsing:
     def __init__( self, *args, **kwargs ):
         pass
 
-    def parse( self, base_string, test_string, pattern_arg ):
-        return self.use_nltk( base_string, test_string, pattern_arg )
+    def parse( self, base_string, test_string, pattern_arg, parser_name ):
+        if parser_name == 'nltk':
+            return self.use_nltk( base_string, test_string, pattern_arg )
+        elif parser_name == 'pattern':
+            return self.use_pattern( base_string, test_string, pattern_arg )
 
     def use_nltk( self, base_string, test_string, pattern_arg ):
-        sentence_information = {}
         patterns = pattern_arg
 
         base_blob = TextBlob( base_string )
-        base_sentenc_info = []
+        base_sentence_info = []
 
         for base_sentence in base_blob.sentences:
-            subject               = ""
-            verb                  = ""
-            object                = ""
-            prepositional_phrases = ""
+            base_sentence = base_sentence.lower()
+
             raw_data              = str( base_sentence )
             pos_sentence          = nltk.pos_tag( nltk.word_tokenize( str( base_sentence ) ) )
+            subject               = self.find_subject( raw_data, pos_sentence )
+            verb                  = self.find_verb( raw_data, pos_sentence )
+            object                = self.find_object( raw_data, pos_sentence, pos_sentence )
+            prepositional_phrases = ""
 
-            #print raw_data
-            #print nltk.pos_tag( nltk.word_tokenize( str( base_sentence ) ) )
-            #print "[ Subject ]: " + self.find_subject( str( base_sentence ), raw_data )
+            #print "***BASE SENTENCE***"
+            #print "Raw Sentence: " + raw_data
+            #print "POS Sentence: " + str( pos_sentence )
+            #print "[ Subject ] : " + subject
+            #print "[ Verb ]    : " + verb
+            #print "[ Object ]  : " + str( object )
 
-            print "***BASE SENTENCE***"
-            print "Raw Sentence: " + raw_data
-            print "POS Sentence: " + str( pos_sentence )
-            print "[ Subject ] : " + self.find_subject( raw_data, pos_sentence )
-            print "[ Verb ]    : " + self.find_verb( raw_data, pos_sentence )
-            print "[ Object ]  : " + str( self.find_object( raw_data, pos_sentence, pos_sentence ) )
+            add_sentence = True
+            for sentence in base_sentence_info:
+                if sentence != []:
+                    if sentence[ len( sentence ) ] == str( base_sentence ):
+                        add_sentence = False
+
+                        break
+
+            if add_sentence:
+                base_sentence_info.append( [ subject, verb, object, [], str( base_sentence ) ] )
 
         test_blob = TextBlob( test_string )
         test_sentence_info = []
 
         for test_sentence in test_blob.sentences:
-            subject               = ""
-            verb                  = ""
-            object                = ""
-            prepositional_phrases = ""
+            test_sentence = test_sentence.lower()
+
             raw_data              = str( test_sentence )
             pos_sentence          = nltk.pos_tag( nltk.word_tokenize( str( test_sentence ) ) )
+            subject               = self.find_subject( raw_data, pos_sentence )
+            verb                  = self.find_verb( raw_data, pos_sentence )
+            object                = self.find_object( raw_data, pos_sentence, pos_sentence )
+            prepositional_phrases = ""
 
-            print "***TEST SENTENCE***"
-            print "Raw Sentence: " + raw_data
-            print "POS Sentence: " + str( pos_sentence )
-            print "[ Subject ] : " + self.find_subject( raw_data, pos_sentence )
-            print "[ Verb ]    : " + self.find_verb( raw_data, pos_sentence )
-            print "[ Object ]  : " + str( self.find_object( raw_data, pos_sentence, pos_sentence ) )
+            #print "***TEST SENTENCE***"
+            #print "Raw Sentence: " + raw_data
+            #print "POS Sentence: " + str( pos_sentence )
+            #print "[ Subject ] : " + subject
+            #print "[ Verb ]    : " + verb
+            #print "[ Object ]  : " + str( object )
 
-        print ""
-        print ""
+            add_sentence = True
+            for sentence in test_sentence_info:
+                if sentence != []:
+                    if sentence[ len( sentence ) ] == str( test_sentence ):
+                        add_sentence = False
 
-        return "", {}
+                        break
+
+            if add_sentence:
+                test_sentence_info.append( [ subject, verb, object, [], str( test_sentence ) ] )
+
+        return self.identify_common_patterns( base_sentence_info, test_sentence_info, patterns )
 
     def find_subject( self, sentence_raw, sentence_tagged ):
         # Getting full subject
@@ -144,11 +165,11 @@ class semantic_parsing:
             elif "NN" in tagged_sentence[ index ][ 1 ] or "PRP" in tagged_sentence[ index ][ 1 ]:
                 if index + 1 < len( tagged_sentence ):
                     if "CC" in tagged_sentence[ index + 1 ][ 1 ]:
-                        compound_object = tagged_sentence[ index ][ 0 ] + " " + tagged_sentence[ index + 1 ][ 0 ]
+                        compound_object = tagged_sentence[ index ][ 0 ]
 
                         for compound_index in range( index + 1, len( tagged_sentence ) ):
                             if "NN" in tagged_sentence[ compound_index ][ 1 ] or "PRP" in tagged_sentence[ compound_index ][ 1 ]:
-                                compound_object += " " + tagged_sentence[ compound_index ][ 0 ]
+                                compound_object +=  " " + tagged_sentence[ index + 1 ][ 0 ] + " " + tagged_sentence[ compound_index ][ 0 ]
 
                                 break
                         if updated_object == "":
@@ -188,7 +209,7 @@ class semantic_parsing:
         return is_word_found, updated_object
 
     def use_pattern( self, base_string, test_string, pattern_arg ):
-        sentence_information = {}
+
         patterns = pattern_arg
 
         # Creating string textblob for analysis & analyzing the base_string's sentences
@@ -276,6 +297,13 @@ class semantic_parsing:
 
         #print test_sentence_info
         #print "[ Finished Displaying Test Sentence Info ]"
+
+        return self.identify_common_patterns( base_sentence_info, test_sentence_info, patterns )
+
+
+    def identify_common_patterns( self, base_sentence_info, test_sentence_info, patterns ):
+        # Creating variables
+        sentence_information = {}
 
         # Comparing the two sets of strings together & finding patterns
         for base_sentence in base_sentence_info:
