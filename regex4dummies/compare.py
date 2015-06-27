@@ -31,6 +31,7 @@ from semantic_parsing import semantic_parsing
 
 class compare:
     global sentence_information
+    global strings_parsed
 
     # Empty constructor
     def __init__( self, *args, **kwargs ):
@@ -40,6 +41,10 @@ class compare:
     def compare_strings( self, strings, literal, parser_name ):
         # Getting global variables
         global sentence_information
+        global strings_parsed
+
+        # Update global variables
+        strings_parsed = strings
 
         # Reset variables
         patterns = []
@@ -64,9 +69,9 @@ class compare:
         for pattern in patterns:
             if keyword != '':
                 if keyword in pattern:
-                    compiled_patterns += [ 0, 0, pattern ]
+                    compiled_patterns += [ self.get_reliability_score( pattern ), 0, pattern ]
             else:
-                compiled_patterns += [ 0, 0, pattern ]
+                compiled_patterns += [ self.get_reliability_score( pattern ), 0, pattern ]
 
         return compiled_patterns
 
@@ -132,6 +137,7 @@ class compare:
     def get_sentence_information( self ):
         # Getting global variables
         global sentence_information
+        global strings_parsed
 
         # Creating a variable to hold the assembled pattern information. All of the pattern data will be converted into a pattern_detail object
         final_pattern_information = []
@@ -144,9 +150,19 @@ class compare:
             pattern_info.subject = sentence_information[ sentence ][ 0 ]
             pattern_info.verb    = sentence_information[ sentence ][ 1 ]
             pattern_info.object  = [ sentence_information[ sentence ][ 2 ] ]
-            pattern_info.reliability_score = sentence_information[ sentence ][ 3 ]
+            pattern_info.reliability_score = sentence_information[ sentence ][ 3 ] * 100 / len( strings_parsed )
 
             final_pattern_information.append( pattern_info )
 
         # Returning the assembled information
         return final_pattern_information
+
+    # This function is used to return the reliability score of a pattern
+    def get_reliability_score( self, pattern ):
+        # Getting global variables
+        global sentence_information
+        global strings_parsed
+
+        for compiled_pattern in sentence_information:
+            if compiled_pattern == pattern:
+                return sentence_information[ compiled_pattern ][ 3 ] * 100 / len( strings_parsed )

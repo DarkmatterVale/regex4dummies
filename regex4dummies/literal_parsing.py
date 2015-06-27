@@ -32,7 +32,7 @@ class literal_parsing:
                         if ' '.join( pattern ) not in patterns:
                             base_sentence_info += [ str( ' '.join( pattern ) ) ]
 
-                            sentence_information[ str( ' '.join( pattern ) ) ] = [ '', '', '', 1 ]
+                            sentence_information[ str( ' '.join( pattern ) ) ] = [ '', '', '', 2 ]
                         else:
                             sentence_information[ str( ' '.join( pattern ) ) ][ 3 ] += 1
 
@@ -55,7 +55,7 @@ class literal_parsing:
 
                     if ' '.join( pattern ) in str( base_string ):
                         if ' '.join( pattern ) not in patterns:
-                            sentence_information[ str( ' '.join( pattern ) ) ] = [ '', '', '', 1 ]
+                            sentence_information[ str( ' '.join( pattern ) ) ] = [ '', '', '', 2 ]
 
                             test_sentence_info += [ str( ' '.join( pattern ) ) ]
                         else:

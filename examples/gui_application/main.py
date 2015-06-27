@@ -91,7 +91,7 @@ class main( tk.Tk ):
                     sentences.append( str( sentence ) )
 
                 regex = regex4dummies()
-                final_literal_text = regex.compare_strings( True, sentences )
+                final_literal_text = regex.compare_strings( 'pattern', True, sentences )
                 final_literal_information = ""
 
                 sentence_information = regex.get_sentence_information()

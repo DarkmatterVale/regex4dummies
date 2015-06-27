@@ -326,7 +326,7 @@ class semantic_parsing:
                                     try:
                                         sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ][ 3 ] += 1
                                     except:
-                                        sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( 1 )
+                                        sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( 2 )
                             # If there are no patterns currently found, add this pattern
                             elif patterns == []:
                                 patterns += [ base_sentence[ len( base_sentence ) - 1 ] ]
@@ -336,7 +336,7 @@ class semantic_parsing:
                                 try:
                                     sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ][ 3 ] += 1
                                 except:
-                                    sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( 1 )
+                                    sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( 2 )
                         else:
                             # If there are patterns already found
                             if patterns != []:
@@ -350,7 +350,7 @@ class semantic_parsing:
                                     try:
                                         sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ][ 3 ] += 1
                                     except:
-                                        sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( 1 )
+                                        sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( 2 )
                             # If there are no patterns currently found
                             elif patterns == []:
                                 patterns += [ test_sentence[ len( test_sentence ) - 1 ] ]
@@ -360,6 +360,6 @@ class semantic_parsing:
                                 try:
                                     sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ][ 3 ] += 1
                                 except:
-                                    sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( 1 )
+                                    sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( 2 )
 
         return patterns, sentence_information

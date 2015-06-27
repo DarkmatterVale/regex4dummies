@@ -14,10 +14,13 @@ Features
 Some features include:
 
 - Automatic pattern detection ( semantic and literal )
+- Multiple parsers ( implementations of nltk and pattern )
 - Keyword searching to find phrases ( and only phrases that contain said keyword )
 - Simple to use. Just install this library, and import it into whatever scripts you would like to use it with
 
 This list is very small compared to what will be implemented, so please check back in the future for additional features.
+
+If you have feature requests, feel free to email me or add an issue to the Github issue tracker. All contributions and requests are appreciated!
 
 
 Usage
@@ -39,10 +42,10 @@ Here is an example of how to use the library.
   regex = regex4dummies()
 
   # Identifying literal patterns in strings
-  print regex.compare_strings( True, strings )
+  print regex.compare_strings( '', True, strings )
 
-  # Identifying semantic patterns in strings
-  print regex.compare_strings( False, strings )\
+  # Identifying semantic patterns in strings using the nltk parser
+  print regex.compare_strings( 'nltk', False, strings )
 
   # Printing pattern information
   pattern_information = regex.get_sentence_information()
@@ -67,20 +70,33 @@ To install this library, run the following command.
 Patch Notes
 -------------
 
-( Latest ) In 1.0.4, a set of functions have been updated. Below is more information on the specific changes:
+( Latest ) 1.1.0! The first MAJOR update to regex4dummies has been released! A number of things have been updated in this release, including:
+
+- A BRAND-NEW parser! You can now use an implementation of nltk ( which works in conjunction with a custom-made recursive parser )
+- MAJOR code refactoring. Even though end-users will not see this update, it is an important and much-needed cleanup of code
+- reliability score update. It now is returned and properly calculated. It should be bug free now
+- A couple of bug fixes
+
+To use the new parser, a new option has been created and is the first parameter in the compare_strings() method. It can be seen in action above and in the documentation
+
+
+In 1.0.4, a set of functions have been updated. Below is more information on the specific changes:
 
 - get_sentence_information() function updated. Instead of returning a dictionary/list, it now returns an object with the properties shown in the above example code ( last part of the program ). If you were previously using this function, please make sure you update to use the latest version
 - GUI has been updated to reflect the function change
 - Docs update. The documentation contained within the repository has been updated and is more developed
+
 
 In this release ( 1.0.3 ), a number of updates have been added:
 
 - Another GUI update. It is now more advanced and supports additional features.
 - Parser update. Reliability score is now available when you grab sentence information ( which is a new command! )
 
+
 In release 1.0.2, the following has been added/updated:
 
 - GUI update. Bug fix which caused a malfunction in reading in sentences.
+
 
 In release 1.0.1, the following has been added/updated:
 
