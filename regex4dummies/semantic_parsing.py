@@ -11,11 +11,11 @@ class semantic_parsing:
         pass
 
     def parse( self, base_string, test_string, pattern_arg ):
-        return self.use_pattern( base_string, test_string, pattern_arg )
+        return self.use_nltk( base_string, test_string, pattern_arg )
 
     def use_nltk( self, base_string, test_string, pattern_arg ):
         sentence_information = {}
-        patterns = pattern_arg
+        patterns = pattern_args
 
         base_blob = TextBlob( base_string )
         base_sentenc_info = []
@@ -27,8 +27,9 @@ class semantic_parsing:
             prepositional_phrases = ""
             raw_data              = nltk.ne_chunk( nltk.pos_tag( nltk.word_tokenize( str( base_sentence ) ) ), binary=True )
 
-            print raw_data
-            print nltk.pos_tag( nltk.word_tokenize( str( base_sentence ) ) )
+            #print raw_data
+            #print nltk.pos_tag( nltk.word_tokenize( str( base_sentence ) ) )
+            #print "[ Subject ]: " + self.find_subject( str( base_sentence ), raw_data )
 
         test_blob = TextBlob( test_string )
         test_sentence_info = []
@@ -41,11 +42,48 @@ class semantic_parsing:
             raw_data              = nltk.pos_tag( nltk.word_tokenize( str( test_sentence ) ) )
 
             print raw_data
+            print "[ Subject ]: " + self.find_subject( str( test_sentence ), raw_data )
 
         print ""
         print ""
 
         return "YOLO", { "YOLONAME" : "YOLO", "YOLO2NAME" : "YOLO1" }
+
+    def find_subject( self, sentence_raw, sentence_tagged ):
+        # Getting full subject
+        for index in range( 0, len( sentence_tagged ) ):
+            if "VB" in sentence_tagged[ index ][ 1 ]:
+                return self.find_subject( ' '.join( sentence_raw.split( ' ' )[ 0 : index ] ), sentence_tagged[ 0 : index ] )
+
+        # Remove excess information
+        updated_subject = sentence_raw
+        for index in range( 0, len( sentence_tagged ) ):
+            # Removing prepositions
+            if "IN" in sentence_tagged[ index ][ 1 ]:
+                for prep_index in range( index, len( sentence_tagged ) ):
+                    if "NN" in sentence_tagged[ prep_index ][ 1 ]:
+                        if index != 0:
+                            updated_subject = ' '.join( sentence_raw.split( ' ' )[ 0 : index ] ) + ' '.join( sentence_raw.split( ' ' )[ prep_index + 1 : len( sentence_raw.split( ' ' ) ) ] )
+                            updated_tag = sentence_tagged[ 0 : index ] + sentence_tagged[ prep_index + 1 : len( sentence_tagged ) ]
+                        else:
+                            updated_subject = ' '.join( sentence_raw.split( ' ' )[ prep_index + 1 : len( sentence_raw.split( ' ' ) ) ] )
+                            updated_tag = sentence_tagged[ prep_index + 1 : len( sentence_tagged ) ]
+
+                        updated_subject = self.find_subject( updated_subject, updated_tag )
+
+                        break
+
+                break
+
+
+        # Return final subject
+        return updated_subject
+
+    def find_verb( self, sentence ):
+        pass
+
+    def find_object( self, sentence ):
+        pass
 
     def use_pattern( self, base_string, test_string, pattern_arg ):
         sentence_information = {}

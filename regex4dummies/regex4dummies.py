@@ -47,13 +47,13 @@ if __name__ == '__main__':
     print "http://github.com/DarkmatterVale/regex4dummies"
     print ""
 
-    exit( 0 )
+    #exit( 0 )
 
     # Test Set
     regex = regex4dummies()
 
     # Printing the semantic patterns within this string
-    print regex.compare_strings( False, [ "the cat is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
+    print regex.compare_strings( False, [ "On the mat the cat in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
 
     # Displaying all of the "meaning" in these sentences
     sentence_information = regex.get_sentence_information()
