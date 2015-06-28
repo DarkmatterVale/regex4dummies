@@ -13,6 +13,24 @@ Features:
 - Simple to use. Just install this library, and import it into whatever scripts you would like to use it with
 
 
+## Roadmap
+
+As of 6/28/15, this is what is left to complete:
+
+- High Priority ( short-term, completed within 3 months ):
+  - Docs
+    - A place that shows the docs in a nice, neat, user friendly way
+  - Examples
+    - All functions need to have specific examples on how to use them. These examples need to be specific and easy to understand
+  - Parsers
+    - nltk
+      - Update custom-made grammatical parser to be more effective and retrieve additional information
+    - pattern
+      - Implement additional information gathering
+      - Implement a more effective way to compare sentences to get better results. Currently, only if the subject, verb, and objects are the same will the two sentences be considered the same. This is good for many situations, but when comparing complex sentences, this will get a little tricky
+- Medium/Long Priority ( mid-term and long-term, hopefully completed within a year ):
+  - Machine Learning implemented-this will allow the parser to learn different "styles" of grammatical syntax, helping it be more accurate
+
 ## Usage
 
 To see how to use this library, please see the Wiki part of this Github repository.
