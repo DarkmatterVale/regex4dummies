@@ -1,6 +1,6 @@
 # regex4dummies
 
-[![Build Status](https://travis-ci.org/DarkmatterVale/regex4dummies.svg?branch=master)]
+![Build Status](https://travis-ci.org/DarkmatterVale/regex4dummies.svg?branch=master)
 
 A pattern finder for strings, implemented in Python.
 
