@@ -41,6 +41,9 @@ Here is an example of how to use the library.
   # Creating regex object & test strings
   regex = regex4dummies()
 
+  # Display the version of regex4dummies you are using
+  print regex.__version__
+
   # Identifying literal patterns in strings
   print regex.compare_strings( '', True, strings )
 
@@ -70,7 +73,12 @@ To install this library, run the following command.
 Patch Notes
 -------------
 
-( Latest ) 1.1.0! The first MAJOR update to regex4dummies has been released! A number of things have been updated in this release, including:
+( Latest ) 1.1.1 includes a minor addition and an update to the nltk parser.
+
+- __version__ variable added to the regex4dummies class, which allows you to see what version of regex4dummies you are using.
+- Compound verbs can now be used in sentences being parsed by the nltk parser
+
+1.1.0! The first MAJOR update to regex4dummies has been released! A number of things have been updated in this release, including:
 
 - A BRAND-NEW parser! You can now use an implementation of nltk ( which works in conjunction with a custom-made recursive parser )
 - MAJOR code refactoring. Even though end-users will not see this update, it is an important and much-needed cleanup of code
