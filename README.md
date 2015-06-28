@@ -27,12 +27,14 @@ As of 6/28/15, this is what is left to complete:
       - Update custom-made grammatical parser to be more effective in determining whether two sentences are the same
       - Gather prepositional phrases
       - Gather indirect object as well as direct object
-      - Gather compound verbs
-      - Be able to identify word case ( for verbs, present, past, future, etc )
+      - Be able to identify word case ( for verbs, present, past, future, etc ) & use that information to make sure some patterns are not removed due to case differences
       - Independent and dependent clause separator
     - pattern
       - Implement additional information gathering
       - Implement a more effective way to compare sentences to get better results. Currently, only if the subject, verb, and objects are the same will the two sentences be considered the same. This is good for many situations, but when comparing complex sentences, this will get a little tricky
+    - nlpnet
+      - Add support for this parser
+      - Add citations that the author requires be added
 - Medium/Long Priority ( mid-term and long-term, hopefully completed within a year ):
   - Machine Learning implemented-this will allow the parser to learn different "styles" of grammatical syntax, helping it be more accurate
 
