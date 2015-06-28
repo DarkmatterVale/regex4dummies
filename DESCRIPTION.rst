@@ -73,7 +73,11 @@ To install this library, run the following command.
 Patch Notes
 -------------
 
-( Latest ) 1.1.2 includes a minor addition and an update to the nltk parser.
+( Latest ) 1.1.3 BUG FIX, VERY IMPORTANT IF YOU DOWNLOADED VERSION 1.1.2:
+
+- There is a bug that causes the library to not be usable. To fix this, upgrade to 1.1.3
+
+1.1.2 includes a minor addition and an update to the nltk parser.
 
 - __version__ variable added to the regex4dummies class, which allows you to see what version of regex4dummies you are using.
 - Compound verbs can now be used in sentences being parsed by the nltk parser
