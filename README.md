@@ -24,7 +24,12 @@ As of 6/28/15, this is what is left to complete:
     - All functions need to have specific examples on how to use them. These examples need to be specific and easy to understand
   - Parsers
     - nltk
-      - Update custom-made grammatical parser to be more effective and retrieve additional information
+      - Update custom-made grammatical parser to be more effective in determining whether two sentences are the same
+      - Gather prepositional phrases
+      - Gather indirect object as well as direct object
+      - Gather compound verbs
+      - Be able to identify word case ( for verbs, present, past, future, etc )
+      - Independent and dependent clause separator
     - pattern
       - Implement additional information gathering
       - Implement a more effective way to compare sentences to get better results. Currently, only if the subject, verb, and objects are the same will the two sentences be considered the same. This is good for many situations, but when comparing complex sentences, this will get a little tricky
