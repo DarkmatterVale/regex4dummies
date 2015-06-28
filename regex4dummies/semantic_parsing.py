@@ -131,6 +131,31 @@ class semantic_parsing:
                 else:
                     updated_verb += " " + tagged_sentence[ index ][ 0 ]
 
+        # Determing if it is a compound verb. If so, generating the final verb correctly
+        verb_count = 0
+
+        if len( updated_verb.split( ' ' ) ) >= 1:
+            if len( updated_verb.split( ' ' ) ) == 2:
+                # Splitting the verbs into sub verbs
+                updated_verb = updated_verb.split( ' ' )
+
+                # Since there are only two, a single conjunction can be used to bring the two together
+                updated_verb[ 0 ] = updated_verb[ 0 ] + " and"
+
+                updated_verb = ' '.join( updated_verb )
+            else:
+                # Splitting the verbs into sub verbs
+                updated_verb = updated_verb.split( ' ' )
+
+                # Correctly bringing all of those verbs together ( adding commas )
+                for index in range( 0, len( updated_verb ) - 2 ):
+                    updated_verb[ index ] = updated_verb[ index ] + ","
+
+                # Adding a conjunction between the second-to-last and last verbs
+                updated_verb[ len( updated_verb ) - 2 ] = updated_verb[ len( updated_verb ) - 2 ] + " and"
+
+                updated_verb = ' '.join( updated_verb )
+
         # Returning the verb
         return updated_verb
 
