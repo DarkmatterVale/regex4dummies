@@ -13,6 +13,9 @@ class regex4dummies:
     # Global compare object. This is global because multiple methods need to be called from the same object
     global compare_object
 
+    # Setting global version variable which contains the version of this library
+    __version__ = 'The current version of regex4dummies installed is: 1.1.0'
+
     # Empty constructor method
     def __init__( self, *args, **kwargs ):
         # Getting global information
