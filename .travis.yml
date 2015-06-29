@@ -6,6 +6,8 @@ install:
   - pip install nltk
   - pip install pattern
   - pip install TextBlob
+  - python -m textblob.download_corpora
+  - python -m nltk.downloader all
 
 script:
   - "python test.py"
