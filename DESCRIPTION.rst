@@ -1,7 +1,8 @@
 regex4dummies: A Simple Way To Find Patterns
 ============================================
 
-A pattern finder for strings, implemented in Python.
+.. image:: https://travis-ci.org/DarkmatterVale/regex4dummies.svg?branch=master
+    :target: https://travis-ci.org/DarkmatterVale/regex4dummies
 
 regex4dummies was developed with lazy people in mind! It allows you to easily parse strings and find simple and complex patterns. Since it has such a small learning curve, after a couple of times using it you will become a pro!
 
@@ -18,10 +19,17 @@ Some features include:
 - Keyword searching to find phrases ( and only phrases that contain said keyword )
 - Simple to use. Just install this library, and import it into whatever scripts you would like to use it with
 
-This list is very small compared to what will be implemented, so please check back in the future for additional features.
+
+Roadmap
+----------
+
+Some features I plan to implement in the future:
+
+- Machine Learning. This will allow the parsers to learn multiple grammatical "styles" and be able to successfully parse a much wider selection of strings
+- Additional parsers. Currently, I am looking at implementing the nlpnet library. I will find others as well as time progresses
+- Continued improvements on the current parsers. In addition to adding new parsers, I would like to make the current ones better. This will be a long-term project, and additional details can be found on the main Github page
 
 If you have feature requests, feel free to email me or add an issue to the Github issue tracker. All contributions and requests are appreciated!
-
 
 Usage
 -------
@@ -126,30 +134,3 @@ License
 ---------
 
 Please see LICENSE.txt for information about the MIT license
-
-
-Roadmap
-----------
-
-This is the current roadmap as of 6/28/15:
-
-- High Priority ( short-term, completed within 3 months ):
-  - Docs
-    - A place that shows the docs in a nice, neat, user friendly way
-  - Examples
-    - All functions need to have specific examples on how to use them. These examples need to be specific and easy to understand
-  - Parsers
-    - nltk
-      - Update custom-made grammatical parser to be more effective in determining whether two sentences are the same
-      - Gather prepositional phrases
-      - Gather indirect object as well as direct object
-      - Be able to identify word case ( for verbs, present, past, future, etc ) & use that information to make sure some patterns are not removed due to case differences
-      - Independent and dependent clause separator
-    - pattern
-      - Implement additional information gathering
-      - Implement a more effective way to compare sentences to get better results. Currently, only if the subject, verb, and objects are the same will the two sentences be considered the same. This is good for many situations, but when comparing complex sentences, this will get a little tricky
-    - nlpnet
-      - Add support for this parser
-      - Add citations that the author requires be added
-- Medium/Long Priority ( mid-term and long-term, hopefully completed within a year ):
-  - Machine Learning implemented-this will allow the parser to learn different "styles" of grammatical syntax, helping it be more accurate
