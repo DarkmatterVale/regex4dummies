@@ -5,6 +5,16 @@ from textblob.parsers import PatternParser
 from textblob import TextBlob
 import re
 import nltk
+import nlpnet
+
+"""
+
+Class information:
+
+- name: semantic_parsing
+- version: 1.1.3
+
+"""
 
 class semantic_parsing:
     def __init__( self, *args, **kwargs ):
@@ -15,6 +25,9 @@ class semantic_parsing:
             return self.use_nltk( base_string, test_string, pattern_arg )
         elif parser_name == 'pattern':
             return self.use_pattern( base_string, test_string, pattern_arg )
+
+    def use_nlpnet( self, base_string, test_string, pattern_arg ):
+        patterns = pattern_arg
 
     def use_nltk( self, base_string, test_string, pattern_arg ):
         patterns = pattern_arg

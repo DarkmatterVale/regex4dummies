@@ -14,6 +14,11 @@ The pattern_detail class is a container for all information related to a specifi
 
 All of these values can be referenced from an object of this class.
 
+Class information:
+
+- name: pattern_detail
+- version: 1.1.3
+
 """
 
 class pattern_detail:

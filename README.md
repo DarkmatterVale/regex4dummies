@@ -39,7 +39,7 @@ As of 6/28/15, this is what is left to complete:
       - Add support for this parser
       - Add citations that the author requires be added
 - Medium/Long Priority ( mid-term and long-term, hopefully completed within a year ):
-  - Machine Learning implemented-this will allow the parser to learn different "styles" of grammatical syntax, helping it be more accurate
+  - Machine Learning implemented-this will allow the parser to learn different "styles" of grammatical syntax, helping it be more accurate ( hopefully )
 
 ## Usage
 

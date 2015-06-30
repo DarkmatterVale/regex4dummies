@@ -2,6 +2,15 @@ __author__ = "Vale Tolpegin"
 
 from textblob import TextBlob
 
+"""
+
+Class information:
+
+- name: literal_parsing
+- version: 1.1.3
+
+"""
+
 class literal_parsing:
     def __init__( self, *args, **kwargs ):
         pass

@@ -77,6 +77,13 @@ To install this library, run the following command.
 
   $ pip install regex4dummies
 
+In addition to installing the library, you might have to download the text blob and nltk corpora. To do this, simply run the following commands
+
+::
+
+  $ python -m textblob.download_corpora
+  $ python -m nltk.downloader all
+
 
 Patch Notes
 -------------

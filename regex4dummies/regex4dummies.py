@@ -7,6 +7,16 @@ import re
 
 # Other
 from compare import compare
+from run_dependency_tests import run_dependency_tests
+
+"""
+
+Class information:
+
+- name: regex4dummies
+- version: 1.1.3
+
+"""
 
 # Main class that handles all interaction between the user/programmer and the compare class which does all of the heavy lifting
 class regex4dummies:
@@ -14,7 +24,7 @@ class regex4dummies:
     global compare_object
 
     # Setting global version variable which contains the version of this library
-    __version__ = 'The current version of regex4dummies installed is: 1.1.3'
+    __version__ = 'regex4dummies version: 1.1.3'
 
     # Empty constructor method
     def __init__( self, *args, **kwargs ):
@@ -27,6 +37,10 @@ class regex4dummies:
     # Function that is integral in communicating between a compare object and the user
     # This function returns a 3-tuple array containing reliability score, applicability score, and pattern
     def compare_strings( self, parser_name, literal_find, strings_to_process ):
+        # Testing the system to make sure all dependencies are installed
+        test_install = run_dependency_tests()
+        test_install.test( parser_name )
+
         # Getting global variables
         global compare_object
 
