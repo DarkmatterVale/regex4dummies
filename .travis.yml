@@ -6,6 +6,7 @@ install:
   - pip install nltk
   - pip install pattern
   - pip install TextBlob
+  - pip install nlpnet
   - python -m textblob.download_corpora
   - python -m nltk.downloader all
 
