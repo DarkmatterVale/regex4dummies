@@ -35,47 +35,82 @@ class semantic_parsing:
         dependency_parser = nlpnet.DependencyParser()
         pos_parser = nlpnet.POSTagger()
 
+        # Getting the passed patterns
+        patterns = pattern_arg
+
         # Parsing the base_string
         base_parse = dependency_parser.parse( base_string )
         base_blob = TextBlob( base_string )
         base_sentences = base_blob.sentences
+        base_sentence_info = []
 
         for index in range( 0, len( base_parse ) ):
-            raw_data = ' '.join( sentence.tokens )
-            pos_sentence = pos_parser.tag( ' '.join( sentence.tokens ) )
-            subject, verb, object = self.identify_sentence_parts_nlpnet( sentence.tokens, sentence.labels )
+            # Grabbing sentence information
+            raw_data = str( base_sentences[ index ] )
+            pos_sentence = pos_parser.tag( str( base_sentences[ index ] ) )
+            subject, verb, object = self.identify_sentence_parts_nlpnet( base_parse[ index ].tokens, base_parse[ index ].labels )
+            prepositional_phrases = ""
 
-            print "***BASE***"
-            print raw_data
-            print sentence.tokens
-            print sentence.labels
-            print subject
-            print verb
-            print object
+            # Displaying information for debugging purposes
+            #print "***BASE***"
+            #print "Raw Sentence: " + raw_data
+            #print "POS Sentence: " + str( pos_sentence )
+            #print "[ Tokens ]  : " + str( base_parse[ index ].tokens )
+            #print "[ Labels ]  : " + str( base_parse[ index ].labels )
+            #print "[ Subject ] : " + subject
+            #print "[ Verb ]    : " + verb
+            #print "[ Object ]  : " + object
+
+            # Deciding whether the sentence/pattern should be added
+            add_sentence = True
+            for sentence in base_sentence_info:
+                if sentence != []:
+                    if sentence[ len( sentence ) ] == raw_data:
+                        add_sentence = False
+
+                        break
+
+            # If the sentence should be added to the possible patterns, add it
+            if add_sentence:
+                base_sentence_info.append( [ subject, verb, object, [], raw_data ] )
 
         # Parsing the test_string
         test_parse = dependency_parser.parse( test_string )
         test_blob = TextBlob( test_string )
         test_sentences = test_blob.sentences
+        test_sentence_info = []
 
         for index in range( 0, len( test_parse ) ):
+            # Grabbing sentence information
             raw_data = str( test_sentences[ index ] )
             pos_sentence = pos_parser.tag( str( test_sentences[ index ] ) )
             subject, verb, object = self.identify_sentence_parts_nlpnet( test_parse[ index ].tokens, test_parse[ index ].labels )
             prepositional_phrases = ""
 
-            print "***TEST***"
-            print raw_data
-            print test_parse[ index ].tokens
-            print test_parse[ index ].labels
-            print subject
-            print verb
-            print object
+            #print "***TEST***"
+            #print "Raw Sentence: " + raw_data
+            #print "POS Sentence: " + str( pos_sentence )
+            #print "[ Tokens ]  : " + str( test_parse[ index ].tokens )
+            #print "[ Labels ]  : " + str( test_parse[ index ].labels )
+            #print "[ Subject ] : " + subject
+            #print "[ Verb ]    : " + verb
+            #print "[ Object ]  : " + object
 
-        print ""
-        print ""
+            # Deciding whether the sentence/pattern should be added
+            add_sentence = True
+            for sentence in test_sentence_info:
+                if sentence != []:
+                    if sentence[ len( sentence ) ] == raw_data:
+                        add_sentence = False
 
-        return "", {}
+                        break
+
+            # If the sentence should be added to the possible patterns, add it
+            if add_sentence:
+                test_sentence_info.append( [ subject, verb, object, [], raw_data ] )
+
+        # Returning the patterns found in the text
+        return self.identify_common_patterns( base_sentence_info, test_sentence_info, patterns )
 
     def identify_sentence_parts_nlpnet( self, tokens, labels ):
         subject = ""
