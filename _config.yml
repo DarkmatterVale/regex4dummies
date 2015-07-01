@@ -26,7 +26,7 @@ gems:      []
 
 # Conversion
 markdown:    kramdown
-highlighter: rouge
+highlighter: pygments
 lsi:         false
 excerpt_separator: "\n\n"
 
@@ -35,6 +35,7 @@ detach:  false
 port:    4000
 host:    127.0.0.1
 baseurl: "" # does not include hostname
+url: "https://github.com/DarkmatterVale/regex4dummies"
 
 # Outputting
 permalink:     date
