@@ -58,6 +58,10 @@ Here is an example of how to use the library.
   # Identifying semantic patterns in strings using the nltk parser
   print regex.compare_strings( 'nltk', False, strings )
 
+  # To use the other parsers, replace the above line of code with either of the following:
+  # print regex.compare_strings( 'pattern', False, strings )
+  # print regex.compare_strings( 'nlpnet', False, strings )
+
   # Printing pattern information
   pattern_information = regex.get_sentence_information()
     for objects in pattern_information:
