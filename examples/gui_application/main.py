@@ -91,7 +91,7 @@ class main( tk.Tk ):
                     sentences.append( str( sentence ) )
 
                 regex = regex4dummies()
-                final_literal_text = regex.compare_strings( 'pattern', True, sentences )
+                final_literal_text = regex.compare_strings( '', True, sentences )
                 final_literal_information = ""
 
                 sentence_information = regex.get_sentence_information()
@@ -102,7 +102,7 @@ class main( tk.Tk ):
                     final_literal_information = "[ Object ]           : " + sentence.object[0] + "\n"
                     final_literal_information = "[ Reliability Score ]: " + str( sentence.reliability_score ) + "\n"
 
-                final_semantic_text = regex.compare_strings( False, sentences )
+                final_semantic_text = regex.compare_strings( 'pattern', False, sentences )
                 final_semantic_information = ""
 
                 sentence_information = regex.get_sentence_information()

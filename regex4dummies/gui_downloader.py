@@ -100,9 +100,9 @@ class gui_downloader( tk.Tk ):
         self.quit()
 
 if __name__ == '__main__':
-    #pass
+    pass
 
-    my_GUI = gui_downloader()
-    my_GUI.download( "This is a test of text", "nlpnet Corpora", "1 GB" )
+    #my_GUI = gui_downloader()
+    #my_GUI.download( "This is a test of text", "nlpnet Corpora", "1 GB" )
 
-    my_GUI.mainloop()
+    #my_GUI.mainloop()

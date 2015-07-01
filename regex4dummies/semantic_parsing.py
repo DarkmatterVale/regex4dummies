@@ -13,7 +13,7 @@ import os
 Class information:
 
 - name: semantic_parsing
-- version: 1.1.3
+- version: 1.2.0
 
 """
 

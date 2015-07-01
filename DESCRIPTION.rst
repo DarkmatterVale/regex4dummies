@@ -89,7 +89,15 @@ That's it! The nlpnet parser should now be able to use its POSTagger.
 Patch Notes
 -------------
 
-( Latest ) 1.1.3 BUG FIX, VERY IMPORTANT IF YOU DOWNLOADED VERSION 1.1.2:
+( Latest ) 1.2.0 MAJOR all around update!
+
+- MAJOR: ANOTHER PARSER! nlpnet has been integrated into the library & can be called exactly like nltk or pattern
+- MAJOR: Dependency downloader GUI! This will allow you to only download the libraries required for your needs. I am aware these dependencies are currently VERY large, and I am working on reducing the size. Please check back for updates and a newer version to address this
+- A bug in the client GUI should be fixed
+- travis-ci monitoring and testing. This is another way to test out code to make sure it is release-ready before published
+- Minor code refactoring
+
+1.1.3 BUG FIX, VERY IMPORTANT IF YOU DOWNLOADED VERSION 1.1.2:
 
 - There is a bug that causes the library to not be usable. To fix this, upgrade to 1.1.3
 
