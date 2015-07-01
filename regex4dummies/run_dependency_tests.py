@@ -35,7 +35,7 @@ class run_dependency_tests:
         pass
 
     def test( self, parser_name ):
-        # Testing for textblob corpora which is used in every parser
+        # Testing for textblob corpora which is used in most parsers
         self.test_for_textblob()
 
         # Testing for parser corpora for each parser
@@ -56,16 +56,12 @@ class run_dependency_tests:
             for sentence in my_blob.sentences:
                 str_sentence = str( sentence )
         except:
-            if tkMessageBox.askokcancel( "Dependency Downloader", "Would you like to download the dependencies for TextBlob? All parsers will not be able to be used until the dependencies are downloaded.\n\nThe required space is: 45.7 MB" ):
-                textblob_downloader = gui_downloader()
-                textblob_downloader.download( "TextBlob Corpora", "45.7 MB" )
-                textblob_downloader.mainloop()
-            else:
-                print ""
-                print "Dependencies MUST be downloaded to use this library's parsers."
-                print ""
+            # If it didn't work, this means the dependencies are missing from the system
+            # The user will be asked whether he/she wants to install the dependencies. If so, they will be installed.
+            # Otherwise, the program will quit and an error will appear saying the dependencies must be installed to use that parser
 
-                exit( 0 )
+            textblob_downloader = gui_downloader()
+            textblob_downloader.download( "Would you like to download the dependencies for TextBlob? All parsers will not be able to be used until the dependencies are downloaded", "TextBlob Corpora", "45.7 MB" )
 
     def test_for_nltk( self ):
         # Attempting to use nltk. This will cause an error if the corpora is not downloaded
@@ -74,7 +70,7 @@ class run_dependency_tests:
             compare_nltk = compare()
 
             # Comparing using the nltk parser
-            compare_nltk.compare_strings( [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ], False, 'nltk'  )
+            compare_nltk.compare_strings( [ "what time is it here?", "This is the cat's hat" ], False, 'nltk'  )
 
             # If that was successfuly, getting information
             sentence_information = compare_nltk.get_sentence_information()
@@ -88,16 +84,31 @@ class run_dependency_tests:
             # If it didn't work, this means the dependencies are missing from the system
             # The user will be asked whether he/she wants to install the dependencies. If so, they will be installed.
             # Otherwise, the program will quit and an error will appear saying the dependencies must be installed to use that parser
-            if tkMessageBox.askokcancel( "Dependency Downloader", "Would you like to download the dependencies for nltk? The nltk parser will not be able to be used until the dependencies are downloaded.\n\nThe required space is: 1 GB" ):
-                nltk_downloader = gui_downloader()
-                nltk_downloader.download( "NLTK Corpora", "1 GB" )
-                nltk_downloader.mainloop()
-            else:
-                print ""
-                print "Dependencies MUST be downloaded to use this parser. Either do not use this parser, or download the dependencies."
-                print ""
 
-                exit( 0 )
+            nltk_downloader = gui_downloader()
+            nltk_downloader.download( "Would you like to download the dependencies for nltk?\n\nThe nltk parser will not be able to be used until the dependencies are downloaded", "NLTK Corpora", "1 GB" )
 
     def test_for_nlpnet( self ):
-        pass
+        # Attempting to use nlpnet. This will cause an error if the required dependencies are not downloaded
+        try:
+            # Creating a new compare object
+            compare_nlpnet = compare()
+
+            # Comparing using the nltk parser
+            compare_nlpnet.compare_strings( [ "what time is it here?", "This is the cat's hat" ], False, 'nlpnet'  )
+
+            # If that was successfuly, getting information
+            sentence_information = compare_nlpnet.get_sentence_information()
+            for sentence in sentence_information:
+                my_pattern           = "[ Pattern ]          : " + sentence.pattern
+                my_subject           = "[ Subject ]          : " + sentence.subject
+                my_verb              = "[ Verb ]             : " + sentence.verb
+                my_object            = "[ Object ]           : " + sentence.object[0]
+                my_reliability_score = "[ Reliability Score ]: " + str( sentence.reliability_score )
+        except:
+            # If it didn't work, this means the dependencies are missing from the system
+            # The user will be asked whether he/she wants to install the dependencies. If so, they will be installed.
+            # Otherwise, the program will quit and an error will appear saying the dependencies must be installed to use that parser
+
+            nlpnet_downloader = gui_downloader()
+            nlpnet_downloader.download( "Would you like to download the dependencies for nlpnet?\n\nThe nlpnet parser will not be able to be used until the dependencies are downloaded", "NLPnet English Library", "400 MB" )

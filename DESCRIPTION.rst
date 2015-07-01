@@ -77,13 +77,14 @@ To install this library, run the following command.
 
   $ pip install regex4dummies
 
-In addition to installing the library, you might have to download the text blob and nltk corpora. To do this, simply run the following commands
+In addition to the library, wget is a required command-line command to use the nlpnet parser. If you do not have wget or cannot get it, follow the below directions to still get the functionality of the nlpnet parser.
 
-::
+Instructions to install the required dependency for nlpnet:
 
-  $ python -m textblob.download_corpora
-  $ python -m nltk.downloader all
+1. Download the nlpnet_dependency file on the most recent release found in Github ( please not, when uncompressed, this file is over 350 MB large ).
+2. Place this directory into the same directory that nltk-data is located ( if you don't have that installed, just run the library and go through the GUI downloader )
 
+That's it! The nlpnet parser should now be able to use its POSTagger.
 
 Patch Notes
 -------------

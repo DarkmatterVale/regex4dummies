@@ -6,6 +6,7 @@ from textblob import TextBlob
 import re
 import nltk
 import nlpnet
+import os
 
 """
 
@@ -25,9 +26,71 @@ class semantic_parsing:
             return self.use_nltk( base_string, test_string, pattern_arg )
         elif parser_name == 'pattern':
             return self.use_pattern( base_string, test_string, pattern_arg )
+        elif parser_name == 'nlpnet':
+            return self.use_nlpnet( base_string, test_string, pattern_arg )
 
     def use_nlpnet( self, base_string, test_string, pattern_arg ):
-        patterns = pattern_arg
+        # Setting up the nlpnet parser
+        nlpnet.set_data_dir( re.sub( r'\n', '', open( os.getcwd() + '/data.txt', 'r' ).read() ) )
+        dependency_parser = nlpnet.DependencyParser()
+        pos_parser = nlpnet.POSTagger()
+
+        # Parsing the base_string
+        base_parse = dependency_parser.parse( base_string )
+        base_blob = TextBlob( base_string )
+        base_sentences = base_blob.sentences
+
+        for index in range( 0, len( base_parse ) ):
+            raw_data = ' '.join( sentence.tokens )
+            pos_sentence = pos_parser.tag( ' '.join( sentence.tokens ) )
+            subject, verb, object = self.identify_sentence_parts_nlpnet( sentence.tokens, sentence.labels )
+
+            print "***BASE***"
+            print raw_data
+            print sentence.tokens
+            print sentence.labels
+            print subject
+            print verb
+            print object
+
+        # Parsing the test_string
+        test_parse = dependency_parser.parse( test_string )
+        test_blob = TextBlob( test_string )
+        test_sentences = test_blob.sentences
+
+        for index in range( 0, len( test_parse ) ):
+            raw_data = str( test_sentences[ index ] )
+            pos_sentence = pos_parser.tag( str( test_sentences[ index ] ) )
+            subject, verb, object = self.identify_sentence_parts_nlpnet( test_parse[ index ].tokens, test_parse[ index ].labels )
+            prepositional_phrases = ""
+
+            print "***TEST***"
+            print raw_data
+            print test_parse[ index ].tokens
+            print test_parse[ index ].labels
+            print subject
+            print verb
+            print object
+
+        print ""
+        print ""
+
+        return "", {}
+
+    def identify_sentence_parts_nlpnet( self, tokens, labels ):
+        subject = ""
+        verb    = ""
+        object  = ""
+
+        for index in range( 0, len( labels ) ):
+            if "SBJ" in labels[ index ] and verb == "":
+                subject += tokens[ index ] + " "
+            elif "ROOT" in labels[ index ]:
+                verb += tokens[ index ]
+            elif "PRD" in labels[ index ] or "OBJ" in labels[ index ]:
+                object += tokens[ index ] + " "
+
+        return subject, verb, object
 
     def use_nltk( self, base_string, test_string, pattern_arg ):
         patterns = pattern_arg
