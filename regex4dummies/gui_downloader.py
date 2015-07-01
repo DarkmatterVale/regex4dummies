@@ -95,7 +95,7 @@ class gui_downloader( tk.Tk ):
             # Download the dependencies
             os.mkdir( path )
             os.chdir( path )
-            #os.system( "wget https://github.com/DarkmatterVale/regex4dummies/" )
+            #os.system( "wget https://github.com/DarkmatterVale/regex4dummies/archive/" )
 
         self.quit()
 
