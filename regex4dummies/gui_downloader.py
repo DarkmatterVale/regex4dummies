@@ -84,7 +84,10 @@ class gui_downloader( tk.Tk ):
 
             # Checking to see whether the dependencies have already been downloaded
             path_file = open( 'data.txt', 'r' )
-            if path == path_file.read():
+            contents = path_file.read()
+            contents = re.sub( r'\n', '', contents )
+
+            if path == contents:
                 self.quit()
 
             # Save path to the data file
