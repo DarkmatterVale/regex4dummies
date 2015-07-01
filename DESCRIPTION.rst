@@ -93,7 +93,7 @@ That's it! The nlpnet parser should now be able to use its POSTagger.
 Patch Notes
 -------------
 
-( Latest ) 1.2.0 MAJOR all around update!
+( Latest ) 1.2.1 MAJOR all around update!
 
 - MAJOR: ANOTHER PARSER! nlpnet has been integrated into the library & can be called exactly like nltk or pattern
 - MAJOR: Dependency downloader GUI! This will allow you to only download the libraries required for your needs. I am aware these dependencies are currently VERY large, and I am working on reducing the size. Please check back for updates and a newer version to address this

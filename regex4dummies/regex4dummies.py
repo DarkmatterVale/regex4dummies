@@ -14,7 +14,7 @@ from run_dependency_tests import run_dependency_tests
 Class information:
 
 - name: regex4dummies
-- version: 1.2.0
+- version: 1.2.1
 
 """
 
@@ -24,7 +24,7 @@ class regex4dummies:
     global compare_object
 
     # Setting global version variable which contains the version of this library
-    __version__ = 'regex4dummies version: 1.2.0'
+    __version__ = 'regex4dummies version: 1.2.1'
 
     # Empty constructor method
     def __init__( self, *args, **kwargs ):
