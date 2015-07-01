@@ -150,3 +150,11 @@ License
 ---------
 
 Please see LICENSE.txt for information about the MIT license
+
+
+Citations
+-----------
+
+nlpnet:
+
+- Fonseca, E. R. and Rosa, J.L.G. Mac-Morpho Revisited: Towards Robust Part-of-Speech Tagging. Proceedings of the 9th Brazilian Symposium in Information and Human Language Technology, 2013. p. 98-107 [PDF]

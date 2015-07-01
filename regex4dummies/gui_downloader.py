@@ -4,6 +4,7 @@ __author__ = 'Vale Tolpegin'
 import Tkinter as tk
 import ttk as ttk
 import tkMessageBox
+import tarfile
 
 # Importing OS related libraries
 import os, sys, re
@@ -92,13 +93,21 @@ class gui_downloader( tk.Tk ):
 
             # Save path to the data file
             path_file = open( 'data.txt', 'w' )
-            path_file.write( path )
+            path_file.write( path + "dependency/" )
             path_file.close()
 
-            # Download the dependencies
+            # Download the dependencies & extract
+            current_directory = os.getcwd()
+
             os.mkdir( path )
             os.chdir( path )
-            #os.system( "wget https://github.com/DarkmatterVale/regex4dummies/archive/" )
+
+            os.system( "wget http://nilc.icmc.usp.br/nlpnet/data/dependency-en.tgz" )
+            tar = tarfile.open( path + 'dependency-en.tgz', 'r:gz' )
+            tar.extractall( path )
+            os.remove( path + 'dependency-en.tgz' )
+
+            os.chdir( current_directory )
 
         self.quit()
 
