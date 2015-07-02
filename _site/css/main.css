@@ -1,0 +1,134 @@
+/* General Styles
+   ------------------------------------------ */
+
+body {
+  font-family: "Helvetica Neue", "Arial", sans-serif;
+  color: #45828E;
+  background-color: #00FA9A;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 400;
+}
+
+a {
+ color: #39AEC6;
+ text-decoration: none;
+}
+
+a:hover {
+  color: #39AEC6;
+  text-decoration: underline;
+}
+
+a.no-hover-dec:hover {
+  text-decoration: none;
+}
+
+.inline-list {
+  list-style: none;
+  padding: 0; margin: 0;
+}
+
+.inline-list li {
+  display: inline-block;
+  padding: 0 10px 0 0;
+  margin: 0;
+}
+
+.text-right {
+  text-align: right;
+}
+
+/* introduction */
+
+.introduction {
+  padding: 0 0 50px 0;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    #00FA9A 40%,
+    #FFFFFF 40%,
+    #FFFFFF 100%
+  );
+  text-align: center;
+}
+
+/* Getting Started */
+
+.getting-started {
+  text-align: center;
+  padding: 50px 0 50px 0;
+  background-color: #FFFFFF;
+}
+
+/* Hero */
+
+.hero {
+  padding: 160px 0 75px 0;
+}
+
+.hero .mega-octicon {
+  font-size: 24px;
+}
+
+.regex4dummies-word {
+  display: inline-block;
+  text-align: center;
+  font-size: 90px;
+  background-color: #00FA9A;
+  color: #FFFFFF;
+}
+.regex4dummies-word:hover {
+  background-color: #00FA9A;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.hero, .built-on, .get-started,
+.regex4dummies-does, .more-features {
+  text-align: center;
+}
+
+.regex4dummies-does {
+  background-color: #00FA9A;
+  /*background-color: #FFFF00;*/
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+/* Header Nav */
+
+header {
+  padding: 12px 0;
+  background-color: #696969;
+}
+
+header a {
+  color: #FAF7F3;
+}
+
+header li {
+  color: #FAF7F3;
+}
+
+header a:hover {
+  color: #FAF7F3;
+}
+
+/* Footer
+   ------------------------------------------ */
+
+footer {
+  padding: 15px 0;
+  background-color: #696969;
+}
+
+footer a {
+  color: #FAF7F3;
+}
+
+footer a:hover {
+  color: #FAF7F3;
+  text-decoration: underline;
+}
