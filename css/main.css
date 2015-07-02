@@ -4,7 +4,11 @@
 body {
   font-family: "Helvetica Neue", "Arial", sans-serif;
   color: #45828E;
-  background-color: #A5ECFA;
+  background-color: #00FA9A;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 400;
 }
 
 a {
@@ -30,14 +34,81 @@ a.no-hover-dec:hover {
   display: inline-block;
   padding: 0 10px 0 0;
   margin: 0;
-}/* Header Nav */
+}
+
+.text-right {
+  text-align: right;
+}
+
+/* introduction */
+
+.introduction {
+  padding: 0 0 50px 0;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    #00FA9A 40%,
+    #FFFFFF 40%,
+    #FFFFFF 100%
+  );
+  text-align: center;
+}
+
+/* Getting Started */
+
+.getting-started {
+  text-align: center;
+  padding: 50px 0 50px 0;
+  background-color: #FFFFFF;
+}
+
+/* Hero */
+
+.hero {
+  padding: 160px 0 75px 0;
+}
+
+.hero .mega-octicon {
+  font-size: 24px;
+}
+
+.regex4dummies-word {
+  display: inline-block;
+  text-align: center;
+  font-size: 90px;
+  background-color: #00FA9A;
+  color: #FFFFFF;
+}
+.regex4dummies-word:hover {
+  background-color: #00FA9A;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.hero, .built-on, .get-started,
+.regex4dummies-does, .more-features {
+  text-align: center;
+}
+
+.regex4dummies-does {
+  background-color: #00FA9A;
+  /*background-color: #FFFF00;*/
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+/* Header Nav */
 
 header {
   padding: 12px 0;
-  background-color: #76C7D7;
+  background-color: #696969;
 }
 
 header a {
+  color: #FAF7F3;
+}
+
+header li {
   color: #FAF7F3;
 }
 
@@ -50,5 +121,14 @@ header a:hover {
 
 footer {
   padding: 15px 0;
-  background-color: #FAF7F3;
+  background-color: #696969;
+}
+
+footer a {
+  color: #FAF7F3;
+}
+
+footer a:hover {
+  color: #FAF7F3;
+  text-decoration: underline;
 }
