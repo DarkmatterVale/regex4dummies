@@ -116,6 +116,7 @@ p {
   background-color: #00FA9A;
   color: #FFFFFF;
 }
+
 .regex4dummies-word:hover {
   background-color: #00FA9A;
   color: #FFFFFF;
@@ -129,12 +130,41 @@ p {
 
 .regex4dummies-does {
   background-color: #D3D3D3;
-  /*background-color: #FFFF00;*/
   padding-bottom: 0px;
   padding-top: 20px;
 }
 
-.regex4dummies-does p, h4 {
+/* current status page */
+
+.current_status_title {
+  padding-top: 75px;
+  padding-bottom: 100px;
+  text-align: center;
+  background-color: #FFFFFF;
+}
+
+.current_status_title h2 {
+  color: #696969;
+}
+
+.current_status_progress_title {
+  padding-bottom: 150px;
+  text-align: left;
+  background-color: #FFFFFF;
+}
+
+.current_status_progress_title h3 {
+  color: #696969;
+}
+
+.current_status_todo_title {
+  padding-bottom: 100px;
+  text-align: left;
+  background-color: #FFFFFF;
+}
+
+.current_status_todo_title h3 {
+  color: #696969;
 }
 
 /* Header Nav */
