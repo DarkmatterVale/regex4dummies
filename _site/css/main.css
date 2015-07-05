@@ -223,6 +223,39 @@ p {
   list-style: none;
 }
 
+/* Releases */
+
+.releases_main_title {
+  text-align: center;
+  padding: 75px 0 0 0;
+  background-color: #FFFFFF;
+}
+
+.release_titles {
+  padding-top: 25px;
+  padding-bottom: 50px;
+  background-color: #FFFFFF;
+}
+
+.releases {
+  padding-bottom: 150px;
+  background-color: #FFFFFF;
+}
+
+.custom-restricted {
+    border: 1px solid gray;
+    border-radius: 4px;
+}
+
+.releases_main_title h2 {
+  color: #696969;
+}
+
+.releases h2 {
+  padding-top: 100px;
+  color: #696969;
+}
+
 /* Header Nav */
 
 header {
