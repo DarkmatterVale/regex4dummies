@@ -167,6 +167,10 @@ p {
   color: #696969;
 }
 
+.current_status_progress_title table {
+  padding-bottom: 250px;
+}
+
 /* Header Nav */
 
 header {
