@@ -38,7 +38,7 @@ $( document ).ready( function() {
         assembled_versions.push( head_version );
       }
 
-      assembled_releases.push( [ head_version, obj.name, obj.body ] );
+      assembled_releases.push( [ head_version, obj.name, obj.body, obj.zipball_url, obj.tarball_url ] );
     });
 
     for ( var version_index = 0; version_index < assembled_versions.length; version_index++ )
@@ -53,9 +53,16 @@ $( document ).ready( function() {
             <td> \
               <h4>" + assembled_releases[release_index][1] + "</h4> \
             </td> \
+            <td> \
+              <a class='text-right' href='" + assembled_releases[ release_index ][ 3 ] + "'>zip download</a> \
+            </td> \
+            <td> \
+              <a class='text-right' href='" + assembled_releases[ release_index ][ 4 ] + "'>tar download</a> \
+            </td> \
           </tr> \
           <tr class='pure-table-odd'> \
             <td><p>" + assembled_releases[ release_index ][ 2 ] + "</p></td> \
+            <td></td><td></td> \
           </tr></table>";
         }
       }
