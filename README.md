@@ -6,6 +6,8 @@ A pattern finder for strings, implemented in Python.
 
 regex4dummies was made for lazy people! It allows you to easily parse strings and find simple and complex patterns. In fact, one of the key features of regex4dummies is that the library will automatically find patterns if you give it a mandatory word or phrase to look for. This can be a keyword or something more complex.
 
+Are you looking for the homepage of the project? Go to https://darkmattervale.github.io/regex4dummies if so.
+
 
 ###
 
@@ -18,11 +20,9 @@ Features:
 
 ## Roadmap
 
-As of 7/1/15, this is what is left to complete:
+As of 7/6/15, this is what is left to complete:
 
 - High Priority ( short-term, completed within 3 months from 6/28/15 ):
-  - Docs
-    - A place that shows the docs in a nice, neat, user friendly way
   - Examples
     - All functions need to have specific examples on how to use them. These examples need to be specific and easy to understand
   - Parsers
@@ -43,7 +43,7 @@ As of 7/1/15, this is what is left to complete:
 
 ## Usage
 
-To see how to use this library, please see the Wiki part of this Github repository or the docs folder.
+To see how to use this library, please see the new homepage for regex4dummies.
 
 
 ## Installation
@@ -53,8 +53,6 @@ To install this library, run the following command.
 ```
 pip install regex4dummies
 ```
-
-NOTE: THIS CURRENTLY DOES NOT WORK. We are in the process of having this package added to pip's list of libraries.
 
 
 ## Contributing
