@@ -256,6 +256,26 @@ p {
   color: #696969;
 }
 
+/* Documentation pages ( other than the main doc page ) */
+
+.doc_title {
+  background-color: #FFFFFF;
+}
+
+.doc_title h2 {
+  padding-top: 100px;
+  color: #696969;
+}
+
+.doc_body {
+  background-color: #FFFFFF;
+  padding-bottom: 100px;
+}
+
+.doc_body h5 {
+  display: block;
+}
+
 /* Header Nav */
 
 header {

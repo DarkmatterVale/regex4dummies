@@ -47,32 +47,26 @@
 
     <div class='page-content'>
       <div class='wrapper'>
-        <section class="documentation_title">
+        <section class="doc_title">
   <div class="container">
     <div class="row">
-      <h2>Documentation</h2>
+      <h2>Modifying Current Parsers</h2>
     </div>
   </div>
 </section>
 
-<section class="documentation_body">
+<section class="doc_body">
   <div class="container">
     <div class="row">
-      <div class="pure-menu custom-restricted-width">
-          <ul class="pure-menu-list">
-            <li class="pure-menu-item"><a href="#" class="pure-menu-link">1. Basic Usage</a>
-              <ul class="inner_menu">
-                <li><a href="/documentation/compare_strings.html" class="pure-menu-link">1.1 Using compare_strings() function</a></li>
-              </ul>
-            </li>
-            <li class="pure-menu-item"><a href="#" class="pure-menu-link">2. Advanced Usage</a></li>
-              <ul class="inner_menu">
-                <li><a href="/documentation/setting_up_a_dev_environment.html" class="pure-menu-link">2.1 Setting up a "development" environment</a></li>
-                <li><a href="/documentation/modifying_parsers.html" class="pure-menu-link">2.2 Modifying a current parser</a></li>
-                <li><a href="/documentation/creating_parsers.html" class="pure-menu-link">2.3 Creating your own parser</a></li>
-              </ul>
-          </ul>
-      </div>
+      <h5>
+<br><br>
+If you need to modify a parser, this can be easily accomplished by editing the source code of the file in question.
+<br><br>
+- If you are going to edit the literal parser, after cding to the regex4dummies folder within the outermost folder, open the literal_parsing.py file. The code should be pretty straight forward, and can be easily changed to suit whatever you would like it to accomplish.
+<br>- If you are going to edit the semantic parsers, open the semantic_parsing.py file. This file is a little more complicated, but should still be simple enough to quickly understand. Simply mess around with it until you understand what does what.
+<br><br>
+The comments contained within each file should help new people better understand how the code fits together.
+      </h5>
     </div>
   </div>
 </section>
