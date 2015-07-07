@@ -93,7 +93,12 @@ That's it! The nlpnet parser should now be able to use its POSTagger.
 Patch Notes
 -------------
 
-( Latest ) Version 1.3.0
+( Latest ) Version 1.3.1: Bug fix and minor background code
+
+- nlpnet parser bug fix. This might have caused a fatal error. To be sure the bug will never affect you, or to fix the bug, update to the most recent version
+- Tests have been updated. The code is better tested and will contain fewer bugs at future release times
+
+Version 1.3.0
 
 This release does not pertain to the actual Python library. Throughout the past week, I have been hard at work creating a nice and simple website for regex4dummies. And I finally got the first version done! Feel free to check out the new homepage of the project, https://darkmattervale.github.io/regex4dummies
 
