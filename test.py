@@ -46,19 +46,6 @@ path = re.sub( r"\'", "", re.sub( r"\[", '', str( stdin.split( '\n' )[ 0 ].split
 path = path.split( r"/" )
 path = '/'.join( path[ 0 : len( path ) - 1 ] ) + '/nlpnet_dependency/'
 
-# Checking to see whether the dependencies have already been downloaded
-path_file = open( 'data.txt', 'r' )
-contents = path_file.read()
-contents = re.sub( r'\n', '', contents )
-
-if path == contents:
-    self.quit()
-
-# Save path to the data file
-path_file = open( 'data.txt', 'w' )
-path_file.write( path + "dependency/" )
-path_file.close()
-
 # Download the dependencies & extract
 current_directory = os.getcwd()
 
@@ -73,6 +60,7 @@ os.remove( path + 'dependency-en.tgz' )
 os.chdir( current_directory )
 
 # Testing the 'nlpnet' parser
+nlpnet.set_data_dir( path + '/dependency' )
 print regex.compare_strings( 'nlpnet', False, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
 sentence_information = regex.get_sentence_information()
 for sentence in sentence_information:
