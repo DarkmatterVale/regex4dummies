@@ -37,7 +37,7 @@ class literal_parsing:
         base_blob = TextBlob( base_string )
         base_sentence_info = []
 
-        # Find patterns
+        # Find patterns for individual sentences
         for sentence in base_blob.sentences:
             words = sentence.split( ' ' )
 
@@ -55,6 +55,27 @@ class literal_parsing:
                             sentence_information[ str( ' '.join( pattern ) ) ] = [ '', '', '', 2 ]
                         else:
                             sentence_information[ str( ' '.join( pattern ) ) ][ 3 ] += 1
+
+        # Find patterns for multiple sentences
+        for outer_length in xrange( len( base_blob.sentences ), 2, -1 ):
+            for outer_end in xrange( len( base_blob.sentences ), 0, -1 ):
+                sentences = ' '.join( base_blob.sentences[ outer_end - outer_length : outer_end ] )
+                words = sentences.split( ' ' )
+
+                for length in xrange( len( words ), 1, -1 ):
+                    for end in xrange( len( words ), 0, -1 ):
+                        if end - length < 0:
+                            break
+
+                        pattern = words[ outer_end - outer_length : outer_end ]
+
+                        if ' '.join( pattern ) in str( test_string ):
+                            if ' '.join( pattern ) not in patterns:
+                                base_sentence_info += [ str( ' '.join( pattern ) ) ]
+
+                                sentence_information[ str( ' '.join( pattern ) ) ] = [ '', '', '', 2 ]
+                            else:
+                                sentence_information[ str( ' '.join( pattern ) ) ][ 3 ] += 1
 
         patterns += base_sentence_info
 
