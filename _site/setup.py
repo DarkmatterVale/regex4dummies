@@ -11,12 +11,12 @@ with open(path.join(here, 'DESCRIPTION.rst')) as f:
 setup(
     name = 'regex4dummies',
 
-    version = '1.2.1',
+    version = '1.3.0',
 
     description = 'A NLP library that simplifies pattern finding in strings',
     long_description = description_file,
 
-    url = 'https://github.com/DarkmatterVale/regex4dummies',
+    url = 'https://darkmattervale.github.io/regex4dummies',
 
     author = 'Vale Tolpegin',
     author_email = 'valetolpegin@gmail.com',
