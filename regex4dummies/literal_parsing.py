@@ -15,7 +15,18 @@ class literal_parsing:
     def __init__( self, *args, **kwargs ):
         pass
 
-    def parse( self, base_string, test_string, pattern_arg ):
+    def parse( self, base_string, test_string, pattern_arg, parser ):
+        if parser == "default":
+            return self.default_parser( base_string, test_string, pattern_arg );
+        else:
+            print ""
+            print "A valid parser was not chosen. Please choose any of the following parsers: "
+            print "- 'default'"
+            print ""
+
+            exit( 0 )
+
+    def default_parser( self, base_string, test_string, pattern_arg ):
         # Setting basic sentence information
         sentence_information = {}
 

@@ -29,6 +29,15 @@ class semantic_parsing:
             return self.use_pattern( base_string, test_string, pattern_arg )
         elif parser_name == 'nlpnet':
             return self.use_nlpnet( base_string, test_string, pattern_arg )
+        else:
+            print ""
+            print "A valid parser was not chosen. Please choose any of the following parsers: "
+            print "- 'nlpnet'"
+            print "- 'pattern'"
+            print "- 'nltk'"
+            print ""
+
+            exit( 0 )
 
     def use_nlpnet( self, base_string, test_string, pattern_arg ):
         # Getting nltk data path

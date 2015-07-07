@@ -100,7 +100,7 @@ class compare:
             for index in xrange( current_index, -1, -1 ):
                 if strings[ index ] != strings[ current_index ]:
                     # patterns += identify_patterns( strings[ index ], strings[ index + 1 ] )
-                    patterns = self.find_literal_patterns( strings[ current_index ], strings[ index ], patterns )
+                    patterns = self.find_literal_patterns( strings[ current_index ], strings[ index ], patterns, parser_name )
 
         # return patterns
         return patterns
@@ -122,7 +122,7 @@ class compare:
         # return patterns
         return patterns
 
-    def find_literal_patterns( self, base_string, test_string, pattern_arg ):
+    def find_literal_patterns( self, base_string, test_string, pattern_arg, parser_name ):
         # Getting global variables
         global sentence_information
 
@@ -130,7 +130,7 @@ class compare:
         literal_pattern_parser = literal_parsing()
 
         # Parsing information
-        patterns, pattern_information = literal_pattern_parser.parse( base_string, test_string, pattern_arg )
+        patterns, pattern_information = literal_pattern_parser.parse( base_string, test_string, pattern_arg, parser_name )
 
         # Appending the pattern information to the global sentence_information variable
         sentence_information.update( pattern_information )
