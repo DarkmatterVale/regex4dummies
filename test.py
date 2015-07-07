@@ -2,8 +2,10 @@
 from regex4dummies import regex4dummies
 
 # Importing other required libraries
-import os
+import os, sys
 from subprocess import *
+import re
+import tarfile
 
 
 # Creating test object
