@@ -60,7 +60,6 @@ os.remove( path + 'dependency-en.tgz' )
 os.chdir( current_directory )
 
 # Testing the 'nlpnet' parser
-nlpnet.set_data_dir( path + '/dependency' )
 print regex.compare_strings( 'nlpnet', False, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
 sentence_information = regex.get_sentence_information()
 for sentence in sentence_information:

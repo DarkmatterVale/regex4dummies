@@ -7,6 +7,7 @@ import re
 import nltk
 import nlpnet
 import os
+from subprocess import *
 
 """
 
@@ -30,8 +31,17 @@ class semantic_parsing:
             return self.use_nlpnet( base_string, test_string, pattern_arg )
 
     def use_nlpnet( self, base_string, test_string, pattern_arg ):
+        # Getting nltk data path
+        running = Popen( [ 'python -c "import nltk;print nltk.data.path"' ], stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True )
+        stdin, stdout = running.communicate()
+
+        # Setting the path that the nlpnet dependency was downloaded to
+        path = re.sub( r"\'", "", re.sub( r"\[", '', str( stdin.split( '\n' )[ 0 ].split( ',' )[ 0 ] ) ) )
+        path = path.split( r"/" )
+        path = '/'.join( path[ 0 : len( path ) - 1 ] ) + '/nlpnet_dependency/dependency'
+
         # Setting up the nlpnet parser
-        nlpnet.set_data_dir( re.sub( r'\n', '', open( os.getcwd() + '/data.txt', 'r' ).read() ) )
+        nlpnet.set_data_dir( path )
         dependency_parser = nlpnet.DependencyParser()
         pos_parser = nlpnet.POSTagger()
 
