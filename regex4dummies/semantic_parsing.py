@@ -67,18 +67,18 @@ class semantic_parsing:
             # Grabbing sentence information
             raw_data = str( base_sentences[ index ] )
             pos_sentence = pos_parser.tag( str( base_sentences[ index ] ) )
-            subject, verb, object = self.identify_sentence_parts_nlpnet( base_parse[ index ].tokens, base_parse[ index ].labels )
-            prepositional_phrases = ""
+            subject, verb, object, prepositional_phrases = self.identify_sentence_parts_nlpnet( base_parse[ index ].tokens, base_parse[ index ].labels )
 
             # Displaying information for debugging purposes
             #print "***BASE***"
-            #print "Raw Sentence: " + raw_data
-            #print "POS Sentence: " + str( pos_sentence )
-            #print "[ Tokens ]  : " + str( base_parse[ index ].tokens )
-            #print "[ Labels ]  : " + str( base_parse[ index ].labels )
-            #print "[ Subject ] : " + subject
-            #print "[ Verb ]    : " + verb
-            #print "[ Object ]  : " + object
+            #print "Raw Sentence     : " + raw_data
+            #print "POS Sentence    : " + str( pos_sentence )
+            #print "[ Tokens ]       : " + str( base_parse[ index ].tokens )
+            #print "[ Labels ]       : " + str( base_parse[ index ].labels )
+            #print "[ Subject ]     : " + subject
+            #print "[ Verb ]        : " + verb
+            #print "[ Object ]      : " + object
+            #print "[ Prep Phrases ] : " + str( prepositional_phrases )
 
             # Deciding whether the sentence/pattern should be added
             add_sentence = True
@@ -103,17 +103,18 @@ class semantic_parsing:
             # Grabbing sentence information
             raw_data = str( test_sentences[ index ] )
             pos_sentence = pos_parser.tag( str( test_sentences[ index ] ) )
-            subject, verb, object = self.identify_sentence_parts_nlpnet( test_parse[ index ].tokens, test_parse[ index ].labels )
-            prepositional_phrases = ""
+            subject, verb, object, prepositional_phrases = self.identify_sentence_parts_nlpnet( test_parse[ index ].tokens, test_parse[ index ].labels )
 
             #print "***TEST***"
-            #print "Raw Sentence: " + raw_data
-            #print "POS Sentence: " + str( pos_sentence )
-            #print "[ Tokens ]  : " + str( test_parse[ index ].tokens )
-            #print "[ Labels ]  : " + str( test_parse[ index ].labels )
-            #print "[ Subject ] : " + subject
-            #print "[ Verb ]    : " + verb
-            #print "[ Object ]  : " + object
+            #print "Raw Sentence     : " + raw_data
+            #print "POS Sentence    : " + str( pos_sentence )
+            #print "[ Tokens ]       : " + str( test_parse[ index ].tokens )
+            #print "[ Labels ]       : " + str( test_parse[ index ].labels )
+            #print "[ Subject ]     : " + subject
+            #print "[ Verb ]        : " + verb
+            #print "[ Object ]      : " + object
+            #print "[ Prep Phrases ] : " + str( prepositional_phrases )
+
 
             # Deciding whether the sentence/pattern should be added
             add_sentence = True
@@ -132,9 +133,10 @@ class semantic_parsing:
         return self.identify_common_patterns( base_sentence_info, test_sentence_info, patterns )
 
     def identify_sentence_parts_nlpnet( self, tokens, labels ):
-        subject = ""
-        verb    = ""
-        object  = ""
+        subject               = ""
+        verb                  = ""
+        object                = ""
+        prepositional_phrases = ""
 
         for index in range( 0, len( labels ) ):
             if "SBJ" in labels[ index ] and verb == "":
@@ -143,8 +145,16 @@ class semantic_parsing:
                 verb += tokens[ index ]
             elif "PRD" in labels[ index ] or "OBJ" in labels[ index ]:
                 object += tokens[ index ] + " "
+            elif "LOC" in labels[ index ]:
+                for prep_index in range( index, len( labels ) ):
+                    if "PMOD" in labels[ prep_index ] and ' '.join( tokens[ index : prep_index + 1 ] ) not in prepositional_phrases:
+                        print ' '.join( tokens[ index : prep_index + 1 ] ) + "..."
+                        prepositional_phrases += ' '.join( tokens[ index : prep_index + 1 ] ) + "..."
 
-        return subject, verb, object
+                        break
+
+
+        return subject, verb, object, prepositional_phrases.split( "..." )
 
     def use_nltk( self, base_string, test_string, pattern_arg ):
         patterns = pattern_arg
