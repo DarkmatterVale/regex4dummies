@@ -8,6 +8,21 @@ import re
 import tarfile
 
 
+"""
+
+Test information:
+
+    Tests:
+    - nltk parser
+    - literal parser
+    - pattern parser
+    - nlpnet parser
+
+Version: 1.3.2
+
+"""
+
+
 # Creating test object
 regex = regex4dummies()
 

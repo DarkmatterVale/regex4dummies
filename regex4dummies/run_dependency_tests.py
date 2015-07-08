@@ -25,7 +25,7 @@ This class will test to see whether the dependencies for the given parser are in
 Class information:
 
 - name: run_dependency_tests
-- version: 1.0.0
+- version: 1.3.2
 
 """
 

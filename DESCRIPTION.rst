@@ -8,6 +8,8 @@ regex4dummies was developed with lazy people in mind! It allows you to easily pa
 
 In addition, this library is very useful to people who work with NLP ( natural language processing ) very often. This library is intended to work out-of-the-box however, so anyone can use it.
 
+Remember to check out the new homepage! You can see it at https://darkmattervale.github.io/regex4dummies
+
 
 Features
 ----------
@@ -69,6 +71,7 @@ Here is an example of how to use the library.
         print "[ Subject ]          : " + objects.subject
         print "[ Verb ]             : " + objects.verb
         print "[ Object ]           : " + objects.object[0]
+        print "[ Prep Phrases ]     : " + str( objects.prepositional_phrases )
         print "[ Reliability Score ]: " + str( objects.reliability_score )
 
 
@@ -93,7 +96,15 @@ That's it! The nlpnet parser should now be able to use its POSTagger.
 Patch Notes
 -------------
 
-( Latest ) Version 1.3.1: Bug fix and minor background code
+( Latest ) v1.3.2: Developer feature update, semantic parser update, and a literal parser update
+
+- Custom literal parsers can now be created! Documentation will be on the website shortly for those eager to develop their own literal parsers
+- Prepositional phrases are now gathered by all parsers. As seen above, they can be seen by calling "objects.prepositional_phrases"
+- The scope of the literal parser has increased. Previously, only single sentences were compared to other single sentences before. Now, in addition to single sentence comparisons, multi-sentence comparisons are completed.
+
+Released on 7/8/15 ( July 8, 2015 )
+
+Version 1.3.1: Bug fix and minor background code
 
 - nlpnet parser bug fix. This might have caused a fatal error. To be sure the bug will never affect you, or to fix the bug, update to the most recent version
 - Tests have been updated. The code is better tested and will contain fewer bugs at future release times
