@@ -17,13 +17,11 @@ layout: main_page
 <br><br>
 Creating your own parser is a fairly complex process. Because of this, not everyone should attempt it and expect good results immediately as it takes a lot of patience and work. If you would like to create your own parser, however, with enough work, it can be done.
 <br><br>
-The first step is the determine which kind of parser you would like to create. Currently, you cannot create a literal parser, but this is on the to do list and will eventually get done ( there is only so much I can do at once... ). To create a semantic parser, you will need to add your parser to the semantic_parsing.py file.
-<br><br>
 But before you can add your parser to the semantic_parsing file, you need to write the parser! I cannot give any guidance to this since the possibilities of what could be done are endless. I can, however, explain how to integrate your parser into the library.
 <br><br>
 Each new parser has 2 requirements that it must fulfill ( if you would like to publish it to the community ).<br>
-- First, each must return the patterns identified as an array with the following attributes: [ reliability score, applicability score, pattern ]. If you are not going to use the reliability score and applicability score, please just set these to 0. The pattern is the string containing the identified pattern.
-<br>- Also, the pattern must be added the parse() method located at the top of the semantic_parsing file ( the current version of the code is below ):
+- First, each parser must return the patterns identified as an array with the following attributes: [ reliability score, applicability score, pattern ]. If you are not going to use the reliability score and applicability score, please just set these to 0. The pattern is the string containing the identified pattern.
+<br>- Also, the pattern must be added the parse() method located at the top of the semantic_parsing file ( version 1.3.1 of the code is below ):
 <pre><code>
 class semantic_parsing:
     def __init__( self, *args, **kwargs ):
