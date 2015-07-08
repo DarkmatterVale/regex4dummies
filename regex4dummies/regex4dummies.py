@@ -71,7 +71,7 @@ if __name__ == '__main__':
     regex = regex4dummies()
 
     # Printing the semantic patterns within this string
-    print regex.compare_strings( 'default', True, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
+    print regex.compare_strings( 'nltk', False, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
 
     # Displaying all of the "meaning" in these sentences
     sentence_information = regex.get_sentence_information()
@@ -80,4 +80,5 @@ if __name__ == '__main__':
         print "[ Subject ]          : " + sentence.subject
         print "[ Verb ]             : " + sentence.verb
         print "[ Object ]           : " + sentence.object[0]
+        print "[ Prep Phrases ]     : " + str( sentence.prepositional_phrases )
         print "[ Reliability Score ]: " + str( sentence.reliability_score )

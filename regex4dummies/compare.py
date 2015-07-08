@@ -150,12 +150,14 @@ class compare:
         # Getting patterns and printing them
         for sentence in sentence_information:
             pattern_info = pattern_detail()
+            print sentence_information[ sentence ]
 
-            pattern_info.pattern = sentence
-            pattern_info.subject = sentence_information[ sentence ][ 0 ]
-            pattern_info.verb    = sentence_information[ sentence ][ 1 ]
-            pattern_info.object  = [ sentence_information[ sentence ][ 2 ] ]
-            pattern_info.reliability_score = sentence_information[ sentence ][ 3 ] * 100 / len( strings_parsed )
+            pattern_info.pattern               = sentence
+            pattern_info.subject               = sentence_information[ sentence ][ 0 ]
+            pattern_info.verb                  = sentence_information[ sentence ][ 1 ]
+            pattern_info.object                = [ sentence_information[ sentence ][ 2 ] ]
+            pattern_info.prepositional_phrases = sentence_information[ sentence ][ 3 ]
+            pattern_info.reliability_score     = sentence_information[ sentence ][ 4 ] * 100 / len( strings_parsed )
 
             final_pattern_information.append( pattern_info )
 
@@ -170,4 +172,4 @@ class compare:
 
         for compiled_pattern in sentence_information:
             if compiled_pattern == pattern:
-                return sentence_information[ compiled_pattern ][ 3 ] * 100 / len( strings_parsed )
+                return sentence_information[ compiled_pattern ][ 4 ] * 100 / len( strings_parsed )

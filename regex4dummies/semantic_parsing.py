@@ -160,14 +160,16 @@ class semantic_parsing:
             subject               = self.find_subject( raw_data, pos_sentence )
             verb                  = self.find_verb( raw_data, pos_sentence )
             object                = self.find_object( raw_data, pos_sentence, pos_sentence )
-            prepositional_phrases = ""
+            prepositional_phrases = self.find_prepositional_phrases( raw_data, pos_sentence )
+            prepositional_phrases = prepositional_phrases.split( '...' )
 
             #print "***BASE SENTENCE***"
-            #print "Raw Sentence: " + raw_data
-            #print "POS Sentence: " + str( pos_sentence )
-            #print "[ Subject ] : " + subject
-            #print "[ Verb ]    : " + verb
-            #print "[ Object ]  : " + str( object )
+            #print "Raw Sentence     : " + raw_data
+            #print "POS Sentence     : " + str( pos_sentence )
+            #print "[ Subject ]      : " + subject
+            #print "[ Verb ]         : " + verb
+            #print "[ Object ]       : " + str( object )
+            #print "[ Prep Phrases ] : " + str( prepositional_phrases )
 
             add_sentence = True
             for sentence in base_sentence_info:
@@ -178,7 +180,7 @@ class semantic_parsing:
                         break
 
             if add_sentence:
-                base_sentence_info.append( [ subject, verb, object, [], str( base_sentence ) ] )
+                base_sentence_info.append( [ subject, verb, object, prepositional_phrases, str( base_sentence ) ] )
 
         test_blob = TextBlob( test_string )
         test_sentence_info = []
@@ -191,14 +193,16 @@ class semantic_parsing:
             subject               = self.find_subject( raw_data, pos_sentence )
             verb                  = self.find_verb( raw_data, pos_sentence )
             object                = self.find_object( raw_data, pos_sentence, pos_sentence )
-            prepositional_phrases = ""
+            prepositional_phrases = self.find_prepositional_phrases( raw_data, pos_sentence )
+            prepositional_phrases = prepositional_phrases.split( '...' )
 
             #print "***TEST SENTENCE***"
-            #print "Raw Sentence: " + raw_data
-            #print "POS Sentence: " + str( pos_sentence )
-            #print "[ Subject ] : " + subject
-            #print "[ Verb ]    : " + verb
-            #print "[ Object ]  : " + str( object )
+            #print "Raw Sentence     : " + raw_data
+            #print "POS Sentence     : " + str( pos_sentence )
+            #print "[ Subject ]      : " + subject
+            #print "[ Verb ]         : " + verb
+            #print "[ Object ]       : " + str( object )
+            #print "[ Prep Phrases ] : " + str( prepositional_phrases )
 
             add_sentence = True
             for sentence in test_sentence_info:
@@ -209,7 +213,7 @@ class semantic_parsing:
                         break
 
             if add_sentence:
-                test_sentence_info.append( [ subject, verb, object, [], str( test_sentence ) ] )
+                test_sentence_info.append( [ subject, verb, object, prepositional_phrases, str( test_sentence ) ] )
 
         return self.identify_common_patterns( base_sentence_info, test_sentence_info, patterns )
 
@@ -361,8 +365,27 @@ class semantic_parsing:
 
         return is_word_found, updated_object
 
-    def use_pattern( self, base_string, test_string, pattern_arg ):
+    def find_prepositional_phrases( self, raw_sentence, tagged_sentence ):
+        prepositional_phrases = ""
 
+        for index in range( 0, len( tagged_sentence ) ):
+            # Removing prepositions
+            if "IN" in tagged_sentence[ index ][ 1 ]:
+                for prep_index in range( index, len( tagged_sentence ) ):
+                    if "NN" in tagged_sentence[ prep_index ][ 1 ]:
+                        if index != 0:
+                            temporary_phrase = ""
+                            for phrase_index in range( index, prep_index + 1 ):
+                                temporary_phrase += " " + tagged_sentence[ phrase_index ][ 0 ]
+
+                            if temporary_phrase not in prepositional_phrases:
+                                prepositional_phrases += temporary_phrase + "..."
+
+                        break
+
+        return prepositional_phrases
+
+    def use_pattern( self, base_string, test_string, pattern_arg ):
         patterns = pattern_arg
 
         # Creating string textblob for analysis & analyzing the base_string's sentences
@@ -473,21 +496,21 @@ class semantic_parsing:
                                 if test_sentence[ len( test_sentence ) - 1 ] not in patterns and base_sentence[ len( base_sentence ) - 1 ] not in patterns:
                                     patterns += [ base_sentence[ len( base_sentence ) - 1 ] ]
 
-                                    sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ] = base_sentence[ 0 : len( base_sentence ) - 2 ]
+                                    sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ] = base_sentence[ 0 : len( base_sentence ) - 1 ]
                                 elif base_sentence[ len( base_sentence ) - 1 ] in patterns:
                                     # Updating reliability score
                                     try:
-                                        sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ][ 3 ] += 1
+                                        sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ][ 4 ] += 1
                                     except:
                                         sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( 2 )
                             # If there are no patterns currently found, add this pattern
                             elif patterns == []:
                                 patterns += [ base_sentence[ len( base_sentence ) - 1 ] ]
 
-                                sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ] = base_sentence[ 0 : len( base_sentence ) - 2 ]
+                                sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ] = base_sentence[ 0 : len( base_sentence ) - 1 ]
                                 # Updating reliability score
                                 try:
-                                    sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ][ 3 ] += 1
+                                    sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ][ 4 ] += 1
                                 except:
                                     sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( 2 )
                         else:
@@ -497,21 +520,21 @@ class semantic_parsing:
                                 if test_sentence[ len( test_sentence ) - 1 ] not in patterns and base_sentence[ len( base_sentence ) - 1 ] not in patterns:
                                     patterns += [ test_sentence[ len( test_sentence ) - 1 ] ]
 
-                                    sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ] = test_sentence[ 0 : len( test_sentence ) - 2 ]
+                                    sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ] = test_sentence[ 0 : len( test_sentence ) - 1 ]
                                 elif test_sentence[ len( test_sentence ) - 1 ] in patterns:
                                     # Updating reliability score
                                     try:
-                                        sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ][ 3 ] += 1
+                                        sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ][ 4 ] += 1
                                     except:
                                         sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( 2 )
                             # If there are no patterns currently found
                             elif patterns == []:
                                 patterns += [ test_sentence[ len( test_sentence ) - 1 ] ]
 
-                                sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ] = test_sentence[ 0 : len( test_sentence ) - 2 ]
+                                sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ] = test_sentence[ 0 : len( test_sentence ) - 1 ]
                                 # Updating reliability score
                                 try:
-                                    sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ][ 3 ] += 1
+                                    sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ][ 4 ] += 1
                                 except:
                                     sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( 2 )
 
