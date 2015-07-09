@@ -150,7 +150,6 @@ class compare:
         # Getting patterns and printing them
         for sentence in sentence_information:
             pattern_info = pattern_detail()
-            print sentence_information[ sentence ]
 
             pattern_info.pattern               = sentence
             pattern_info.subject               = sentence_information[ sentence ][ 0 ]

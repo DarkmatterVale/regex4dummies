@@ -29,6 +29,20 @@ class semantic_parsing:
             return self.use_pattern( base_string, test_string, pattern_arg )
         elif parser_name == 'nlpnet':
             return self.use_nlpnet( base_string, test_string, pattern_arg )
+        elif parser_name == '':
+            parsed_data = []
+            parsed_data.append( self.use_nltk( base_string, test_string, [] ) )
+            parsed_data.append( self.use_pattern( base_string, test_string, [] ) )
+            parsed_data.append( self.use_nlpnet( base_string, test_string, [] ) )
+
+            #print "-"
+            #print "PATTERNS:    " + str( pattern_arg )
+            #print "BASE_STRING: " + base_string
+            #print "TEST_STRING: " + test_string
+            #print parsed_data
+            #print "---"
+
+            return self.use_pattern( base_string, test_string, pattern_arg )
         else:
             print ""
             print "A valid parser was not chosen. Please choose any of the following parsers: "
@@ -38,6 +52,9 @@ class semantic_parsing:
             print ""
 
             exit( 0 )
+
+    def MY_TEST( self, base_string, test_string, pattern_arg ):
+        return "YOLO"
 
     def use_nlpnet( self, base_string, test_string, pattern_arg ):
         # Getting nltk data path
@@ -148,7 +165,6 @@ class semantic_parsing:
             elif "LOC" in labels[ index ]:
                 for prep_index in range( index, len( labels ) ):
                     if "PMOD" in labels[ prep_index ] and ' '.join( tokens[ index : prep_index + 1 ] ) not in prepositional_phrases:
-                        print ' '.join( tokens[ index : prep_index + 1 ] ) + "..."
                         prepositional_phrases += ' '.join( tokens[ index : prep_index + 1 ] ) + "..."
 
                         break
@@ -502,11 +518,14 @@ class semantic_parsing:
                         if len( base_sentence[ len( base_sentence ) - 1 ].split( ' ' ) ) > len( test_sentence[ len( test_sentence ) - 1 ].split( ' ' ) ):
                             # If other patterns have been detected
                             if patterns != []:
+                                sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ] = base_sentence[ 0 : len( base_sentence ) - 1 ]
+                                sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( 2 )
+
                                 # If the current test patterns are not in patterns
                                 if test_sentence[ len( test_sentence ) - 1 ] not in patterns and base_sentence[ len( base_sentence ) - 1 ] not in patterns:
                                     patterns += [ base_sentence[ len( base_sentence ) - 1 ] ]
 
-                                    sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ] = base_sentence[ 0 : len( base_sentence ) - 1 ]
+                                    #sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ] = base_sentence[ 0 : len( base_sentence ) - 1 ]
                                 elif base_sentence[ len( base_sentence ) - 1 ] in patterns:
                                     # Updating reliability score
                                     try:
@@ -526,11 +545,14 @@ class semantic_parsing:
                         else:
                             # If there are patterns already found
                             if patterns != []:
+                                sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ] = test_sentence[ 0 : len( test_sentence ) - 1 ]
+                                sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( 2 )
+
                                 # If the test patterns are not in the already found patterns
                                 if test_sentence[ len( test_sentence ) - 1 ] not in patterns and base_sentence[ len( base_sentence ) - 1 ] not in patterns:
                                     patterns += [ test_sentence[ len( test_sentence ) - 1 ] ]
 
-                                    sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ] = test_sentence[ 0 : len( test_sentence ) - 1 ]
+                                    #sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ] = test_sentence[ 0 : len( test_sentence ) - 1 ]
                                 elif test_sentence[ len( test_sentence ) - 1 ] in patterns:
                                     # Updating reliability score
                                     try:
@@ -549,3 +571,15 @@ class semantic_parsing:
                                     sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( 2 )
 
         return patterns, sentence_information
+
+    # This function determines:
+    #   1. Removes duplicate patterns
+    #   2. Applicability score for a given pattern
+    #
+    # This function is used when all 3 parsers are used to identify patterns in one single call
+    def full_pattern_comparison( self, parsed_data ):
+        for data_index in range( 0, len( parsed_data ) ):
+            #print parsed_data[ data_index ]
+            pass
+
+        exit( 0 )
