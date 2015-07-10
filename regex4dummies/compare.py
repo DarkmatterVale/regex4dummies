@@ -114,13 +114,21 @@ class compare:
         semantic_pattern_parser = semantic_parsing()
 
         # Parsing information
-        patterns, pattern_information = semantic_pattern_parser.parse( base_string, test_string, pattern_arg, parser_name )
+        if parser_name == '':
+            patterns, parsed_data = semantic_pattern_parser.parse( base_string, test_string, pattern_arg, parser_name )
+            print "-"
+            print patterns
+            print "---"
 
-        # Appending the pattern information to the global sentence_information variable
-        sentence_information.update( pattern_information )
+            return patterns
+        else:
+            patterns, pattern_information = semantic_pattern_parser.parse( base_string, test_string, pattern_arg, parser_name )
 
-        # return patterns
-        return patterns
+            # Appending the pattern information to the global sentence_information variable
+            sentence_information.update( pattern_information )
+
+            # return patterns
+            return patterns
 
     def find_literal_patterns( self, base_string, test_string, pattern_arg, parser_name ):
         # Getting global variables
