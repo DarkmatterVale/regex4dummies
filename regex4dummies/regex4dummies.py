@@ -39,8 +39,12 @@ class regex4dummies:
     def compare_strings( self, parser_name, literal_find, strings_to_process ):
         # Testing the system to make sure all dependencies are installed
         if not literal_find:
-            test_install = run_dependency_tests()
-            test_install.test( parser_name )
+            if parser_name == '':
+                test_install = run_dependency_tests()
+                test_install.test( 'pattern nltk nlpnet' )
+            else:
+                test_install = run_dependency_tests()
+                test_install.test( 'pattern nltk nlpnet' )
 
         # Getting global variables
         global compare_object
