@@ -115,10 +115,10 @@ class compare:
 
         # Parsing information
         if parser_name == '':
-            patterns, parsed_data = semantic_pattern_parser.parse( base_string, test_string, pattern_arg, parser_name )
-            print "-"
-            print patterns
-            print "---"
+            patterns, pattern_information = semantic_pattern_parser.parse( base_string, test_string, pattern_arg, parser_name )
+
+            # Appending the pattern information to the global sentence_information variable
+            sentence_information.update( pattern_information )
 
             return patterns
         else:

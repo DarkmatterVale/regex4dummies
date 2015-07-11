@@ -587,43 +587,47 @@ class semantic_parsing:
 
             # For every pattern identified by that parser
             for base_pattern in base_data:
-                # If that pattern was not already found
-                if base_pattern not in patterns:
-                    # Get the pattern's information
-                    base_pattern_subject               = base_data[ base_pattern ][ 0 ]
-                    base_pattern_verb                  = base_data[ base_pattern ][ 1 ]
-                    base_pattern_object                = base_data[ base_pattern ][ 2 ]
-                    base_pattern_prepositional_phrases = base_data[ base_pattern ][ 3 ]
+                # Get the pattern's information
+                base_pattern_subject               = base_data[ base_pattern ][ 0 ]
+                base_pattern_verb                  = base_data[ base_pattern ][ 1 ]
+                base_pattern_object                = base_data[ base_pattern ][ 2 ]
+                base_pattern_prepositional_phrases = base_data[ base_pattern ][ 3 ]
 
-                    # Comparing the base parser to the remainder of parsers
-                    for compare_index in range( data_index, len( parsed_data ) ):
-                        # Getting the information about every pattern identified by the parser
-                        test_data = parsed_data[ compare_index ][ 1 ]
+                # Comparing the base parser to the remainder of parsers
+                for compare_index in range( data_index, len( parsed_data ) ):
+                    # Getting the information about every pattern identified by the parser
+                    test_data = parsed_data[ compare_index ][ 1 ]
 
-                        # For each pattern identified
-                        for test_pattern in test_data:
-                            # As long as the pattern is not already found
-                            if test_pattern not in patterns:
-                                # Getting pattern information
-                                test_pattern_subject               = test_data[ test_pattern ][ 0 ]
-                                test_pattern_verb                  = test_data[ test_pattern ][ 1 ]
-                                test_pattern_object                = test_data[ test_pattern ][ 2 ]
-                                test_pattern_prepositional_phrases = test_data[ test_pattern ][ 3 ]
+                    # For each pattern identified
+                    for test_pattern in test_data:
+                        # Getting pattern information
+                        test_pattern_subject               = test_data[ test_pattern ][ 0 ]
+                        test_pattern_verb                  = test_data[ test_pattern ][ 1 ]
+                        test_pattern_object                = test_data[ test_pattern ][ 2 ]
+                        test_pattern_prepositional_phrases = test_data[ test_pattern ][ 3 ]
 
-                                # Comparing pattern information
-                                if base_pattern_subject == test_pattern_subject and base_pattern_verb == test_pattern_verb and base_pattern_object == test_pattern_object:
-                                    # If the patterns are the same, add the patterns to the identified patterns
-                                    # If the base_pattern is more descriptive, add that to the pattern information
-                                    if len( base_pattern.split( ' ' ) ) > len( test_pattern.split( ' ' ) ):
-                                        # Add the pattern to the list of identified patterns
-                                        patterns.append( str( base_pattern ) )
+                        # Comparing pattern information
+                        if base_pattern_subject == test_pattern_subject and base_pattern_verb == test_pattern_verb and base_pattern_object == test_pattern_object:
+                            # If the patterns are the same, add the patterns to the identified patterns
+                            # If the base_pattern is more descriptive, add that to the pattern information
+                            if len( base_pattern.split( ' ' ) ) > len( test_pattern.split( ' ' ) ):
+                                pattern_information[ base_pattern.lower() ] = [ base_pattern_subject, base_pattern_verb, base_pattern_object, base_pattern_prepositional_phrases, 2 ]
 
-                                        pattern_information[ base_pattern ] = [ base_pattern_subject, base_pattern_verb, base_pattern_object, base_pattern_prepositional_phrases, 2 ]
-                                    # Otherwise, add test_pattern
-                                    else:
-                                        # Add the pattern to the list of identified patterns
-                                        patterns.append( str( test_pattern ) )
+                                # As long as the pattern is not already found
+                                if base_pattern.lower() not in patterns and test_pattern.lower() not in patterns:
+                                    # Add the pattern to the list of identified patterns
+                                    patterns.append( str( base_pattern.lower() ) )
+                                else:
+                                    pattern_information[ base_pattern.lower() ][ 4 ] += 1
+                            # Otherwise, add test_pattern
+                            else:
+                                pattern_information[ test_pattern.lower() ] = [ test_pattern_subject, test_pattern_verb, test_pattern_object, test_pattern_prepositional_phrases, 2 ]
 
-                                        pattern_information[ test_pattern ] = [ test_pattern_subject, test_pattern_verb, test_pattern_object, test_pattern_prepositional_phrases, 2 ]
+                                # As long as the pattern is not already found
+                                if test_pattern.lower() not in patterns and base_pattern.lower() not in patterns:
+                                    # Add the pattern to the list of identified patterns
+                                    patterns.append( str( test_pattern.lower() ) )
+                                else:
+                                    pattern_information[ test_pattern.lower() ][ 4 ] += 1
 
-        return patterns, parsed_data
+        return patterns, pattern_information
