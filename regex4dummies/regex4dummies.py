@@ -44,7 +44,7 @@ class regex4dummies:
                 test_install.test( 'pattern nltk nlpnet' )
             else:
                 test_install = run_dependency_tests()
-                test_install.test( 'pattern nltk nlpnet' )
+                test_install.test( parser_name )
 
         # Getting global variables
         global compare_object
