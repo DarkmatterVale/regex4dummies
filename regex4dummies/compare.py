@@ -180,3 +180,12 @@ class compare:
         for compiled_pattern in sentence_information:
             if compiled_pattern == pattern:
                 return sentence_information[ compiled_pattern ][ 4 ] * 100 / len( strings_parsed )
+
+    def get_applicability_score( self, pattern ):
+        # Getting global variables
+        global sentence_information
+        global strings_parsed
+
+        for compiled_pattern in sentence_information:
+            if compiled_pattern == pattern:
+                return sentence_information[ compiled_pattern ][ 5 ] * 100 / len( strings_parsed )
