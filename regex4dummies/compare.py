@@ -74,9 +74,9 @@ class compare:
         for pattern in patterns:
             if keyword != '':
                 if keyword in pattern:
-                    compiled_patterns += [ self.get_reliability_score( pattern ), 0, pattern ]
+                    compiled_patterns += [ self.get_reliability_score( pattern ), self.get_applicability_score( pattern ), pattern ]
             else:
-                compiled_patterns += [ self.get_reliability_score( pattern ), 0, pattern ]
+                compiled_patterns += [ self.get_reliability_score( pattern ), self.get_applicability_score( pattern ), pattern ]
 
         return compiled_patterns
 
@@ -165,6 +165,7 @@ class compare:
             pattern_info.object                = [ sentence_information[ sentence ][ 2 ] ]
             pattern_info.prepositional_phrases = sentence_information[ sentence ][ 3 ]
             pattern_info.reliability_score     = sentence_information[ sentence ][ 4 ] * 100 / len( strings_parsed )
+            pattern_info.applicability_score   = sentence_information[ sentence ][ 5 ]
 
             final_pattern_information.append( pattern_info )
 
@@ -188,4 +189,4 @@ class compare:
 
         for compiled_pattern in sentence_information:
             if compiled_pattern == pattern:
-                return sentence_information[ compiled_pattern ][ 5 ] * 100 / len( strings_parsed )
+                return sentence_information[ compiled_pattern ][ 5 ]

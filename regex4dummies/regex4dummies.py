@@ -75,7 +75,7 @@ if __name__ == '__main__':
     regex = regex4dummies()
 
     # Printing the semantic patterns within this string
-    print regex.compare_strings( '', False, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "what time is it", "This is the cat's hat", "That is the cat's hat" ] )
+    print regex.compare_strings( 'pattern', False, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "what time is it", "This is the cat's hat", "That is the cat's hat" ] )
 
     # Displaying all of the "meaning" in these sentences
     sentence_information = regex.get_sentence_information()
