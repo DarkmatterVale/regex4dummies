@@ -20,7 +20,7 @@ Features:
 
 ## Roadmap
 
-As of 7/6/15, this is what is left to complete:
+As of 7/13/15, this is what is left to complete:
 
 - High Priority ( short-term, completed within 3 months from 6/28/15 ):
   - Examples
@@ -28,18 +28,13 @@ As of 7/6/15, this is what is left to complete:
   - Parsers
     - Update comparison to be more effective in determining whether two sentences/patterns are the same
     - nltk
-      - Gather prepositional phrases
       - Gather indirect object as well as direct object
       - Be able to identify word case ( for verbs, present, past, future, etc ) & use that information to make sure some patterns are not removed due to case differences
       - Independent and dependent clause separator
     - pattern
-      - Implement additional information gathering ( such as prepositional phrases, etc )
       - Be able to identify word case ( for verbs, present, past, future, etc ) & use that information to make sure some patterns are not removed due to case differences
-    - nlpnet
-      - Implement additional information gathering ( such as prepositional phrases, etc )
 - Medium/Long Priority ( mid-term and long-term, hopefully completed within a year ):
   - Machine Learning implemented-this will allow the parser to learn different "styles" of grammatical syntax, helping it be more accurate ( hopefully )
-  - Remove need to specify parser. All 3 parsers will be called, and the correct pattern is deduced automatically
 
 ## Usage
 
