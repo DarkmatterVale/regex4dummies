@@ -30,7 +30,7 @@ This class accomplishes the bulk of regex4dummies' work. Below is a short list o
 Class information:
 
 - name: compare
-- version: 1.3.2
+- version: 1.3.3
 
 """
 

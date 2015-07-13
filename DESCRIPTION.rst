@@ -64,15 +64,20 @@ Here is an example of how to use the library.
   # print regex.compare_strings( 'pattern', False, strings )
   # print regex.compare_strings( 'nlpnet', False, strings )
 
+  # To call all of the parsers, replace the above line of code with the following:
+  # print regex.compare_strings( '', False, strings )
+
   # Printing pattern information
   pattern_information = regex.get_sentence_information()
     for objects in pattern_information:
-        print "[ Pattern ]          : " + objects.pattern
-        print "[ Subject ]          : " + objects.subject
-        print "[ Verb ]             : " + objects.verb
-        print "[ Object ]           : " + objects.object[0]
-        print "[ Prep Phrases ]     : " + str( objects.prepositional_phrases )
-        print "[ Reliability Score ]: " + str( objects.reliability_score )
+        print "[ Pattern ]             : " + objects.pattern
+        print "[ Subject ]             : " + objects.subject
+        print "[ Verb ]                : " + objects.verb
+        print "[ Object ]              : " + objects.object[0]
+        print "[ Prep Phrases ]        : " + str( objects.prepositional_phrases )
+        print "[ Reliability Score ]   : " + str( objects.reliability_score )
+        print "[ Applicability Score ] : " + str( objects.applicability_score )
+        print ""
 
 
 Installation
@@ -96,7 +101,13 @@ That's it! The nlpnet parser should now be able to use its POSTagger.
 Patch Notes
 -------------
 
-( Latest ) v1.3.2: Developer feature update, semantic parser update, and a literal parser update
+( Latest ) v1.3.3: Semantic parser updates!
+
+- All parsers can now be called using the same compare_strings() function, but without having to separate data yourself. See above for the usage of this command ( in the example code )
+- Applicability Score has been added and can now be found in any semantic pattern
+- A bug fix
+
+v1.3.2: Developer feature update, semantic parser update, and a literal parser update
 
 - Custom literal parsers can now be created! Documentation will be on the website shortly for those eager to develop their own literal parsers
 - Prepositional phrases are now gathered by all parsers. As seen above, they can be seen by calling "objects.prepositional_phrases"
