@@ -637,7 +637,7 @@ class semantic_parsing:
                             # If the patterns are the same, add the patterns to the identified patterns
                             # If the base_pattern is more descriptive, add that to the pattern information
                             if len( base_pattern.split( ' ' ) ) > len( test_pattern.split( ' ' ) ):
-                                pattern_information[ base_pattern.lower() ] = [ base_pattern_subject, base_pattern_verb, base_pattern_object, base_pattern_prepositional_phrases, 2 ]
+                                pattern_information[ base_pattern.lower() ] = [ base_pattern_subject, base_pattern_verb, base_pattern_object, base_pattern_prepositional_phrases, 2, 0 ]
 
                                 # As long as the pattern is not already found
                                 if base_pattern.lower() not in patterns and test_pattern.lower() not in patterns:
@@ -645,9 +645,11 @@ class semantic_parsing:
                                     patterns.append( str( base_pattern.lower() ) )
                                 else:
                                     pattern_information[ base_pattern.lower() ][ 4 ] += 1
+
+                                pattern_information[ base_pattern.lower() ][ 5 ] += 1
                             # Otherwise, add test_pattern
                             else:
-                                pattern_information[ test_pattern.lower() ] = [ test_pattern_subject, test_pattern_verb, test_pattern_object, test_pattern_prepositional_phrases, 2 ]
+                                pattern_information[ test_pattern.lower() ] = [ test_pattern_subject, test_pattern_verb, test_pattern_object, test_pattern_prepositional_phrases, 2, 0 ]
 
                                 # As long as the pattern is not already found
                                 if test_pattern.lower() not in patterns and base_pattern.lower() not in patterns:
@@ -655,5 +657,7 @@ class semantic_parsing:
                                     patterns.append( str( test_pattern.lower() ) )
                                 else:
                                     pattern_information[ test_pattern.lower() ][ 4 ] += 1
+
+                                pattern_information[ test_pattern.lower() ][ 5 ] += 1
 
         return patterns, pattern_information
