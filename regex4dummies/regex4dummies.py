@@ -69,7 +69,7 @@ if __name__ == '__main__':
     print "http://github.com/DarkmatterVale/regex4dummies"
     print ""
 
-    #exit( 0 )
+    exit( 0 )
 
     # Test Set
     regex = regex4dummies()
