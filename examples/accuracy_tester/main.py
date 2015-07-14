@@ -35,7 +35,7 @@ class main:
         print "This is currently under development....Please check back soon for a working version."
         print ""
 
-        return
+        #return
 
         # Currently implemented functions that will be tested
         # This program performs a number of accuracy tests against the library. THey are:
@@ -88,15 +88,18 @@ class main:
         print ""
 
         # Showing other test-related information
-        print "NLTK test details:"
+        print "NLTK test details    "
+        print "---------------------"
         print nltk_score_info
         print ""
 
-        print "Pattern test details:"
+        print "Pattern test details "
+        print "---------------------"
         print pattern_score_info
         print ""
 
-        print "nlpnet test details:"
+        print "nlpnet test details  "
+        print "---------------------"
         print nlpnet_score_info
         print ""
 
@@ -122,6 +125,32 @@ class main:
         nltk_score_info    = ""
         pattern_score_info = ""
         nlpnet_score_info  = ""
+
+        # Creating test-containing strings
+        test_1 = """This is the first test string.
+
+In this particular test string, a number of theories are discussed, with topics ranging from astrophysics to neural networking in computer science.
+        """
+        test_2 = """
+        """
+        test_3 = """
+        """
+        test_4 = """
+        """
+
+        # Creating correct information
+        test_1_correct = []
+        test_2_correct = []
+        test_3_correct = []
+        test_4_correct = []
+
+        # Structure of the correct information
+        # The correct information is in this format:
+        # [ [ patterns ] ]
+        # 1. First array ( [] ):
+        #   a. pattern_detail object(s) containing patterns
+        # 1. Example:
+        #
 
 if __name__ == '__main__':
     main()
