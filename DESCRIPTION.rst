@@ -178,7 +178,9 @@ In release 1.0.1, the following has been added/updated:
 Contributing
 --------------
 
-If you would like to contriubte, please fork the repository and create a PR with your feature update.
+Contributors are welcome and much needed! regex4dummies is still under heavy development, and needs all of the help it can get. If you have any feature ideas, feel free to create an issue on the github repository ( https://github.com/darkmattervale/regex4dummies/issues ) or fork the repository and create your addition.
+
+Any help you can give is much appreciated. The more help we get, the better regex4dummies will perform. Thanks for contributing!
 
 
 License
