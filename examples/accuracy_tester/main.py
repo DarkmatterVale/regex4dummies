@@ -1,5 +1,15 @@
 __author__ = 'Vale Tolpegin'
 
+# Importing required libraries
+from regex4dummies import regex4dummies
+
+from pattern.en import parse
+from textblob.parsers import PatternParser
+from textblob import TextBlob
+import nltk
+import nlpnet
+import os
+
 """
 
 Class information:
@@ -105,6 +115,7 @@ class main:
 
         print ""
 
+
     # This function will perform the above tests, and set the appropriate variables with test information
     def complete_tests( self ):
         # Getting global variables
@@ -139,18 +150,47 @@ In this particular test string, a number of theories are discussed, with topics 
         """
 
         # Creating correct information
-        test_1_correct = []
-        test_2_correct = []
-        test_3_correct = []
-        test_4_correct = []
+        correct_patterns            = []
+        correct_pattern_information = []
+
+        # ************************************************************
+        # Beginning tests
+        # ************************************************************
 
         # Structure of the correct information
         # The correct information is in this format:
         # [ [ patterns ] ]
-        # 1. First array ( [] ):
+        # 1. First array ( [ patterns ] ):
         #   a. pattern_detail object(s) containing patterns
-        # 1. Example:
-        #
+
+        # Instantiating a regex4dummies object that will be used in the tests
+        regex = regex4dummies()
+
+        # Testing the NLTK parser
+        #nltk_result = regex.compare_strings( 'nltk', False, [ test_1, test_2, test_3, test_4 ] )
+
+        # Processing the raw data
+        # nltk_score, nltk_score_info = self.process_raw_data( nltk_result, correct_patterns, correct_pattern_information )
+
+        # Testing the Pattern parser
+        #pattern_result = regex.compare_strings( 'pattern', False, [ test_1, test_2, test_3, test_4 ] )
+
+        # Processing the raw data
+        # pattern_score, pattern_score_info = self.process_raw_data( pattern_result, correct_patterns, correct_pattern_information )
+
+        # Testing the nlpnet parser
+        #nlpnet_result = regex.compare_strings( 'nlpnet', False, [ test_1, test_2, test_3, test_4 ] )
+
+        # Processing the raw data
+        # nlpnet_score, nlpnet_score_info = self.process_raw_data( nlpnet_result, correct_patterns, correct_pattern_information )
+
+
+    # This function processes the raw data and turns it into useful information.
+    # That data provides useful statistics about the library's current "health"
+    # The function returns the overall score for the data, and specific statistics of the data
+    def process_raw_data( self, raw_data, correct_patterns, correct_pattern_information ):
+        pass
+
 
 if __name__ == '__main__':
     main()
