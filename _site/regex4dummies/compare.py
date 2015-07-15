@@ -30,7 +30,7 @@ This class accomplishes the bulk of regex4dummies' work. Below is a short list o
 Class information:
 
 - name: compare
-- version: 1.1.3
+- version: 1.3.3
 
 """
 
@@ -74,9 +74,9 @@ class compare:
         for pattern in patterns:
             if keyword != '':
                 if keyword in pattern:
-                    compiled_patterns += [ self.get_reliability_score( pattern ), 0, pattern ]
+                    compiled_patterns += [ self.get_reliability_score( pattern ), self.get_applicability_score( pattern ), pattern ]
             else:
-                compiled_patterns += [ self.get_reliability_score( pattern ), 0, pattern ]
+                compiled_patterns += [ self.get_reliability_score( pattern ), self.get_applicability_score( pattern ), pattern ]
 
         return compiled_patterns
 
@@ -100,7 +100,7 @@ class compare:
             for index in xrange( current_index, -1, -1 ):
                 if strings[ index ] != strings[ current_index ]:
                     # patterns += identify_patterns( strings[ index ], strings[ index + 1 ] )
-                    patterns = self.find_literal_patterns( strings[ current_index ], strings[ index ], patterns )
+                    patterns = self.find_literal_patterns( strings[ current_index ], strings[ index ], patterns, parser_name )
 
         # return patterns
         return patterns
@@ -114,15 +114,23 @@ class compare:
         semantic_pattern_parser = semantic_parsing()
 
         # Parsing information
-        patterns, pattern_information = semantic_pattern_parser.parse( base_string, test_string, pattern_arg, parser_name )
+        if parser_name == '':
+            patterns, pattern_information = semantic_pattern_parser.parse( base_string, test_string, pattern_arg, parser_name )
 
-        # Appending the pattern information to the global sentence_information variable
-        sentence_information.update( pattern_information )
+            # Appending the pattern information to the global sentence_information variable
+            sentence_information.update( pattern_information )
 
-        # return patterns
-        return patterns
+            return patterns
+        else:
+            patterns, pattern_information = semantic_pattern_parser.parse( base_string, test_string, pattern_arg, parser_name )
 
-    def find_literal_patterns( self, base_string, test_string, pattern_arg ):
+            # Appending the pattern information to the global sentence_information variable
+            sentence_information.update( pattern_information )
+
+            # return patterns
+            return patterns
+
+    def find_literal_patterns( self, base_string, test_string, pattern_arg, parser_name ):
         # Getting global variables
         global sentence_information
 
@@ -130,7 +138,7 @@ class compare:
         literal_pattern_parser = literal_parsing()
 
         # Parsing information
-        patterns, pattern_information = literal_pattern_parser.parse( base_string, test_string, pattern_arg )
+        patterns, pattern_information = literal_pattern_parser.parse( base_string, test_string, pattern_arg, parser_name )
 
         # Appending the pattern information to the global sentence_information variable
         sentence_information.update( pattern_information )
@@ -151,11 +159,13 @@ class compare:
         for sentence in sentence_information:
             pattern_info = pattern_detail()
 
-            pattern_info.pattern = sentence
-            pattern_info.subject = sentence_information[ sentence ][ 0 ]
-            pattern_info.verb    = sentence_information[ sentence ][ 1 ]
-            pattern_info.object  = [ sentence_information[ sentence ][ 2 ] ]
-            pattern_info.reliability_score = sentence_information[ sentence ][ 3 ] * 100 / len( strings_parsed )
+            pattern_info.pattern               = sentence
+            pattern_info.subject               = sentence_information[ sentence ][ 0 ]
+            pattern_info.verb                  = sentence_information[ sentence ][ 1 ]
+            pattern_info.object                = [ sentence_information[ sentence ][ 2 ] ]
+            pattern_info.prepositional_phrases = sentence_information[ sentence ][ 3 ]
+            pattern_info.reliability_score     = sentence_information[ sentence ][ 4 ] * 100 / len( strings_parsed )
+            pattern_info.applicability_score   = sentence_information[ sentence ][ 5 ]
 
             final_pattern_information.append( pattern_info )
 
@@ -170,4 +180,13 @@ class compare:
 
         for compiled_pattern in sentence_information:
             if compiled_pattern == pattern:
-                return sentence_information[ compiled_pattern ][ 3 ] * 100 / len( strings_parsed )
+                return sentence_information[ compiled_pattern ][ 4 ] * 100 / len( strings_parsed )
+
+    def get_applicability_score( self, pattern ):
+        # Getting global variables
+        global sentence_information
+        global strings_parsed
+
+        for compiled_pattern in sentence_information:
+            if compiled_pattern == pattern:
+                return sentence_information[ compiled_pattern ][ 5 ]

@@ -25,7 +25,7 @@ This class will test to see whether the dependencies for the given parser are in
 Class information:
 
 - name: run_dependency_tests
-- version: 1.0.0
+- version: 1.3.2
 
 """
 
@@ -79,6 +79,7 @@ class run_dependency_tests:
                 my_subject           = "[ Subject ]          : " + sentence.subject
                 my_verb              = "[ Verb ]             : " + sentence.verb
                 my_object            = "[ Object ]           : " + sentence.object[0]
+                my_preps             = "[ Prep Phrases ]     : " + str( sentence.prepositional_phrases )
                 my_reliability_score = "[ Reliability Score ]: " + str( sentence.reliability_score )
         except:
             # If it didn't work, this means the dependencies are missing from the system
@@ -104,6 +105,7 @@ class run_dependency_tests:
                 my_subject           = "[ Subject ]          : " + sentence.subject
                 my_verb              = "[ Verb ]             : " + sentence.verb
                 my_object            = "[ Object ]           : " + sentence.object[0]
+                my_preps             = "[ Prep Phrases ]     : " + str( sentence.prepositional_phrases )
                 my_reliability_score = "[ Reliability Score ]: " + str( sentence.reliability_score )
         except:
             # If it didn't work, this means the dependencies are missing from the system

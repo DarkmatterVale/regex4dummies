@@ -10,3 +10,7 @@ Current list of applications included in this project:
   - Version: 1.0
   - Stable : Yes
   - Info   : A GUI that allows the use of this library without any programming knowledge required
+- Accuracy Tester
+  - Version: 0.0
+  - Stable : No
+  - Info   : A client that determines how well the regex4dummies library performs semantic parsing

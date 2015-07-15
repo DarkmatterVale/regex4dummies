@@ -7,13 +7,14 @@ import re
 import nltk
 import nlpnet
 import os
+from subprocess import *
 
 """
 
 Class information:
 
 - name: semantic_parsing
-- version: 1.2.0
+- version: 1.3.3
 
 """
 
@@ -28,10 +29,38 @@ class semantic_parsing:
             return self.use_pattern( base_string, test_string, pattern_arg )
         elif parser_name == 'nlpnet':
             return self.use_nlpnet( base_string, test_string, pattern_arg )
+        elif parser_name == '':
+            parsed_data = []
+            parsed_data.append( self.use_nltk( base_string, test_string, [] ) )
+            parsed_data.append( self.use_pattern( base_string, test_string, [] ) )
+            parsed_data.append( self.use_nlpnet( base_string, test_string, [] ) )
+
+            return self.full_pattern_comparison( parsed_data, pattern_arg )
+        else:
+            print ""
+            print "A valid parser was not chosen. Please choose any of the following parsers: "
+            print "- 'nlpnet'"
+            print "- 'pattern'"
+            print "- 'nltk'"
+            print ""
+
+            exit( 0 )
+
+    def MY_TEST( self, base_string, test_string, pattern_arg ):
+        return "YOLO"
 
     def use_nlpnet( self, base_string, test_string, pattern_arg ):
+        # Getting nltk data path
+        running = Popen( [ 'python -c "import nltk;print nltk.data.path"' ], stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True )
+        stdin, stdout = running.communicate()
+
+        # Setting the path that the nlpnet dependency was downloaded to
+        path = re.sub( r"\'", "", re.sub( r"\[", '', str( stdin.split( '\n' )[ 0 ].split( ',' )[ 0 ] ) ) )
+        path = path.split( r"/" )
+        path = '/'.join( path[ 0 : len( path ) - 1 ] ) + '/nlpnet_dependency/dependency'
+
         # Setting up the nlpnet parser
-        nlpnet.set_data_dir( re.sub( r'\n', '', open( os.getcwd() + '/data.txt', 'r' ).read() ) )
+        nlpnet.set_data_dir( path )
         dependency_parser = nlpnet.DependencyParser()
         pos_parser = nlpnet.POSTagger()
 
@@ -48,18 +77,18 @@ class semantic_parsing:
             # Grabbing sentence information
             raw_data = str( base_sentences[ index ] )
             pos_sentence = pos_parser.tag( str( base_sentences[ index ] ) )
-            subject, verb, object = self.identify_sentence_parts_nlpnet( base_parse[ index ].tokens, base_parse[ index ].labels )
-            prepositional_phrases = ""
+            subject, verb, object, prepositional_phrases = self.identify_sentence_parts_nlpnet( base_parse[ index ].tokens, base_parse[ index ].labels )
 
             # Displaying information for debugging purposes
             #print "***BASE***"
-            #print "Raw Sentence: " + raw_data
-            #print "POS Sentence: " + str( pos_sentence )
-            #print "[ Tokens ]  : " + str( base_parse[ index ].tokens )
-            #print "[ Labels ]  : " + str( base_parse[ index ].labels )
-            #print "[ Subject ] : " + subject
-            #print "[ Verb ]    : " + verb
-            #print "[ Object ]  : " + object
+            #print "Raw Sentence     : " + raw_data
+            #print "POS Sentence    : " + str( pos_sentence )
+            #print "[ Tokens ]       : " + str( base_parse[ index ].tokens )
+            #print "[ Labels ]       : " + str( base_parse[ index ].labels )
+            #print "[ Subject ]     : " + subject
+            #print "[ Verb ]        : " + verb
+            #print "[ Object ]      : " + object
+            #print "[ Prep Phrases ] : " + str( prepositional_phrases )
 
             # Deciding whether the sentence/pattern should be added
             add_sentence = True
@@ -84,17 +113,18 @@ class semantic_parsing:
             # Grabbing sentence information
             raw_data = str( test_sentences[ index ] )
             pos_sentence = pos_parser.tag( str( test_sentences[ index ] ) )
-            subject, verb, object = self.identify_sentence_parts_nlpnet( test_parse[ index ].tokens, test_parse[ index ].labels )
-            prepositional_phrases = ""
+            subject, verb, object, prepositional_phrases = self.identify_sentence_parts_nlpnet( test_parse[ index ].tokens, test_parse[ index ].labels )
 
             #print "***TEST***"
-            #print "Raw Sentence: " + raw_data
-            #print "POS Sentence: " + str( pos_sentence )
-            #print "[ Tokens ]  : " + str( test_parse[ index ].tokens )
-            #print "[ Labels ]  : " + str( test_parse[ index ].labels )
-            #print "[ Subject ] : " + subject
-            #print "[ Verb ]    : " + verb
-            #print "[ Object ]  : " + object
+            #print "Raw Sentence     : " + raw_data
+            #print "POS Sentence    : " + str( pos_sentence )
+            #print "[ Tokens ]       : " + str( test_parse[ index ].tokens )
+            #print "[ Labels ]       : " + str( test_parse[ index ].labels )
+            #print "[ Subject ]     : " + subject
+            #print "[ Verb ]        : " + verb
+            #print "[ Object ]      : " + object
+            #print "[ Prep Phrases ] : " + str( prepositional_phrases )
+
 
             # Deciding whether the sentence/pattern should be added
             add_sentence = True
@@ -113,9 +143,10 @@ class semantic_parsing:
         return self.identify_common_patterns( base_sentence_info, test_sentence_info, patterns )
 
     def identify_sentence_parts_nlpnet( self, tokens, labels ):
-        subject = ""
-        verb    = ""
-        object  = ""
+        subject               = ""
+        verb                  = ""
+        object                = ""
+        prepositional_phrases = ""
 
         for index in range( 0, len( labels ) ):
             if "SBJ" in labels[ index ] and verb == "":
@@ -124,8 +155,15 @@ class semantic_parsing:
                 verb += tokens[ index ]
             elif "PRD" in labels[ index ] or "OBJ" in labels[ index ]:
                 object += tokens[ index ] + " "
+            elif "LOC" in labels[ index ]:
+                for prep_index in range( index, len( labels ) ):
+                    if "PMOD" in labels[ prep_index ] and ' '.join( tokens[ index : prep_index + 1 ] ) not in prepositional_phrases:
+                        prepositional_phrases += ' '.join( tokens[ index : prep_index + 1 ] ) + "..."
 
-        return subject, verb, object
+                        break
+
+
+        return subject, verb, object, prepositional_phrases.split( "..." )
 
     def use_nltk( self, base_string, test_string, pattern_arg ):
         patterns = pattern_arg
@@ -141,14 +179,16 @@ class semantic_parsing:
             subject               = self.find_subject( raw_data, pos_sentence )
             verb                  = self.find_verb( raw_data, pos_sentence )
             object                = self.find_object( raw_data, pos_sentence, pos_sentence )
-            prepositional_phrases = ""
+            prepositional_phrases = self.find_prepositional_phrases( raw_data, pos_sentence )
+            prepositional_phrases = prepositional_phrases.split( '...' )
 
             #print "***BASE SENTENCE***"
-            #print "Raw Sentence: " + raw_data
-            #print "POS Sentence: " + str( pos_sentence )
-            #print "[ Subject ] : " + subject
-            #print "[ Verb ]    : " + verb
-            #print "[ Object ]  : " + str( object )
+            #print "Raw Sentence     : " + raw_data
+            #print "POS Sentence     : " + str( pos_sentence )
+            #print "[ Subject ]      : " + subject
+            #print "[ Verb ]         : " + verb
+            #print "[ Object ]       : " + str( object )
+            #print "[ Prep Phrases ] : " + str( prepositional_phrases )
 
             add_sentence = True
             for sentence in base_sentence_info:
@@ -159,7 +199,7 @@ class semantic_parsing:
                         break
 
             if add_sentence:
-                base_sentence_info.append( [ subject, verb, object, [], str( base_sentence ) ] )
+                base_sentence_info.append( [ subject, verb, object, prepositional_phrases, str( base_sentence ) ] )
 
         test_blob = TextBlob( test_string )
         test_sentence_info = []
@@ -172,14 +212,16 @@ class semantic_parsing:
             subject               = self.find_subject( raw_data, pos_sentence )
             verb                  = self.find_verb( raw_data, pos_sentence )
             object                = self.find_object( raw_data, pos_sentence, pos_sentence )
-            prepositional_phrases = ""
+            prepositional_phrases = self.find_prepositional_phrases( raw_data, pos_sentence )
+            prepositional_phrases = prepositional_phrases.split( '...' )
 
             #print "***TEST SENTENCE***"
-            #print "Raw Sentence: " + raw_data
-            #print "POS Sentence: " + str( pos_sentence )
-            #print "[ Subject ] : " + subject
-            #print "[ Verb ]    : " + verb
-            #print "[ Object ]  : " + str( object )
+            #print "Raw Sentence     : " + raw_data
+            #print "POS Sentence     : " + str( pos_sentence )
+            #print "[ Subject ]      : " + subject
+            #print "[ Verb ]         : " + verb
+            #print "[ Object ]       : " + str( object )
+            #print "[ Prep Phrases ] : " + str( prepositional_phrases )
 
             add_sentence = True
             for sentence in test_sentence_info:
@@ -190,7 +232,7 @@ class semantic_parsing:
                         break
 
             if add_sentence:
-                test_sentence_info.append( [ subject, verb, object, [], str( test_sentence ) ] )
+                test_sentence_info.append( [ subject, verb, object, prepositional_phrases, str( test_sentence ) ] )
 
         return self.identify_common_patterns( base_sentence_info, test_sentence_info, patterns )
 
@@ -342,8 +384,27 @@ class semantic_parsing:
 
         return is_word_found, updated_object
 
-    def use_pattern( self, base_string, test_string, pattern_arg ):
+    def find_prepositional_phrases( self, raw_sentence, tagged_sentence ):
+        prepositional_phrases = ""
 
+        for index in range( 0, len( tagged_sentence ) ):
+            # Removing prepositions
+            if "IN" in tagged_sentence[ index ][ 1 ]:
+                for prep_index in range( index, len( tagged_sentence ) ):
+                    if "NN" in tagged_sentence[ prep_index ][ 1 ]:
+                        if index != 0:
+                            temporary_phrase = ""
+                            for phrase_index in range( index, prep_index + 1 ):
+                                temporary_phrase += " " + tagged_sentence[ phrase_index ][ 0 ]
+
+                            if temporary_phrase not in prepositional_phrases:
+                                prepositional_phrases += temporary_phrase + "..."
+
+                        break
+
+        return prepositional_phrases
+
+    def use_pattern( self, base_string, test_string, pattern_arg ):
         patterns = pattern_arg
 
         # Creating string textblob for analysis & analyzing the base_string's sentences
@@ -450,50 +511,153 @@ class semantic_parsing:
                         if len( base_sentence[ len( base_sentence ) - 1 ].split( ' ' ) ) > len( test_sentence[ len( test_sentence ) - 1 ].split( ' ' ) ):
                             # If other patterns have been detected
                             if patterns != []:
+                                sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ] = base_sentence[ 0 : len( base_sentence ) - 1 ]
+                                sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( 2 )
+                                sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( 100 )
+
                                 # If the current test patterns are not in patterns
                                 if test_sentence[ len( test_sentence ) - 1 ] not in patterns and base_sentence[ len( base_sentence ) - 1 ] not in patterns:
                                     patterns += [ base_sentence[ len( base_sentence ) - 1 ] ]
 
-                                    sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ] = base_sentence[ 0 : len( base_sentence ) - 2 ]
+                                    #sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ] = base_sentence[ 0 : len( base_sentence ) - 1 ]
                                 elif base_sentence[ len( base_sentence ) - 1 ] in patterns:
                                     # Updating reliability score
                                     try:
-                                        sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ][ 3 ] += 1
+                                        sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ][ 4 ] += 1
                                     except:
                                         sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( 2 )
+
+                                    # Adding applicability score
+                                    try:
+                                        sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ][ 5 ] = 100
+                                    except:
+                                        sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( 100 )
                             # If there are no patterns currently found, add this pattern
                             elif patterns == []:
                                 patterns += [ base_sentence[ len( base_sentence ) - 1 ] ]
 
-                                sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ] = base_sentence[ 0 : len( base_sentence ) - 2 ]
+                                sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ] = base_sentence[ 0 : len( base_sentence ) - 1 ]
                                 # Updating reliability score
                                 try:
-                                    sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ][ 3 ] += 1
+                                    sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ][ 4 ] += 1
                                 except:
                                     sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( 2 )
+
+                                # Adding applicability score
+                                try:
+                                    sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ][ 5 ] = 100
+                                except:
+                                    sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( 100 )
                         else:
                             # If there are patterns already found
                             if patterns != []:
+                                sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ] = test_sentence[ 0 : len( test_sentence ) - 1 ]
+                                sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( 2 )
+                                sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( 100 )
+
                                 # If the test patterns are not in the already found patterns
                                 if test_sentence[ len( test_sentence ) - 1 ] not in patterns and base_sentence[ len( base_sentence ) - 1 ] not in patterns:
                                     patterns += [ test_sentence[ len( test_sentence ) - 1 ] ]
 
-                                    sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ] = test_sentence[ 0 : len( test_sentence ) - 2 ]
+                                    #sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ] = test_sentence[ 0 : len( test_sentence ) - 1 ]
                                 elif test_sentence[ len( test_sentence ) - 1 ] in patterns:
                                     # Updating reliability score
                                     try:
-                                        sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ][ 3 ] += 1
+                                        sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ][ 4 ] += 1
                                     except:
                                         sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( 2 )
+
+                                    # Adding applicability score
+                                    try:
+                                        sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ][ 5 ] = 100
+                                    except:
+                                        sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( 100 )
                             # If there are no patterns currently found
                             elif patterns == []:
                                 patterns += [ test_sentence[ len( test_sentence ) - 1 ] ]
 
-                                sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ] = test_sentence[ 0 : len( test_sentence ) - 2 ]
+                                sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ] = test_sentence[ 0 : len( test_sentence ) - 1 ]
                                 # Updating reliability score
                                 try:
-                                    sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ][ 3 ] += 1
+                                    sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ][ 4 ] += 1
                                 except:
                                     sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( 2 )
 
+                                # Adding applicability score
+                                try:
+                                    sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ][ 5 ] = 100
+                                except:
+                                    sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( 100 )
+
         return patterns, sentence_information
+
+    # This function determines:
+    #   1. Removes duplicate patterns
+    #   2. Applicability score for a given pattern
+    #
+    # This function is used when all 3 parsers are used to identify patterns in one single call
+    def full_pattern_comparison( self, parsed_data, patterns ):
+        # Creating variable containing pattern information that will be returned
+        pattern_information = {}
+
+        # Comparing the output of one parser to the output of each other parser
+        # This is the base data index which will be compared to all other outputs. For example, if there are 4 parsers, the total comparison will look something like:
+        # Parsers: 1 2 3 4
+        # 1 : 2 3 4
+        # 2 : 3 4
+        # 3 : 4
+        # Where ':' means compared to.
+        for data_index in range( 0, len( parsed_data ) ):
+            # Getting the actual information about every pattern in a parser
+            base_data = parsed_data[ data_index ][ 1 ]
+
+            # For every pattern identified by that parser
+            for base_pattern in base_data:
+                # Get the pattern's information
+                base_pattern_subject               = base_data[ base_pattern ][ 0 ]
+                base_pattern_verb                  = base_data[ base_pattern ][ 1 ]
+                base_pattern_object                = base_data[ base_pattern ][ 2 ]
+                base_pattern_prepositional_phrases = base_data[ base_pattern ][ 3 ]
+
+                # Comparing the base parser to the remainder of parsers
+                for compare_index in range( data_index, len( parsed_data ) ):
+                    # Getting the information about every pattern identified by the parser
+                    test_data = parsed_data[ compare_index ][ 1 ]
+
+                    # For each pattern identified
+                    for test_pattern in test_data:
+                        # Getting pattern information
+                        test_pattern_subject               = test_data[ test_pattern ][ 0 ]
+                        test_pattern_verb                  = test_data[ test_pattern ][ 1 ]
+                        test_pattern_object                = test_data[ test_pattern ][ 2 ]
+                        test_pattern_prepositional_phrases = test_data[ test_pattern ][ 3 ]
+
+                        # Comparing pattern information
+                        if base_pattern_subject == test_pattern_subject and base_pattern_verb == test_pattern_verb and base_pattern_object == test_pattern_object:
+                            # If the patterns are the same, add the patterns to the identified patterns
+                            # If the base_pattern is more descriptive, add that to the pattern information
+                            if len( base_pattern.split( ' ' ) ) > len( test_pattern.split( ' ' ) ):
+                                pattern_information[ base_pattern.lower() ] = [ base_pattern_subject, base_pattern_verb, base_pattern_object, base_pattern_prepositional_phrases, 2, 0 ]
+
+                                # As long as the pattern is not already found
+                                if base_pattern.lower() not in patterns and test_pattern.lower() not in patterns:
+                                    # Add the pattern to the list of identified patterns
+                                    patterns.append( str( base_pattern.lower() ) )
+                                else:
+                                    pattern_information[ base_pattern.lower() ][ 4 ] += 1
+
+                                pattern_information[ base_pattern.lower() ][ 5 ] += 1
+                            # Otherwise, add test_pattern
+                            else:
+                                pattern_information[ test_pattern.lower() ] = [ test_pattern_subject, test_pattern_verb, test_pattern_object, test_pattern_prepositional_phrases, 2, 0 ]
+
+                                # As long as the pattern is not already found
+                                if test_pattern.lower() not in patterns and base_pattern.lower() not in patterns:
+                                    # Add the pattern to the list of identified patterns
+                                    patterns.append( str( test_pattern.lower() ) )
+                                else:
+                                    pattern_information[ test_pattern.lower() ][ 4 ] += 1
+
+                                pattern_information[ test_pattern.lower() ][ 5 ] += 1
+
+        return patterns, pattern_information

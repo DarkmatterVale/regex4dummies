@@ -83,19 +83,6 @@ class gui_downloader( tk.Tk ):
             path = path.split( r"/" )
             path = '/'.join( path[ 0 : len( path ) - 1 ] ) + '/nlpnet_dependency/'
 
-            # Checking to see whether the dependencies have already been downloaded
-            path_file = open( 'data.txt', 'r' )
-            contents = path_file.read()
-            contents = re.sub( r'\n', '', contents )
-
-            if path == contents:
-                self.quit()
-
-            # Save path to the data file
-            path_file = open( 'data.txt', 'w' )
-            path_file.write( path + "dependency/" )
-            path_file.close()
-
             # Download the dependencies & extract
             current_directory = os.getcwd()
 

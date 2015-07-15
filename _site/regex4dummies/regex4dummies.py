@@ -14,7 +14,7 @@ from run_dependency_tests import run_dependency_tests
 Class information:
 
 - name: regex4dummies
-- version: 1.2.1
+- version: 1.3.3
 
 """
 
@@ -24,7 +24,7 @@ class regex4dummies:
     global compare_object
 
     # Setting global version variable which contains the version of this library
-    __version__ = 'regex4dummies version: 1.3.0'
+    __version__ = 'regex4dummies version: 1.3.3'
 
     # Empty constructor method
     def __init__( self, *args, **kwargs ):
@@ -38,8 +38,13 @@ class regex4dummies:
     # This function returns a 3-tuple array containing reliability score, applicability score, and pattern
     def compare_strings( self, parser_name, literal_find, strings_to_process ):
         # Testing the system to make sure all dependencies are installed
-        test_install = run_dependency_tests()
-        test_install.test( parser_name )
+        if not literal_find:
+            if parser_name == '':
+                test_install = run_dependency_tests()
+                test_install.test( 'pattern nltk nlpnet' )
+            else:
+                test_install = run_dependency_tests()
+                test_install.test( parser_name )
 
         # Getting global variables
         global compare_object
@@ -70,13 +75,16 @@ if __name__ == '__main__':
     regex = regex4dummies()
 
     # Printing the semantic patterns within this string
-    print regex.compare_strings( 'nlpnet', False, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
+    print regex.compare_strings( '', False, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "what time is it", "This is the cat's hat", "That is the cat's hat" ] )
 
     # Displaying all of the "meaning" in these sentences
     sentence_information = regex.get_sentence_information()
     for sentence in sentence_information:
-        print "[ Pattern ]          : " + sentence.pattern
-        print "[ Subject ]          : " + sentence.subject
-        print "[ Verb ]             : " + sentence.verb
-        print "[ Object ]           : " + sentence.object[0]
-        print "[ Reliability Score ]: " + str( sentence.reliability_score )
+        print "[ Pattern ]            : " + sentence.pattern
+        print "[ Subject ]            : " + sentence.subject
+        print "[ Verb ]               : " + sentence.verb
+        print "[ Object ]             : " + sentence.object[0]
+        print "[ Prep Phrases ]       : " + str( sentence.prepositional_phrases )
+        print "[ Reliability Score ]  : " + str( sentence.reliability_score )
+        print "[ Applicability Score ]: " + str( sentence.applicability_score )
+        print ""

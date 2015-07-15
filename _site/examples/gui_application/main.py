@@ -11,6 +11,15 @@ import time
 from regex4dummies import regex4dummies
 from textblob import TextBlob
 
+"""
+
+Class information:
+
+- name: main
+- version: 1.3.4
+
+"""
+
 class main( tk.Tk ):
     def __init__( self, *args, **kwargs ):
         tk.Tk.__init__(self, *args, **kwargs)
