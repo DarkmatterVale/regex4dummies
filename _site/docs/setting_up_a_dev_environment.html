@@ -1,0 +1,59 @@
+<section class="doc_title">
+  <div class="container">
+    <div class="row">
+      <h2>Setting up a Development Environment</h2>
+    </div>
+  </div>
+</section>
+
+<section class="doc_body">
+  <div class="container">
+    <div class="row">
+      <h5>
+<br><br>
+To setup a development environment, a few things must be done. Each of these steps are described in detail below.
+<br><br>
+1. Make sure you have python and wget command-line commands installed<br>
+2. Download & extract the Github repository<br>
+3. "cd", or change directory, to the downloaded file<br>
+4. Test & Start messing with the code!
+<br><br><br><br>
+1. Making sure you have python and the wget command-line commands installed
+<br><br>
+Both of these are required commands to get the library to work. To test to see whether you have python installed, type the following into the terminal:
+<pre><code>
+~$ python
+</code></pre>
+If you get an error, then you will have to install Python 2.7. This is very easy and can be completed by going to the Python website and downloading Python 2.7
+<br><br>
+Next up is checking whether you have wget installed. This is also a simple test, and can be done like the following:
+<pre><code>
+~$ wget
+</code></pre>
+You should get something like "usage: etc.", but if you get an error you will have to install wget. This varies by operating system and is well documented online, so I will not go into detail about it here.
+<br><br><br><br>
+2. The next step is to download the Github repository. Since you are setting up a development environment, you will probably want the latest release. To get this, go to this link ( which is the link to the releases page on Github ):
+<br><br>
+<a href="https://github.com/DarkmatterVale/regex4dummies/releases">https://github.com/DarkmatterVale/regex4dummies/releases</a>
+<br><br>
+Once you have downloaded the file, extract it and you should be ready to move on to the next step.
+<br><br><br><br>
+3. Luckily, this is a simple step. Open command-line or terminal, and cd to the downloaded folder containing the latest release. Then you're done!
+<br><br><br><br>
+4. In this last step, you are going to need to test the library. Enter into the regex4dummies.py file, and near the bottom, you should see the following line of code:
+<pre><code>
+exit( 0 )
+</code></pre>
+Change that line to this:
+<pre><code>
+#exit( 0 )
+</code></pre>
+You just commented out the code that would exit the main library if you attempted to run it. Now, if everything was installed properly, you should be able to run the following command in command-line/terminal, and you should get some patterns!
+<pre><code>
+~$ python regex4dummies.py
+</code></pre>
+Now, feel free to look over the code and mess with anything you want!
+      </h5>
+    </div>
+  </div>
+</section>
