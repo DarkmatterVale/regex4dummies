@@ -148,7 +148,7 @@ p {
 }
 
 .current_status_progress_title {
-  padding-bottom: 150px;
+  padding-bottom: 0;
   text-align: left;
   background-color: #FFFFFF;
 }
@@ -165,6 +165,52 @@ p {
 
 .current_status_todo_title h3 {
   color: #696969;
+}
+
+.current_status_current_milestone_title {
+  padding-bottom: 150px;
+  text-align: left;
+  background-color: #FFFFFF;
+}
+
+.current_status_current_milestone_title h4 {
+  color: #696969
+}
+
+progress[value] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 450px;
+}
+
+progress[value]::-webkit-progress-bar {
+  background-color: #FFFFFF;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+progress[value]::-webkit-progress-value {
+  background-image:
+	   -webkit-linear-gradient(-45deg,
+	                           transparent 33%, rgba(0, 0, 0, .25) 33%,
+	                           rgba(0,0, 0, .25) 66%, transparent 66%),
+	   -webkit-linear-gradient(top,
+	                           rgba(255, 255, 255, .25),
+	                           rgba(0, 0, 0, .25)),
+      -webkit-linear-gradient(left, #00FA9A, #00FA9A);
+
+    border-radius: 2px;
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+    -webkit-animation: animate-stripes 5s linear infinite;
+    animation: animate-stripes 5s linear infinite;
+}
+
+@-webkit-keyframes animate-stripes {
+   100% { background-position: -100px 0px; }
+}
+
+@keyframes animate-stripes {
+   100% { background-position: -100px 0px; }
 }
 
 /* Documentation pages */
