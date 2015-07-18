@@ -34,7 +34,10 @@ As of 7/13/15, this is what is left to complete:
     - pattern
       - Be able to identify word case ( for verbs, present, past, future, etc ) & use that information to make sure some patterns are not removed due to case differences
 - Medium/Long Priority ( mid-term and long-term, hopefully completed within a year ):
-  - Machine Learning implemented-this will allow the parser to learn different "styles" of grammatical syntax, helping it be more accurate ( hopefully )
+  - Machine Learning implemented to allow use of multiple grammatical "styles"
+  - Add tokenizer function. Allows the user to get a more-accurate tokenized sentence ( accomplished by using multiple tokenizers and some machine learning implemented )
+  - Add frequency-distribution-led sentence/string topic analyzer ( implemented by machine learning and identification of all content-bearing words )
+  - Add sentiment analysis function
 
 ## Usage
 
