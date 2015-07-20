@@ -53,6 +53,11 @@ a.no-hover-dec:hover {
   background-color: #D3D3D3;
 }
 
+.features h4 {
+  font-size: 10px;
+  text-align: left;
+}
+
 .first-feature {
   padding-top: 75px;
 }
@@ -76,7 +81,7 @@ p {
 /* Introduction */
 
 .introduction {
-  padding: 0 0 125px 0;
+  padding: 0 0 75px 0;
   height: 100%;
   background: linear-gradient(
     to bottom,
@@ -131,7 +136,11 @@ p {
 .regex4dummies-does {
   background-color: #D3D3D3;
   padding-bottom: 0px;
-  padding-top: 20px;
+  padding-top: 0px;
+}
+
+.regex4dummies-does img {
+  padding-bottom: 15px;
 }
 
 /* Current Status page */
