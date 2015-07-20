@@ -101,7 +101,15 @@ That's it! The nlpnet parser should now be able to use its POSTagger.
 Patch Notes
 -------------
 
-( Latest ) v1.3.3: Semantic parser updates!
+( Latest ) v1.3.4: Minor update
+
+This is not a parser or core functionality update ( sadly :( ). An accuracy tester is half-completed, but due to the need to create a "gold-standard" test set, I need additional time.
+
+- Artwork added to main website page
+- Current Status page updated to include next milestone information display
+- Minor in-repo doc update
+
+v1.3.3: Semantic parser updates!
 
 - All parsers can now be called using the same compare_strings() function, but without having to separate data yourself. See above for the usage of this command ( in the example code )
 - Applicability Score has been added and can now be found in any semantic pattern
