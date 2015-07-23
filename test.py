@@ -25,6 +25,9 @@ Version: 1.3.2
 """
 
 
+# Moving to the directory required to run the program
+os.chdir( "regex4dummies" )
+
 # Creating test object
 regex = regex4dummies()
 

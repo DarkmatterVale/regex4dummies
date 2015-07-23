@@ -11,7 +11,6 @@ import nltk
 import nlpnet
 
 current_directory = os.getcwd()
-os.chdir( "regex4dummies" )
 os.chdir( "semantic_parsers" )
 sys.path.insert( 0, os.getcwd() )
 os.chdir( current_directory )
