@@ -11,14 +11,14 @@ import nltk
 import nlpnet
 
 current_directory = os.getcwd()
-print current_directory
-print os.listdir( current_directory )
+os.chdir( "regex4dummies" )
 os.chdir( "semantic_parsers" )
 sys.path.insert( 0, os.getcwd() )
+os.chdir( current_directory )
+
 from nlpnet_parser import NLPNET
 from nltk_parser import NLTK
 from pattern_parser import PATTERN
-os.chdir( current_directory )
 
 
 """
