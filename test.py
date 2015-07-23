@@ -1,6 +1,3 @@
-# Importing the main library
-from regex4dummies import regex4dummies
-
 # Importing other required libraries
 import os
 from subprocess import *
@@ -8,6 +5,12 @@ import re
 import sys
 
 import tarfile
+
+# Moving to the directory required to run the program
+os.chdir( "regex4dummies" )
+
+# Importing the main library
+from regex4dummies import regex4dummies
 
 
 """
@@ -24,9 +27,6 @@ Version: 1.3.2
 
 """
 
-
-# Moving to the directory required to run the program
-os.chdir( "regex4dummies" )
 
 # Creating test object
 regex = regex4dummies()
