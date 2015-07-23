@@ -2,9 +2,11 @@
 from regex4dummies import regex4dummies
 
 # Importing other required libraries
-import os, sys
+import os
 from subprocess import *
 import re
+import sys
+
 import tarfile
 
 

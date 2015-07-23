@@ -10,10 +10,14 @@ from textblob import TextBlob
 import nltk
 import nlpnet
 
-sys.path.insert( 0, os.getcwd() + r"/semantic_parsers/" )
+current_directory = os.getcwd()
+os.chdir( "semantic_parsers" )
+sys.path.insert( 0, os.getcwd() )
 from nlpnet_parser import NLPNET
 from nltk_parser import NLTK
 from pattern_parser import PATTERN
+os.chdir( current_directory )
+
 
 """
 
