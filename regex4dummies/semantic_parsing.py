@@ -11,6 +11,7 @@ import nltk
 import nlpnet
 
 current_directory = os.getcwd()
+print os.listdir()
 os.chdir( "semantic_parsers" )
 sys.path.insert( 0, os.getcwd() )
 from nlpnet_parser import NLPNET
