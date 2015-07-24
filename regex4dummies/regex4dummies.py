@@ -14,7 +14,7 @@ from run_dependency_tests import run_dependency_tests
 Class information:
 
 - name: regex4dummies
-- version: 1.3.4
+- version: 1.3.5
 
 """
 
@@ -26,6 +26,7 @@ class regex4dummies:
     # Setting global version variable which contains the version of this library
     __version__ = 'regex4dummies version: 1.3.4'
 
+
     # Empty constructor method
     def __init__( self, *args, **kwargs ):
         # Getting global information
@@ -33,6 +34,7 @@ class regex4dummies:
 
         # Instantiating compare object to be used
         compare_object = compare()
+
 
     # Function that is integral in communicating between a compare object and the user
     # This function returns a 3-tuple array containing reliability score, applicability score, and pattern
@@ -53,12 +55,22 @@ class regex4dummies:
         # Return the output from compare_strings
         return compare_object.compare_strings( strings_to_process, literal_find, parser_name )
 
+
     # This function returns the information for each sentence/pattern that was identified.
     # This is only useful if semantic parsing is implemented; otherwise, {} will be returned
     def get_sentence_information( self ):
         global compare_object
 
         return compare_object.get_sentence_information()
+
+
+    def get_pattern_topics( self ):
+        """ Returns the list of topics that the parsers identified """
+
+        global compare_object
+
+        return compare_object.get_pattern_topics()
+
 
 # If a user mistakingly runs this library believing it is a program, inform the user that it is not a program
 if __name__ == '__main__':
@@ -69,13 +81,17 @@ if __name__ == '__main__':
     print "http://github.com/DarkmatterVale/regex4dummies"
     print ""
 
-    exit( 0 )
+    #exit( 0 )
 
     # Test Set
     regex = regex4dummies()
 
     # Printing the semantic patterns within this string
-    print regex.compare_strings( '', False, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "what time is it", "This is the cat's hat", "That is the cat's hat" ] )
+    print "Patterns: " + str( regex.compare_strings( 'nltk', False, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "what time is it", "This is the cat's hat", "That is the cat's hat" ] ) )
+
+    # Displaying the topics that were identified by the parsers in the most recently compared set of strings
+    print "Topics: " + str( regex.get_pattern_topics() )
+    print ""
 
     # Displaying all of the "meaning" in these sentences
     sentence_information = regex.get_sentence_information()

@@ -7,12 +7,11 @@ import re
 
 # Parsing related libraries
 import re
-from textblob import TextBlob
-from textblob.parsers import PatternParser
-from pattern.en import parse
 from pattern_detail import pattern_detail
 from literal_parsing import literal_parsing
 from semantic_parsing import semantic_parsing
+import nltk
+from operator import itemgetter
 
 """
 
@@ -30,7 +29,7 @@ This class accomplishes the bulk of regex4dummies' work. Below is a short list o
 Class information:
 
 - name: compare
-- version: 1.3.3
+- version: 1.3.5
 
 """
 
@@ -171,6 +170,55 @@ class compare:
 
         # Returning the assembled information
         return final_pattern_information
+
+
+    def get_pattern_topics( self ):
+        """ This function will find all of the topics from the strings most recently compared """
+
+        global strings_parsed
+
+        topics = {}
+        for string in strings_parsed:
+            # Determine part of speech of each word
+            words = nltk.pos_tag( nltk.word_tokenize( string ) )
+
+            for word in words:
+                if word[1] != "DT" and word[1] != "CC" and "PRP" not in word[1] and "VB" not in word[1] and word[1] != "IN" and word[1] != "." and word[1] != "," and word[1] != "POS" and word[1] != "WP" and "RB" not in word[1]:
+                    if word[0] in topics:
+                        topics[ word[0] ][1] += 1
+                    else:
+                        topics[ word[0] ] = [ word[0], 1 ]
+
+        # Sort topics list
+        organized_topics = []
+
+        # Creating a list out of the compiled information
+        for token in topics:
+            organized_topics.append( [token, topics[ token ][1]] )
+
+        # Removing topics that are only mentioned once. If the word in question is a topic, it will be used more than once
+        topic_index = 0
+        while topic_index < len( organized_topics ):
+            if organized_topics[topic_index][1] == 1:
+                del organized_topics[topic_index]
+
+                topic_index = 0
+
+            topic_index += 1
+
+        # Sorting the final list
+        organized_topics = sorted( organized_topics, key=itemgetter(1) )
+        organized_topics = list(reversed( organized_topics ))
+
+        # Removing numbers
+        for topic_index in range(0, len(organized_topics)):
+            organized_topics[topic_index] = organized_topics[topic_index][0]
+
+        # Return organized_topics
+        # A list is returned, with the most important topics on the left. For example,
+        # [ "Most important/common pattern", "Second most important/common pattern", etc. ]
+        return organized_topics
+
 
     # This function is used to return the reliability score of a pattern
     def get_reliability_score( self, pattern ):
