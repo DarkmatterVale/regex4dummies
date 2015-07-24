@@ -177,6 +177,9 @@ class compare:
 
         global strings_parsed
 
+        """
+        This is a backup simple topic determiner. It is only meant to be used in the event of something breaking with NLTK's NE chunker.
+
         topics = {}
         for string in strings_parsed:
             # Determine part of speech of each word
@@ -213,11 +216,22 @@ class compare:
         # Removing numbers
         for topic_index in range(0, len(organized_topics)):
             organized_topics[topic_index] = organized_topics[topic_index][0]
+        """
+
+        topics = []
+        for string in strings_parsed:
+            named_entities = nltk.ne_chunk(nltk.pos_tag(nltk.word_tokenize( string )), binary=True)
+            named_entities =  nltk.chunk.tree2conlltags(named_entities)
+
+            for entity in named_entities:
+                if "NE" in entity[2]:
+                    if entity not in topics:
+                        topics.append( entity[0] )
 
         # Return organized_topics
         # A list is returned, with the most important topics on the left. For example,
         # [ "Most important/common pattern", "Second most important/common pattern", etc. ]
-        return organized_topics
+        return topics
 
 
     # This function is used to return the reliability score of a pattern
