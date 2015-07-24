@@ -16,6 +16,7 @@ from subprocess import *
 
 from textblob import TextBlob
 import nlpnet
+from nltk.stem.porter import *
 
 
 class NLPNET:

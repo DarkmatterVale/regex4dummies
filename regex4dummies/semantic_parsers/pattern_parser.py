@@ -16,6 +16,7 @@ from subprocess import *
 
 from pattern.en import parse
 from textblob import TextBlob
+from nltk.stem.porter import *
 
 
 class PATTERN:
