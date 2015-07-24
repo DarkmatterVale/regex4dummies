@@ -24,7 +24,7 @@ class regex4dummies:
     global compare_object
 
     # Setting global version variable which contains the version of this library
-    __version__ = 'regex4dummies version: 1.3.4'
+    __version__ = 'regex4dummies version: 1.3.5'
 
 
     # Empty constructor method
@@ -81,7 +81,7 @@ if __name__ == '__main__':
     print "http://github.com/DarkmatterVale/regex4dummies"
     print ""
 
-    #exit( 0 )
+    exit( 0 )
 
     # Test Set
     regex = regex4dummies()

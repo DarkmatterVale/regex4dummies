@@ -27,9 +27,9 @@ Roadmap
 
 Some features I plan to implement in the future:
 
-- Machine Learning. This will allow the parsers to learn multiple grammatical "styles" and be able to successfully parse a much wider selection of strings
-- Additional parsers. Currently, I am looking at implementing the nlpnet library. I will find others as well as time progresses
-- Continued improvements on the current parsers. In addition to adding new parsers, I would like to make the current ones better. This will be a long-term project, and additional details can be found on the main Github page
+- Machine Learning. This will allow the parsers to learn multiple grammatical “styles” and be able to successfully parse a much wider selection of strings
+- Additional parsers
+- Continued improvements on the current parsers. This will be a long-term project, and additional details can be found on the main Github page
 
 If you have feature requests, feel free to email me or add an issue to the Github issue tracker. All contributions and requests are appreciated!
 
@@ -67,6 +67,9 @@ Here is an example of how to use the library.
   # To call all of the parsers, replace the above line of code with the following:
   # print regex.compare_strings( '', False, strings )
 
+  # To get the topics of the strings, call the get_pattern_topics function
+  print regex.get_pattern_topics()
+
   # Printing pattern information
   pattern_information = regex.get_sentence_information()
     for objects in pattern_information:
@@ -101,7 +104,13 @@ That's it! The nlpnet parser should now be able to use its POSTagger.
 Patch Notes
 -------------
 
-( Latest ) v1.3.4: Minor update
+( Latest ) v1.3.5: Feature update
+
+- Topic identifier has been added. This is currently in "beta" and only features NLTK's NE chunker. In the next releases, functionality will increase. Think of this as a preview of what is to come
+- Substantial code refactoring. The semantic parser code structure has been changed. This is mostly intended for developers only who would like to develop their own modules for regex4dummies, but it also make the code easier to read
+- Behind-the-scenes parser update. A Stemmer has been implemented in pattern comparison to help the parsers be more accurate ( only applies to individual parser calls, not the "all parser" call )
+
+v1.3.4: Minor update
 
 This is not a parser or core functionality update ( sadly :( ). An accuracy tester is half-completed, but due to the need to create a "gold-standard" test set, I need additional time.
 
