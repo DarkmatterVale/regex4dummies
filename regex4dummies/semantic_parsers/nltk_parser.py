@@ -16,6 +16,7 @@ import os
 
 from textblob import TextBlob
 import nltk
+from nltk.stem.porter import *
 
 
 class NLTK:
@@ -266,6 +267,27 @@ class NLTK:
 
         return prepositional_phrases
 
+
+    def normalize_sentence_info( self, sentence_info ):
+        """ Normalizes all of the incoming text to a standard """
+
+        # Create a stemmer object
+        stemmer = PorterStemmer()
+
+        # Normalizing sthe patterns
+        # Make the subject, verb, and object lowercase
+        sentence_info[0] = sentence_info[0].lower()
+        sentence_info[1] = sentence_info[1].lower()
+        sentence_info[2] = sentence_info[2].lower()
+
+        # Implement stemming
+        sentence_info[0] = stemmer.stem( sentence_info[0] )
+        sentence_info[1] = stemmer.stem( sentence_info[1] )
+        sentence_info[2] = stemmer.stem( sentence_info[2] )
+
+        # Return normalized information
+        return sentence_info
+
     def identify_common_patterns( self, base_sentence_info, test_sentence_info, patterns ):
         # Creating variables
         sentence_information = {}
@@ -275,8 +297,12 @@ class NLTK:
             for test_sentence in test_sentence_info:
                 # If there are two sentences/patterns to compare
                 if base_sentence != [] and test_sentence != []:
+                    # Normalize the pattern
+                    normalized_base_sentence = self.normalize_sentence_info( base_sentence )
+                    normalized_test_sentence = self.normalize_sentence_info( test_sentence )
+
                     # If the patterns' semantic "value" is the same
-                    if base_sentence[0] == test_sentence[0] and base_sentence[1] == test_sentence[1] and base_sentence[2] == test_sentence[2]:
+                    if normalized_base_sentence[0] == normalized_test_sentence[0] and normalized_base_sentence[1] == normalized_test_sentence[1] and normalized_base_sentence[2] == normalized_test_sentence[2]:
                         # If one sentence/pattern is longer than the other, use that pattern
                         if len( base_sentence[ len( base_sentence ) - 1 ].split( ' ' ) ) > len( test_sentence[ len( test_sentence ) - 1 ].split( ' ' ) ):
                             # If other patterns have been detected
