@@ -75,7 +75,7 @@ class NLPNET:
             add_sentence = True
             for sentence in base_sentence_info:
                 if sentence != []:
-                    if sentence[ len( sentence ) ] == raw_data:
+                    if sentence[ len( sentence ) - 1 ] == raw_data:
                         add_sentence = False
 
                         break
@@ -111,7 +111,7 @@ class NLPNET:
             add_sentence = True
             for sentence in test_sentence_info:
                 if sentence != []:
-                    if sentence[ len( sentence ) ] == raw_data:
+                    if sentence[ len( sentence ) - 1 ] == raw_data:
                         add_sentence = False
 
                         break

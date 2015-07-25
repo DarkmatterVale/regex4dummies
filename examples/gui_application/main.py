@@ -24,7 +24,7 @@ Class information:
 
 """
 
-class main( tk.Tk ):
+class Main( tk.Tk ):
     def __init__( self, *args, **kwargs ):
         tk.Tk.__init__(self, *args, **kwargs)
 
@@ -147,6 +147,6 @@ class main( tk.Tk ):
 
 
 if __name__ == '__main__':
-    main_gui = main()
+    main_gui = Main()
 
     main_gui.mainloop()

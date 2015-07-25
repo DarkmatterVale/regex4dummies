@@ -15,11 +15,13 @@ from regex4dummies import regex4dummies
 Class information:
 
 - name: main
-- version: 1.3.4
+- version: 1.3.7
+
+This is an accuracy tester for regex4dummies. It will test all components of the library and determine how effective it is at accomplishing its goal
 
 """
 
-class main:
+class Main:
     # Global variables
     global overall_score
     global pattern_score
@@ -29,8 +31,10 @@ class main:
     global nlpnet_score
     global nlpnet_score_info
 
-    # Constructor
+
     def __init__( self, *args, **kwargs ):
+        """ Constructor method that will complete the tests and display the results """
+
         # Getting global variables
         global overall_score
         global pattern_score
@@ -53,20 +57,19 @@ class main:
         #   a. Are the subject, verb, object, and prepositional phrases properly identified?
         #   b. Are the applicability score and the reliability score properly calculated?
         #   c. Are all of the patterns identified?
+        #   d. Is everything pertaining to the literal parser properly identified?
         # 2. All 3 parsers in one function call
         #   a. Are all of the patterns identified?
         #   b. Are the subject, verb, object, and prepositional phrases properly identified?
         #   c. Are the applicability score and the reliability score properly calculated?
 
         # Functions to be implemented that will be tested
-        # 3. FreqDist to determine the possible topics that all to the strings relate to
-        # 4. Topics for each pattern is correctly identified
+        # 3. Topics are correctly identified
 
-        # Weighting of each aspect of the final score
-        # Test-Set #1: 40%
-        # Test-Set #2: 40%
-        # Test-Set #3: 10%
-        # Test-Set #4: 10%
+        # Weighting of each aspect of the final score ( from the above list )
+        # #1: 50%
+        # #2: 25%
+        # #3: 25%
         # The test sets total up to 100%, giving a complete score. This score is meant to represent
         #   how important each aspect of the library is relative to the other aspects of the library.
 
@@ -116,8 +119,9 @@ class main:
         print ""
 
 
-    # This function will perform the above tests, and set the appropriate variables with test information
     def complete_tests( self ):
+        """ This function will perform the above tests, and set the appropriate variables with test information """
+
         # Getting global variables
         global overall_score
         global pattern_score
@@ -138,20 +142,41 @@ class main:
         nlpnet_score_info  = ""
 
         # Creating test-containing strings
-        test_1 = """This is the first test string.
+        # TODO: Increase "corpora" size & add much more data to test
+        test_1 = "This is the first test string. Cats are very unique animals. In addition to being pets, they are wild animals. There are a number of different kinds of cats. Lions and cheetahs are included, there are three categories of cats."
+        test_2 = "This is the second test string. Dogs, unlike cats, are not a unique kind of animal. Dogs are pets, wild animals, and some are even in between being wild and pets. Unlike cats, there are many different kinds of dogs. Wolves, for instance, are a kind of dog."
+        test_3 = "This is the third test string. This string is about computers. Many people argue that artificially intelligent computers will take over the world. In fact, I disagree with this view. I believe that computers will not turn against us."
+        test_4 = "This is the fourth test string. Like the last string, this string is about computers and is a continuation of the last conversation. Computers are very likely to instead help us. Although many scientists believe that I am incorrect, a number of other very smart scientists agree with me."
 
-In this particular test string, a number of theories are discussed, with topics ranging from astrophysics to neural networking in computer science.
         """
-        test_2 = """
+        Tests to make sure the above strings work without any issues/bugs arising.
         """
-        test_3 = """
-        """
-        test_4 = """
-        """
+        regex = regex4dummies()
+
+        # Printing the semantic patterns within this string
+        print "Patterns: " + str( regex.compare_strings( 'nltk', False, [ test_1, test_2, test_3, test_4 ] ) )
+
+        # Displaying the topics that were identified by the parsers in the most recently compared set of strings
+        print "Topics: " + str( regex.get_pattern_topics() )
+        print ""
+
+        # Displaying all of the "meaning" in these sentences
+        sentence_information = regex.get_sentence_information()
+        for sentence in sentence_information:
+            print "[ Pattern ]            : " + sentence.pattern
+            print "[ Subject ]            : " + sentence.subject
+            print "[ Verb ]               : " + sentence.verb
+            print "[ Object ]             : " + sentence.object[0]
+            print "[ Prep Phrases ]       : " + str( sentence.prepositional_phrases )
+            print "[ Reliability Score ]  : " + str( sentence.reliability_score )
+            print "[ Applicability Score ]: " + str( sentence.applicability_score )
+            print ""
+        #"""
 
         # Creating correct information
         correct_patterns            = []
-        correct_pattern_information = []
+        correct_pattern_information = {}
+        correct_topics = [ "cats", "dogs", "computers" ]
 
         # ************************************************************
         # Beginning tests
@@ -185,12 +210,62 @@ In this particular test string, a number of theories are discussed, with topics 
         # nlpnet_score, nlpnet_score_info = self.process_raw_data( nlpnet_result, correct_patterns, correct_pattern_information )
 
 
-    # This function processes the raw data and turns it into useful information.
-    # That data provides useful statistics about the library's current "health"
-    # The function returns the overall score for the data, and specific statistics of the data
-    def process_raw_data( self, raw_data, correct_patterns, correct_pattern_information ):
-        pass
+    def process_raw_data_semantic( self, parser_name, raw_data, information ):
+        """ This function processes the raw data and turns it into useful information.
+            That data provides useful statistics about the library's current "health".
+            The function returns the overall score for the data, and specific statistics of the data """
+
+        regex = regex4dummies()
+
+        # Getting the semantic patterns within the test strings
+        regex.compare_strings( parser_name, False, information[ 0 ] )
+
+        # Identifying topics discovered by the parsers in the most recently compared set of strings
+        test_topics = regex.get_pattern_topics()
+
+        # Gathering and comparing the "meaning" in these sentences
+        compare_index = 0
+        sentence_information = regex.get_sentence_information()
+        for sentence in sentence_information:
+            # Getting information from the test sentence
+            test_pattern = sentence.pattern
+            test_subject = sentence.subject
+            test_verb = sentence.verb
+            test_object = sentence.object[0]
+            test_prepositional_phrases = sentence.prepositional_phrases
+            test_reliability_score = sentence.reliability_score
+            test_applicability_score = sentence.applicability_score
+
+            # Getting information from the correct sentence
+
+            # Comparing and generating score
+            compare_index += 1
+
+        # Generating the semantic score
+
+        # Comparing topics & Generating topic score
+
+        # Generating overall score
+
+        # Returning the final score and all other relevant information
+
+
+    def process_raw_data_literal( self, parser_name, raw_data, information ):
+        """ This function processes the raw data and turns it into useful information.
+            That data provides useful statistics about the library's current "health".
+            The function returns the overall score for the data, and specific statistics of the data """
+
+        regex = regex4dummies()
+
+        # Printing the semantic patterns within this string
+        test_patterns = regex.compare_strings( parser_name, True, information[ 0 ] )
+
+        # Compare test_patterns to correct patterns ( patterns in the "golden standard" )
+
+        # Generating overall score
+
+        # Returning the final score and all other relevant information
 
 
 if __name__ == '__main__':
-    main()
+    Main()

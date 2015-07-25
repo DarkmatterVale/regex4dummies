@@ -63,7 +63,7 @@ class PATTERN:
             add_sentence = True
             for sentence in base_sentence_info:
                 if sentence != []:
-                    if sentence[ len( sentence ) ] == str( base_sentence ):
+                    if sentence[ len( sentence ) - 1 ] == str( base_sentence ):
                         add_sentence = False
 
                         break
@@ -106,7 +106,7 @@ class PATTERN:
             add_sentence = True
             for sentence in test_sentence_info:
                 if sentence != []:
-                    if sentence[ len( sentence ) ] == str( test_sentence ):
+                    if sentence[ len( sentence ) - 1 ] == str( test_sentence ):
                         add_sentence = False
 
                         break
