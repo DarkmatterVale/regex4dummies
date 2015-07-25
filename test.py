@@ -6,9 +6,6 @@ import sys
 
 import tarfile
 
-# Moving to the directory required to run the program
-os.chdir( "regex4dummies" )
-
 # Importing the main library
 from regex4dummies import regex4dummies
 
@@ -23,7 +20,7 @@ Test information:
     - pattern parser
     - nlpnet parser
 
-Version: 1.3.2
+Version: 1.3.6
 
 """
 

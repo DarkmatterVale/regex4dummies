@@ -104,7 +104,11 @@ That's it! The nlpnet parser should now be able to use its POSTagger.
 Patch Notes
 -------------
 
-( Latest ) v1.3.5: Feature update
+( Latest ) v1.3.6: Fatal bug fix
+
+If you downloaded version 1.3.5, you will need to update to 1.3.6 before you can use regex4dummies due to a fatal bug. All of the feature updates from 1.3.5 are still available in 1.3.6
+
+v1.3.5: Feature update
 
 - Topic identifier has been added. This is currently in "beta" and only features NLTK's NE chunker. In the next releases, functionality will increase. Think of this as a preview of what is to come
 - Substantial code refactoring. The semantic parser code structure has been changed. This is mostly intended for developers only who would like to develop their own modules for regex4dummies, but it also make the code easier to read

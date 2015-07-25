@@ -10,11 +10,6 @@ from textblob import TextBlob
 import nltk
 import nlpnet
 
-current_directory = os.getcwd()
-os.chdir( "semantic_parsers" )
-sys.path.insert( 0, os.getcwd() )
-os.chdir( current_directory )
-
 from nlpnet_parser import NLPNET
 from nltk_parser import NLTK
 from pattern_parser import PATTERN
@@ -25,7 +20,7 @@ from pattern_parser import PATTERN
 Class information:
 
 - name: semantic_parsing
-- version: 1.3.5
+- version: 1.3.6
 
 """
 

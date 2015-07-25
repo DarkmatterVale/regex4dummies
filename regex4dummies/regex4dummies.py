@@ -24,7 +24,7 @@ class regex4dummies:
     global compare_object
 
     # Setting global version variable which contains the version of this library
-    __version__ = 'regex4dummies version: 1.3.5'
+    __version__ = 'regex4dummies version: 1.3.6'
 
 
     # Empty constructor method
