@@ -55,7 +55,7 @@ Here is an example of how to use the library.
   print regex.__version__
 
   # Identifying literal patterns in strings
-  print regex.compare_strings( '', True, strings )
+  print regex.compare_strings( 'default', True, strings )
 
   # Identifying semantic patterns in strings using the nltk parser
   print regex.compare_strings( 'nltk', False, strings )
