@@ -20,7 +20,7 @@ Features:
 
 ## Roadmap
 
-As of 7/13/15, this is what is left to complete:
+As of 7/25/15, this is what is left to complete:
 
 - High Priority ( short-term, completed within 3 months from 6/28/15 ):
   - Examples
@@ -28,16 +28,13 @@ As of 7/13/15, this is what is left to complete:
   - Parsers
     - Update comparison to be more effective in determining whether two sentences/patterns are the same
     - nltk
-      - Gather indirect object as well as direct object
-      - Be able to identify word case ( for verbs, present, past, future, etc ) & use that information to make sure some patterns are not removed due to case differences
       - Independent and dependent clause separator
-    - pattern
-      - Be able to identify word case ( for verbs, present, past, future, etc ) & use that information to make sure some patterns are not removed due to case differences
 - Medium/Long Priority ( mid-term and long-term, hopefully completed within a year ):
   - Machine Learning implemented to allow use of multiple grammatical "styles"
   - Add tokenizer function. Allows the user to get a more-accurate tokenized sentence ( accomplished by using multiple tokenizers and some machine learning implemented )
-  - Add frequency-distribution-led sentence/string topic analyzer ( implemented by machine learning and identification of all content-bearing words )
   - Add sentiment analysis function
+
+This is just a short list. Please see the issues webpage for the project if you would like to see all of the features that are planned to be implemented
 
 ## Usage
 

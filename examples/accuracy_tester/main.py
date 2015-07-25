@@ -1,14 +1,14 @@
 __author__ = 'Vale Tolpegin'
 
-# Importing required libraries
-from regex4dummies import regex4dummies
+import os
 
 from pattern.en import parse
-from textblob.parsers import PatternParser
 from textblob import TextBlob
 import nltk
 import nlpnet
-import os
+
+# Importing required libraries
+from regex4dummies import regex4dummies
 
 """
 
