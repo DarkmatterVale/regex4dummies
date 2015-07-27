@@ -30,6 +30,8 @@ class Main:
     global nltk_score_info
     global nlpnet_score
     global nlpnet_score_info
+    global literal_score
+    global literal_score_info
 
 
     def __init__( self, *args, **kwargs ):
@@ -43,13 +45,8 @@ class Main:
         global nltk_score_info
         global nlpnet_score
         global nlpnet_score_info
-
-        # Displaying current message saying the example does not work yet
-        print ""
-        print "This is currently under development....Please check back soon for a working version."
-        print ""
-
-        #return
+        global literal_score
+        global literal_score_info
 
         # Currently implemented functions that will be tested
         # This program performs a number of accuracy tests against the library. THey are:
@@ -63,13 +60,9 @@ class Main:
         #   b. Are the subject, verb, object, and prepositional phrases properly identified?
         #   c. Are the applicability score and the reliability score properly calculated?
 
-        # Functions to be implemented that will be tested
-        # 3. Topics are correctly identified
-
         # Weighting of each aspect of the final score ( from the above list )
-        # #1: 50%
+        # #1: 75%
         # #2: 25%
-        # #3: 25%
         # The test sets total up to 100%, giving a complete score. This score is meant to represent
         #   how important each aspect of the library is relative to the other aspects of the library.
 
@@ -98,6 +91,7 @@ class Main:
         print "NLTK Score    : " + str( nltk_score )
         print "Pattern Score : " + str( pattern_score )
         print "nlpnet Score  : " + str( nlpnet_score )
+        print "Literal Score : " + str( literal_score )
         print ""
 
         # Showing other test-related information
@@ -116,6 +110,11 @@ class Main:
         print nlpnet_score_info
         print ""
 
+        print "Literal test details "
+        print "---------------------"
+        print literal_score_info
+        print ""
+
         print ""
 
 
@@ -130,31 +129,35 @@ class Main:
         global nltk_score_info
         global nlpnet_score
         global nlpnet_score_info
+        global literal_score
+        global literal_score_info
 
         # Setting all of the scores to restart
         overall_score = 0
         nltk_score    = 0
         pattern_score = 0
         nlpnet_score  = 0
+        literal_score = 0
 
         nltk_score_info    = ""
         pattern_score_info = ""
         nlpnet_score_info  = ""
+        literal_score_info = ""
 
         # Creating test-containing strings
         # TODO: Increase "corpora" size & add much more data to test
-        test_1 = "This is the first test string. Cats are very unique animals. In addition to being pets, they are wild animals. There are a number of different kinds of cats. Lions and cheetahs are included, there are three categories of cats."
+        test_1 = "This is the first test string. Cats are very unique animals. In addition to being pets, they are wild animals. There are a number of different kinds of cats. Lions and cheetahs included, there are three kinds of cats."
         test_2 = "This is the second test string. Dogs, unlike cats, are not a unique kind of animal. Dogs are pets, wild animals, and some are even in between being wild and pets. Unlike cats, there are many different kinds of dogs. Wolves, for instance, are a kind of dog."
         test_3 = "This is the third test string. This string is about computers. Many people argue that artificially intelligent computers will take over the world. In fact, I disagree with this view. I believe that computers will not turn against us."
         test_4 = "This is the fourth test string. Like the last string, this string is about computers and is a continuation of the last conversation. Computers are very likely to instead help us. Although many scientists believe that I am incorrect, a number of other very smart scientists agree with me."
 
         """
         Tests to make sure the above strings work without any issues/bugs arising.
-        """
+
         regex = regex4dummies()
 
         # Printing the semantic patterns within this string
-        print "Patterns: " + str( regex.compare_strings( 'nltk', False, [ test_1, test_2, test_3, test_4 ] ) )
+        print "Patterns: " + str( regex.compare_strings( 'nlpnet', False, [ test_1, test_2, test_3, test_4 ] ) )
 
         # Displaying the topics that were identified by the parsers in the most recently compared set of strings
         print "Topics: " + str( regex.get_pattern_topics() )
@@ -174,9 +177,11 @@ class Main:
         #"""
 
         # Creating correct information
-        correct_patterns            = []
-        correct_pattern_information = {}
+        correct_patterns            = [ 100, 100, "This is the first test string.", 100, 100, "This is the second test string.", 100, 100, "This is the third test string." ]
+        correct_pattern_information = { "This is the first test string." : ["This", "is", "string", [], 75, 100], "This is the second test string." : ["This", "is", "string", [], 75, 100], "This is the third test string." : ["This", "is", "string", [], 75, 100] }
         correct_topics = [ "cats", "dogs", "computers" ]
+
+        correct_literal_patterns    = [ [ 0, 100, "This is" ], [ 0, 100, "This is the" ], [ 0, 100, "test string." ], [ 0, 100, "is about computers" ], [ 0, 100, "this string" ], [ 0, 100, "about computers" ], [ 0, 100, "kinds of" ], [ 0, 100, "are a" ], [ 0, 100, "is the" ], [ 0, 100, "string is" ] ]
 
         # ************************************************************
         # Beginning tests
@@ -188,29 +193,35 @@ class Main:
         # 1. First array ( [ patterns ] ):
         #   a. pattern_detail object(s) containing patterns
 
-        # Instantiating a regex4dummies object that will be used in the tests
-        regex = regex4dummies()
+        # Processing the raw data for the nltk parser
+        print "Beginning nltk tests"
+        nltk_score, nltk_score_info = self.process_raw_data_semantic( "nltk", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
+        print "nltk tests completed"
 
-        # Testing the NLTK parser
-        #nltk_result = regex.compare_strings( 'nltk', False, [ test_1, test_2, test_3, test_4 ] )
+        # Processing the raw data for the pattern parser
+        print "Beginning pattern tests"
+        pattern_score, pattern_score_info = self.process_raw_data_semantic( "pattern", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
+        print "pattern tests completed"
 
-        # Processing the raw data
-        # nltk_score, nltk_score_info = self.process_raw_data( nltk_result, correct_patterns, correct_pattern_information )
+        # Processing the raw data for the nlpnet parser
+        print "Beginning nlpnet tests"
+        nlpnet_score, nlpnet_score_info = self.process_raw_data_semantic( "nlpnet", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
+        print "nlpnet tests completed"
 
-        # Testing the Pattern parser
-        #pattern_result = regex.compare_strings( 'pattern', False, [ test_1, test_2, test_3, test_4 ] )
+        # Processing the raw data for the literal parser
+        print "Beginning literal parser tests"
+        literal_score, literal_score_info = self.process_raw_data_literal( "default", [test_1, test_2, test_3, test_4], correct_literal_patterns )
+        print "literal parser tests completed"
 
-        # Processing the raw data
-        # pattern_score, pattern_score_info = self.process_raw_data( pattern_result, correct_patterns, correct_pattern_information )
+        print "Beginning tri-parser tests"
+        tri_parser_score, _ = self.process_raw_data_semantic( "", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
+        print "tri-parser tests completed"
 
-        # Testing the nlpnet parser
-        #nlpnet_result = regex.compare_strings( 'nlpnet', False, [ test_1, test_2, test_3, test_4 ] )
-
-        # Processing the raw data
-        # nlpnet_score, nlpnet_score_info = self.process_raw_data( nlpnet_result, correct_patterns, correct_pattern_information )
+        overall_score = ( ( nltk_score + pattern_score + nlpnet_score + literal_score ) / 4 ) * 0.75
+        overall_score += tri_parser_score * 0.25
 
 
-    def process_raw_data_semantic( self, parser_name, raw_data, information ):
+    def process_raw_data_semantic( self, parser_name, information, correct_topics ):
         """ This function processes the raw data and turns it into useful information.
             That data provides useful statistics about the library's current "health".
             The function returns the overall score for the data, and specific statistics of the data """
@@ -224,7 +235,7 @@ class Main:
         test_topics = regex.get_pattern_topics()
 
         # Gathering and comparing the "meaning" in these sentences
-        compare_index = 0
+        test_information = {}
         sentence_information = regex.get_sentence_information()
         for sentence in sentence_information:
             # Getting information from the test sentence
@@ -236,21 +247,65 @@ class Main:
             test_reliability_score = sentence.reliability_score
             test_applicability_score = sentence.applicability_score
 
-            # Getting information from the correct sentence
+            test_information[ test_pattern ] = [ test_subject, test_verb, test_object, test_prepositional_phrases, test_reliability_score, test_applicability_score ]
+
+        compatibility_score = 0.00
+        compare_index = 0
+        for pattern in information[1]:
+            base_pattern               = pattern
+            base_subject               = information[1][base_pattern][0]
+            base_verb                  = information[1][base_pattern][1]
+            base_object                = information[1][base_pattern][2]
+            base_prepositional_phrases = information[1][base_pattern][3]
+            base_reliability_score     = information[1][base_pattern][4]
+            base_applicability_score   = information[1][base_pattern][5]
+
+            try:
+                test_pattern               = base_pattern
+                test_subject               = test_information[ test_pattern ][ 0 ]
+                test_verb                  = test_information[ test_pattern ][ 1 ]
+                test_object                = test_information[ test_pattern ][ 2 ]
+                test_prepositional_phrases = test_information[ test_pattern ][ 3 ]
+                test_reliability_score     = test_information[ test_pattern ][ 4 ]
+                test_applicability_score   = test_information[ test_pattern ][ 5 ]
+
+                if test_subject == base_subject:
+                    compatibility_score += 70 / 6
+                if test_verb == base_verb:
+                    compatibility_score += 70 / 6
+                if test_object == base_object:
+                    compatibility_score += 70 / 6
+                if test_prepositional_phrases == base_prepositional_phrases:
+                    compatibility_score += 70 / 6
+                if test_reliability_score == base_reliability_score:
+                    compatibility_score += 70 / 6
+                if test_applicability_score == base_applicability_score:
+                    compatibility_score += 70 / 6
+            except:
+                compare_index += 1
+
+                # The pattern was not in the gathered data. The score will not have anything additional added to it, and the loop will continue
+                continue
 
             # Comparing and generating score
             compare_index += 1
 
         # Generating the semantic score
+        compatibility_score = compatibility_score / compare_index
 
         # Comparing topics & Generating topic score
+        for topic in correct_topics:
+            if topic in test_topics:
+                compatibility_score += 30 / len( correct_topics )
 
-        # Generating overall score
+        compatibility_score_info = str( test_information ) + "\n\n"
+        compatibility_score_info += str( information[1] )
 
         # Returning the final score and all other relevant information
+        return compatibility_score, compatibility_score_info
 
 
-    def process_raw_data_literal( self, parser_name, raw_data, information ):
+    def process_raw_data_literal( self, parser_name, strings, correct_patterns ):
         """ This function processes the raw data and turns it into useful information.
             That data provides useful statistics about the library's current "health".
             The function returns the overall score for the data, and specific statistics of the data """
@@ -258,13 +313,22 @@ class Main:
         regex = regex4dummies()
 
         # Printing the semantic patterns within this string
-        test_patterns = regex.compare_strings( parser_name, True, information[ 0 ] )
+        test_patterns = regex.compare_strings( parser_name, True, strings )
 
         # Compare test_patterns to correct patterns ( patterns in the "golden standard" )
+        score = 0.00
+        score_info = ""
+        for compare_index in xrange( 0, len( test_patterns ) - 2, 3 ):
+            for correct_pattern in correct_patterns:
+                if test_patterns[ compare_index + 2 ] == correct_pattern[ 2 ]:
+                    score += 100.00 / len( correct_patterns )
 
-        # Generating overall score
+                    break
+
+        score_info += "Test pattern: " + str( test_patterns ) + "\n" + "Correct pattern: " + str( correct_patterns ) + "\n\n"
 
         # Returning the final score and all other relevant information
+        return score, score_info
 
 
 if __name__ == '__main__':
