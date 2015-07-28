@@ -32,6 +32,8 @@ class Main:
     global nlpnet_score_info
     global literal_score
     global literal_score_info
+    global tri_parser_score
+    global tri_parser_score_info
 
 
     def __init__( self, *args, **kwargs ):
@@ -47,6 +49,8 @@ class Main:
         global nlpnet_score_info
         global literal_score
         global literal_score_info
+        global tri_parser_score
+        global tri_parser_score_info
 
         # Currently implemented functions that will be tested
         # This program performs a number of accuracy tests against the library. THey are:
@@ -86,33 +90,39 @@ class Main:
         print ""
         print ""
         print "***Score information***"
-        print "Overall Score : " + str( overall_score )
+        print "Overall Score    : " + str( overall_score )
         print ""
-        print "NLTK Score    : " + str( nltk_score )
-        print "Pattern Score : " + str( pattern_score )
-        print "nlpnet Score  : " + str( nlpnet_score )
-        print "Literal Score : " + str( literal_score )
+        print "NLTK Score       : " + str( nltk_score )
+        print "Pattern Score    : " + str( pattern_score )
+        print "nlpnet Score     : " + str( nlpnet_score )
+        print "Literal Score    : " + str( literal_score )
+        print "Tri-parser Score : " + str( tri_parser_score )
         print ""
 
         # Showing other test-related information
-        print "NLTK test details    "
-        print "---------------------"
+        print "NLTK test details       "
+        print "------------------------"
         print nltk_score_info
         print ""
 
-        print "Pattern test details "
-        print "---------------------"
+        print "Pattern test details    "
+        print "------------------------"
         print pattern_score_info
         print ""
 
-        print "nlpnet test details  "
-        print "---------------------"
+        print "nlpnet test details     "
+        print "------------------------"
         print nlpnet_score_info
         print ""
 
-        print "Literal test details "
-        print "---------------------"
+        print "Literal test details    "
+        print "------------------------"
         print literal_score_info
+        print ""
+
+        print "Tri-parser test details "
+        print "------------------------"
+        print tri_parser_score_info
         print ""
 
         print ""
@@ -131,18 +141,22 @@ class Main:
         global nlpnet_score_info
         global literal_score
         global literal_score_info
+        global tri_parser_score
+        global tri_parser_score_info
 
         # Setting all of the scores to restart
-        overall_score = 0
-        nltk_score    = 0
-        pattern_score = 0
-        nlpnet_score  = 0
-        literal_score = 0
+        overall_score    = 0
+        nltk_score       = 0
+        pattern_score    = 0
+        nlpnet_score     = 0
+        literal_score    = 0
+        tri_parser_score = 0
 
-        nltk_score_info    = ""
-        pattern_score_info = ""
-        nlpnet_score_info  = ""
-        literal_score_info = ""
+        nltk_score_info       = ""
+        pattern_score_info    = ""
+        nlpnet_score_info     = ""
+        literal_score_info    = ""
+        tri_parser_score_info = ""
 
         # Creating test-containing strings
         # TODO: Increase "corpora" size & add much more data to test
@@ -214,7 +228,7 @@ class Main:
         print "literal parser tests completed"
 
         print "Beginning tri-parser tests"
-        tri_parser_score, _ = self.process_raw_data_semantic( "", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
+        tri_parser_score, tri_parser_score_info = self.process_raw_data_semantic( "", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
         print "tri-parser tests completed"
 
         overall_score = ( ( nltk_score + pattern_score + nlpnet_score + literal_score ) / 4 ) * 0.75

@@ -21,7 +21,6 @@ from nltk.stem.porter import *
 
 class NLTK:
 
-
     def __init__( self, *args, **kwargs ):
         """ Blank constructor method """
 
@@ -35,14 +34,15 @@ class NLTK:
         base_sentence_info = []
 
         for base_sentence in base_blob.sentences:
+            capitalized_data = base_sentence
             base_sentence = base_sentence.lower()
 
             raw_data              = str( base_sentence )
             pos_sentence          = nltk.pos_tag( nltk.word_tokenize( str( base_sentence ) ) )
-            subject               = self.find_subject( raw_data, pos_sentence )
-            verb                  = self.find_verb( raw_data, pos_sentence )
-            object                = self.find_object( raw_data, pos_sentence, pos_sentence )
-            prepositional_phrases = self.find_prepositional_phrases( raw_data, pos_sentence )
+            subject               = self.find_subject( capitalized_data, raw_data, pos_sentence )
+            verb                  = self.find_verb( capitalized_data, raw_data, pos_sentence )
+            object                = self.find_object( capitalized_data, raw_data, pos_sentence, pos_sentence )
+            prepositional_phrases = self.find_prepositional_phrases( capitalized_data, raw_data, pos_sentence )
             prepositional_phrases = prepositional_phrases.split( '...' )
 
             #print "***BASE SENTENCE***"
@@ -68,14 +68,15 @@ class NLTK:
         test_sentence_info = []
 
         for test_sentence in test_blob.sentences:
+            capitalized_data = test_sentence
             test_sentence = test_sentence.lower()
 
             raw_data              = str( test_sentence )
             pos_sentence          = nltk.pos_tag( nltk.word_tokenize( str( test_sentence ) ) )
-            subject               = self.find_subject( raw_data, pos_sentence )
-            verb                  = self.find_verb( raw_data, pos_sentence )
-            object                = self.find_object( raw_data, pos_sentence, pos_sentence )
-            prepositional_phrases = self.find_prepositional_phrases( raw_data, pos_sentence )
+            subject               = self.find_subject( capitalized_data, raw_data, pos_sentence )
+            verb                  = self.find_verb( capitalized_data, raw_data, pos_sentence )
+            object                = self.find_object( capitalized_data, raw_data, pos_sentence, pos_sentence )
+            prepositional_phrases = self.find_prepositional_phrases( capitalized_data, raw_data, pos_sentence )
             prepositional_phrases = prepositional_phrases.split( '...' )
 
             #print "***TEST SENTENCE***"
@@ -99,11 +100,27 @@ class NLTK:
 
         return self.identify_common_patterns( base_sentence_info, test_sentence_info, patterns )
 
-    def find_subject( self, sentence_raw, sentence_tagged ):
+
+    #def separate_clauses( self, sentence ):
+    #    """ Independent and dependent clauses must be separated. Otherwise, the parser will get skewed results. This method accomplishes that """
+
+    #    # Setting up variables containing sentence information
+    #    clauses = []
+
+    #    # Until all of the clauses have been separated, continue separating the clauses within a sentence
+    #    while True:
+    #        sentence_verb = self.find_verb( sentence )
+    #        if sentence_verb != "":
+
+
+    #    return clauses
+
+
+    def find_subject( self, capitalized_sentence, sentence_raw, sentence_tagged ):
         # Getting full subject
         for index in range( 0, len( sentence_tagged ) ):
             if "VB" in sentence_tagged[ index ][ 1 ]:
-                return self.find_subject( ' '.join( sentence_raw.split( ' ' )[ 0 : index ] ), sentence_tagged[ 0 : index ] )
+                return self.find_subject( capitalized_sentence, ' '.join( sentence_raw.split( ' ' )[ 0 : index ] ), sentence_tagged[ 0 : index ] )
 
         # Remove excess information
         updated_subject = ""
@@ -119,7 +136,7 @@ class NLTK:
                             updated_subject = ' '.join( sentence_raw.split( ' ' )[ prep_index + 1 : len( sentence_raw.split( ' ' ) ) ] )
                             updated_tag = sentence_tagged[ prep_index + 1 : len( sentence_tagged ) ]
 
-                        updated_subject = self.find_subject( updated_subject, updated_tag )
+                        updated_subject = self.find_subject( capitalized_sentence, updated_subject, updated_tag )
 
                         break
 
@@ -131,11 +148,16 @@ class NLTK:
                 else:
                     updated_subject += ", " + sentence_tagged[ index ][ 0 ]
 
+        # Correcting any spelling errors
+        for word in capitalized_sentence.split( ' ' ):
+            if word.lower() in updated_subject:
+                updated_subject = re.sub( word.lower(), word, updated_subject )
 
         # Return final subject
         return updated_subject
 
-    def find_verb( self, raw_sentence, tagged_sentence ):
+
+    def find_verb( self, capitalized_sentence, raw_sentence, tagged_sentence ):
         # Creating the variable that will hold the verb(s) of the sentence
         updated_verb = ""
 
@@ -149,7 +171,9 @@ class NLTK:
 
         # Determing if it is a compound verb. If so, generating the final verb correctly
         if len( updated_verb.split( ' ' ) ) >= 1:
-            if len( updated_verb.split( ' ' ) ) == 2:
+            if len( updated_verb.split( ' ' ) ) == 1:
+                pass
+            elif len( updated_verb.split( ' ' ) ) == 2:
                 # Splitting the verbs into sub verbs
                 updated_verb = updated_verb.split( ' ' )
 
@@ -170,10 +194,16 @@ class NLTK:
 
                 updated_verb = ' '.join( updated_verb )
 
+        # Correcting any spelling errors
+        for word in capitalized_sentence.split( ' ' ):
+            if word.lower() in updated_verb:
+                updated_verb = re.sub( word.lower(), word, updated_verb )
+
         # Returning the verb
         return updated_verb
 
-    def find_object( self, raw_sentence, tagged_sentence, full_tagged_sentence ):
+
+    def find_object( self, capitalized_sentence, raw_sentence, tagged_sentence, full_tagged_sentence ):
         # Creating the variable that will hold the object(s) of the sentence
         updated_object = ""
 
@@ -181,7 +211,7 @@ class NLTK:
         # Removing the subject and the verb of the sentence
         for index in range( 0, len( tagged_sentence ) ):
             if "VB" in tagged_sentence[ index ][ 1 ]:
-                return self.find_object( ' '.join( raw_sentence.split( ' ' )[ index + 1: len( raw_sentence.split( ' ' ) ) ] ), tagged_sentence[ index + 1 : len( tagged_sentence ) ], full_tagged_sentence )
+                return self.find_object( capitalized_sentence, ' '.join( raw_sentence.split( ' ' )[ index + 1: len( raw_sentence.split( ' ' ) ) ] ), tagged_sentence[ index + 1 : len( tagged_sentence ) ], full_tagged_sentence )
 
         # Remove excess information
         for index in range( 0, len( tagged_sentence ) ):
@@ -196,7 +226,7 @@ class NLTK:
                             updated_object = ' '.join( raw_sentence.split( ' ' )[ prep_index + 1 : len( raw_sentence.split( ' ' ) ) ] )
                             updated_tag = tagged_sentence[ prep_index + 1 : len( tagged_sentence ) ]
 
-                        updated_object = self.find_object( updated_object, updated_tag, full_tagged_sentence )
+                        updated_object = self.find_object( capitalized_sentence, updated_object, updated_tag, full_tagged_sentence )
 
                         break
 
@@ -229,8 +259,14 @@ class NLTK:
                         else:
                             updated_object = new_object
 
+        # Correcting any spelling errors
+        for word in capitalized_sentence.split( ' ' ):
+            if word.lower() in updated_object:
+                updated_object = re.sub( word.lower(), word, updated_object )
+
         # Returning the objects found
         return updated_object
+
 
     def find_previous_instance( self, instance_to_find, string_containing_instance, current_index, objects_to_fail, updated_object ):
         is_word_found = "False"
@@ -247,7 +283,8 @@ class NLTK:
 
         return is_word_found, updated_object
 
-    def find_prepositional_phrases( self, raw_sentence, tagged_sentence ):
+
+    def find_prepositional_phrases( self, capitalized_sentence, raw_sentence, tagged_sentence ):
         prepositional_phrases = ""
 
         for index in range( 0, len( tagged_sentence ) ):
@@ -287,6 +324,7 @@ class NLTK:
 
         # Return normalized information
         return sentence_info
+
 
     def identify_common_patterns( self, base_sentence_info, test_sentence_info, patterns ):
         # Creating variables
