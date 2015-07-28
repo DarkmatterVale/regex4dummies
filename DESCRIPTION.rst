@@ -104,7 +104,15 @@ That's it! The nlpnet parser should now be able to use its POSTagger.
 Patch Notes
 -------------
 
-( Latest ) v1.3.6: Fatal bug fix
+( Latest ) v1.3.7: Bug fixes & minor updates
+
+- First version of the accuracy tester released
+- Another round of bug fixes. Some of the bugs found can cause aspects of regex4dummies to not be usable ( and crash your programs ), so if you encounter any bugs be sure to update to v1.3.7
+- GUI update. The GUI should be compatible with the latest version of regex4dummies now ( it is not backwards compatible, however, so update to the latest version of the library to get full functionality ).
+
+Released on 7/28/2015
+
+v1.3.6: Fatal bug fix
 
 If you downloaded version 1.3.5, you will need to update to 1.3.6 before you can use regex4dummies due to a fatal bug. All of the feature updates from 1.3.5 are still available in 1.3.6
 

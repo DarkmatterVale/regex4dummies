@@ -7,7 +7,7 @@ from textblob import TextBlob
 Class information:
 
 - name: literal_parsing
-- version: 1.3.2
+- version: 1.3.7
 
 """
 
