@@ -51,14 +51,18 @@ Here is an example of how to use the library.
   # Creating regex object & test strings
   regex = regex4dummies()
 
-  # Display the version of regex4dummies you are using
-  print regex.__version__
-
   # Identifying literal patterns in strings
   print regex.compare_strings( 'default', True, strings )
 
   # Identifying semantic patterns in strings using the nltk parser
   print regex.compare_strings( 'nltk', False, strings )
+
+Above is regex4dummies in its simplest form. It allows for additional features as well, however, including:
+
+.. code-block:: Python
+
+  # Display the version of regex4dummies you are using
+  print regex.__version__
 
   # To use the other parsers, replace the above line of code with either of the following:
   # print regex.compare_strings( 'pattern', False, strings )
