@@ -13,6 +13,8 @@ from semantic_parsing import semantic_parsing
 import nltk
 from operator import itemgetter
 
+from topic_finder import TopicFinder
+
 """
 
 This class accomplishes the bulk of regex4dummies' work. Below is a short list of how this class works and what it does.
@@ -177,60 +179,15 @@ class compare:
 
         global strings_parsed
 
-        """
-        This is a backup simple topic determiner. It is only meant to be used in the event of something breaking with NLTK's NE chunker.
-
-        topics = {}
-        for string in strings_parsed:
-            # Determine part of speech of each word
-            words = nltk.pos_tag( nltk.word_tokenize( string ) )
-
-            for word in words:
-                if word[1] != "DT" and word[1] != "CC" and "PRP" not in word[1] and "VB" not in word[1] and word[1] != "IN" and word[1] != "." and word[1] != "," and word[1] != "POS" and word[1] != "WP" and "RB" not in word[1]:
-                    if word[0] in topics:
-                        topics[ word[0] ][1] += 1
-                    else:
-                        topics[ word[0] ] = [ word[0], 1 ]
-
-        # Sort topics list
-        organized_topics = []
-
-        # Creating a list out of the compiled information
-        for token in topics:
-            organized_topics.append( [token, topics[ token ][1]] )
-
-        # Removing topics that are only mentioned once. If the word in question is a topic, it will be used more than once
-        topic_index = 0
-        while topic_index < len( organized_topics ):
-            if organized_topics[topic_index][1] == 1:
-                del organized_topics[topic_index]
-
-                topic_index = 0
-
-            topic_index += 1
-
-        # Sorting the final list
-        organized_topics = sorted( organized_topics, key=itemgetter(1) )
-        organized_topics = list(reversed( organized_topics ))
-
-        # Removing numbers
-        for topic_index in range(0, len(organized_topics)):
-            organized_topics[topic_index] = organized_topics[topic_index][0]
-        """
+        string_topic_finder = TopicFinder()
 
         topics = []
         for string in strings_parsed:
-            named_entities = nltk.ne_chunk(nltk.pos_tag(nltk.word_tokenize( string )), binary=True)
-            named_entities =  nltk.chunk.tree2conlltags(named_entities)
+            identified_topics = string_topic_finder.identify_topics( string )
 
-            for entity in named_entities:
-                if "NE" in entity[2]:
-                    if entity not in topics:
-                        topics.append( entity[0] )
+            if identified_topics != []:
+                topics.append( identified_topics )
 
-        # Return organized_topics
-        # A list is returned, with the most important topics on the left. For example,
-        # [ "Most important/common pattern", "Second most important/common pattern", etc. ]
         return topics
 
 
