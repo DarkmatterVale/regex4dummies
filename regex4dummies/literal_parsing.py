@@ -117,6 +117,3 @@ class literal_parsing:
             exit( 0 )
 
         return patterns, sentence_information
-
-    def identify_syntactic_patterns( self, base_string, test_string, pattern_arg ):
-        pass

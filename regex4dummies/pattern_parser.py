@@ -17,6 +17,7 @@ from subprocess import *
 from pattern.en import parse
 from textblob import TextBlob
 from nltk.stem.porter import *
+from fuzzywuzzy import fuzz
 
 
 class PATTERN:
@@ -160,7 +161,7 @@ class PATTERN:
                             if patterns != []:
                                 sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ] = base_sentence[ 0 : len( base_sentence ) - 1 ]
                                 sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( 2 )
-                                sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( 100 )
+                                sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( fuzz.ratio( base_sentence[ len( base_sentence ) - 1 ], test_sentence[ len( test_sentence ) - 1 ] ) )
 
                                 # If the current test patterns are not in patterns
                                 if test_sentence[ len( test_sentence ) - 1 ] not in patterns and base_sentence[ len( base_sentence ) - 1 ] not in patterns:
@@ -173,12 +174,6 @@ class PATTERN:
                                         sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ][ 4 ] += 1
                                     except:
                                         sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( 2 )
-
-                                    # Adding applicability score
-                                    try:
-                                        sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ][ 5 ] = 100
-                                    except:
-                                        sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( 100 )
                             # If there are no patterns currently found, add this pattern
                             elif patterns == []:
                                 patterns += [ base_sentence[ len( base_sentence ) - 1 ] ]
@@ -192,15 +187,15 @@ class PATTERN:
 
                                 # Adding applicability score
                                 try:
-                                    sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ][ 5 ] = 100
+                                    sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ][ 5 ] = fuzz.ratio( base_sentence[ len( base_sentence ) - 1 ], test_sentence[ len( test_sentence ) - 1 ] )
                                 except:
-                                    sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( 100 )
+                                    sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ].append( fuzz.ratio( base_sentence[ len( base_sentence ) - 1 ], test_sentence[ len( test_sentence ) - 1 ] ) )
                         else:
                             # If there are patterns already found
                             if patterns != []:
                                 sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ] = test_sentence[ 0 : len( test_sentence ) - 1 ]
                                 sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( 2 )
-                                sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( 100 )
+                                sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( fuzz.ratio( base_sentence[ len( base_sentence ) - 1 ], test_sentence[ len( test_sentence ) - 1 ] ) )
 
                                 # If the test patterns are not in the already found patterns
                                 if test_sentence[ len( test_sentence ) - 1 ] not in patterns and base_sentence[ len( base_sentence ) - 1 ] not in patterns:
@@ -213,12 +208,6 @@ class PATTERN:
                                         sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ][ 4 ] += 1
                                     except:
                                         sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( 2 )
-
-                                    # Adding applicability score
-                                    try:
-                                        sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ][ 5 ] = 100
-                                    except:
-                                        sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( 100 )
                             # If there are no patterns currently found
                             elif patterns == []:
                                 patterns += [ test_sentence[ len( test_sentence ) - 1 ] ]
@@ -232,8 +221,8 @@ class PATTERN:
 
                                 # Adding applicability score
                                 try:
-                                    sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ][ 5 ] = 100
+                                    sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ][ 5 ] = fuzz.ratio( base_sentence[ len( base_sentence ) - 1 ], test_sentence[ len( test_sentence ) - 1 ] )
                                 except:
-                                    sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( 100 )
+                                    sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ].append( fuzz.ratio( base_sentence[ len( base_sentence ) - 1 ], test_sentence[ len( test_sentence ) - 1 ] ) )
 
         return patterns, sentence_information

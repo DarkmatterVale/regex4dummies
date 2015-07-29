@@ -37,7 +37,7 @@ setup(
 
     packages = find_packages(),
 
-    install_requires = [ 'pattern', 'TextBlob', 'nltk', 'nlpnet', 'numpy' ],
+    install_requires = [ 'pattern', 'TextBlob', 'nltk', 'nlpnet', 'numpy', 'fuzzywuzzy', 'python-Levenshtein' ],
 
     keywords = [ 'TextBlob', 'NLTK', 'Pattern', 'NLP' ],
 )
