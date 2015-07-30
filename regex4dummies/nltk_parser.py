@@ -5,7 +5,7 @@ __author__ = 'Vale Tolpegin'
 Class information:
 
 - Name: NLTK
-- Version: 1.3.7
+- Version: 1.4.0
 
 NLTK is used to manage the NLTK parser
 
@@ -26,6 +26,20 @@ class NLTK:
         """ Blank constructor method """
 
         pass
+
+
+    def tokenize( self, tokenize_string ):
+        """ Returns the tokenized version of tokenize_string, which is just a normal English sentence """
+
+        return nltk.pos_tag( nltk.word_tokenize( tokenize_string ) )
+
+
+    def find_dependencies( self, dependency_string ):
+        """ Returns dependency_string with sentence dependencies included """
+
+        # TODO: Implement dependency finding with nltk
+
+        return dependency_string
 
 
     def use_nltk( self, base_string, test_string, pattern_arg ):

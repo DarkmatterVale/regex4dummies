@@ -5,7 +5,7 @@ __author__ = 'Vale Tolpegin'
 Class information:
 
 - Name: PATTERN
-- Version: 1.3.6
+- Version: 1.4.0
 
 PATTERN is used to manage the Pattern parser
 
@@ -27,6 +27,18 @@ class PATTERN:
         """ Blank constructor method """
 
         pass
+
+
+    def tokenize( self, tokenize_string ):
+        """ Returns the tokenized version of tokenize_string, which is just a normal English sentence """
+
+        return parse( tokenize_string )
+
+
+    def find_dependencies( self, dependency_string ):
+        """ Returns dependency_string with sentence dependencies included """
+
+        return parse( dependency_string, relations=True )
 
 
     def use_pattern( self, base_string, test_string, pattern_arg ):

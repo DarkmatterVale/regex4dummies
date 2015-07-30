@@ -5,7 +5,7 @@ __author__ = 'Vale Tolpegin'
 Class information:
 
 - Name: NLPNET
-- Version: 1.3.6
+- Version: 1.4.0
 
 NLPNET is used to manage the nlpnet parser
 
@@ -29,8 +29,27 @@ class NLPNET:
         pass
 
 
-    def use_nlpnet( self, base_string, test_string, pattern_arg ):
-        """ Main interface method from the NLPNET class to the rest of the program """
+    def tokenize( self, tokenize_string ):
+        """ Returns the tokenized version of tokenize_string, which is just a normal English sentence """
+
+        # Setting up the nlpnet parser
+        nlpnet.set_data_dir( self.get_data_dir_path() )
+        pos_parser = nlpnet.POSTagger()
+
+        return pos_parser.tag( tokenize_string )
+
+
+    def get_dependencies( self, dependency_string ):
+        """ Returns dependency_string with sentence dependencies included """
+
+        nlpnet.set_data_dir( self.get_data_dir_path() )
+        dependency_parser = nlpnet.DependencyParser()
+
+        return dependency_parser.parse( dependency_string )
+
+
+    def get_data_dir_path( self ):
+        """ Returns the directory of the nlpnet corpora """
 
         # Getting nltk data path
         running = Popen( [ 'python -c "import nltk;print nltk.data.path"' ], stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True )
@@ -41,8 +60,14 @@ class NLPNET:
         path = path.split( r"/" )
         path = '/'.join( path[ 0 : len( path ) - 1 ] ) + '/nlpnet_dependency/dependency'
 
+        return path
+
+
+    def use_nlpnet( self, base_string, test_string, pattern_arg ):
+        """ Main interface method from the NLPNET class to the rest of the program """
+
         # Setting up the nlpnet parser
-        nlpnet.set_data_dir( path )
+        nlpnet.set_data_dir( self.get_data_dir_path() )
         dependency_parser = nlpnet.DependencyParser()
         pos_parser = nlpnet.POSTagger()
 
