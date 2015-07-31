@@ -22,7 +22,7 @@ class Dependency:
         pass
 
 
-    def get_dependencies( self, string_to_find_dependencies, parser ):
+    def find_dependencies( self, string_to_find_dependencies, parser ):
         """ Interface method to regex4dummies returning the sentence dependencies gathered by given parser """
 
         if parser.lower() == "nltk":
@@ -44,16 +44,22 @@ class Dependency:
     def return_nltk_dependencies( self, string_to_find_dependencies ):
         """ Interface method to get the sentence dependencies using nltk """
 
-        pass
+        nltk_dependency_finder = NLTK()
+
+        return nltk_dependency_finder.find_dependencies( string_to_find_dependencies )
 
 
     def return_pattern_dependencies( self, string_to_find_dependencies ):
         """ Interface method to get the sentence dependencies using pattern """
 
-        pass
+        pattern_dependency_finder = PATTERN()
+
+        return pattern_dependency_finder.find_dependencies( string_to_find_dependencies )
 
 
     def return_nlpnet_dependencies( self, string_to_find_dependencies ):
         """ Interface method to get the sentence dependencies using nlpnet """
 
-        pass
+        nlpnet_dependency_finder = NLPNET()
+
+        return nlpnet_dependency_finder.find_dependencies( string_to_find_dependencies )

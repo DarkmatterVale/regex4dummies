@@ -12,6 +12,7 @@ Tokenizer provides regex4dummies an easy-to-use interface to the pattern, nltk, 
 
 from nltk_parser import NLTK
 from pattern_parser import PATTERN
+from nlpnet_parser import NLPNET
 
 class Tokenizer:
 
@@ -41,16 +42,22 @@ class Tokenizer:
     def tokenize_nltk( self, string_to_tokenize ):
         """ Interface method to the nltk tokenizer """
 
-        pass
+        nltk_tokenizer = NLTK()
+
+        return nltk_tokenizer.tokenize( string_to_tokenize )
 
 
     def tokenize_pattern( self, string_to_tokenize ):
         """ Interface method to the pattern tokenizer """
 
-        pass
+        pattern_tokenizer = PATTERN()
+
+        return pattern_tokenizer.tokenize( string_to_tokenize )
 
 
     def tokenize_nlpnet( self, string_to_tokenize ):
         """ Interface method to the nlpnet tokenizer """
 
-        pass
+        nlpnet_tokenizer = NLPNET()
+
+        return nlpnet_tokenizer.tokenize( string_to_tokenize )

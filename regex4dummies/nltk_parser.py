@@ -37,7 +37,27 @@ class NLTK:
     def find_dependencies( self, dependency_string ):
         """ Returns dependency_string with sentence dependencies included """
 
-        # TODO: Implement dependency finding with nltk
+        pos_sentence = nltk.pos_tag( nltk.word_tokenize( str( base_sentence ) ) )
+        subject = self.find_subject( dependency_string, dependency_string.lower(), pos_sentence )
+        verb    = self.find_verb( dependency_string, dependency_string.lower(), pos_sentence )
+        object  = self.find_object( dependency_string, dependency_string.lower(), pos_sentence )
+
+        return self.concatenate_sentence_dependencies( dependency_string, [ ["subject", subject], ["verb", verb], ["object", object] ] )
+
+
+    def concatenate_sentence_dependencies( self, dependency_string, dependencies ):
+        """ This will turn the dependency_string, the final string to """
+
+        for dependency in dependencies:
+            if dependency[ 0 ] == "subject":
+                # Label dependency_string's subject as SBJ
+                dependency_string = re.sub( dependency[ 1 ], dependency[ 1 ] + "/NP-SBJ", dependency_string )
+            elif dependency[ 0 ] == "verb":
+                # Label dependency_string's verb as VB
+                dependency_string = re.sub( dependency[ 1 ], dependency[ 1 ] + "/VP", dependency_string )
+            elif dependency[ 0 ] == "object":
+                # Label dependency_string's object as OBJ
+                dependency_string = re.sub( dependency[ 1 ], dependency[ 1 ] + "/NP-OBJ", dependency_string )
 
         return dependency_string
 
