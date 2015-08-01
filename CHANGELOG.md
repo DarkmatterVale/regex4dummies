@@ -1,6 +1,12 @@
 # Changelog
 
-## ( Current ) v1.3.7: Bug fixes & minor updates
+## ( Current ) v1.4.0: Feature additions and some minor updates
+
+- Two new functions have been added! The tokenizer function will return the tokenized version of the string passed using the given parser ( pattern, nlpnet, or nltk ). The dependency function will return the string with the added dependency information using a specific parser( pattern, nltk, or nlpnet )
+- FuzzyWuzzy is the new applicability score. In the past, it has been pretty hard to find a good way to implement the applicability score, and this has been reflected in the quality of the score. Hopefully, this update will greatly improve the accuracy of this score
+- Small topic finder update
+
+## v1.3.7: Bug fixes & minor updates
 
 - First version of the accuracy tester released
 - Another round of bug fixes. Some of the bugs found can cause aspects of regex4dummies to not be usable ( and crash your programs ), so if you encounter any bugs be sure to update to v1.3.7

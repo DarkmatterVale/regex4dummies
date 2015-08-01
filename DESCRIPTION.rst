@@ -4,7 +4,7 @@ regex4dummies: A Simple Way To Find Patterns
 .. image:: https://travis-ci.org/DarkmatterVale/regex4dummies.svg?branch=master
     :target: https://travis-ci.org/DarkmatterVale/regex4dummies
 
-Simple pattern finding in strings.
+Simple pattern finding in strings and natural language processing.
 
 
 Features
@@ -25,6 +25,7 @@ Some features I plan to implement in the future:
 - Continued improvements on the current parsers. This will be a long-term project, and additional details can be found on the main Github page
 
 If you have feature requests, feel free to add an issue to the Github issue tracker. All contributions and requests are appreciated!
+
 
 Usage
 -------
@@ -75,6 +76,19 @@ Above is regex4dummies in its simplest form. It allows for additional features a
         print "[ Applicability Score ] : " + str( objects.applicability_score )
         print ""
 
+A newly released set of features include a tokenizer and dependency finder function. To use them, simply give a string as the first parameter, and the name of the parser you would like to use as the second for both functions.
+
+.. code-block:: Python
+
+  # Testing the toolkit functions
+  tool_tester = Toolkit()
+
+  # Testing the tokenizer functions
+  print tool_tester.tokenize( "This is a test string.", "pattern" )
+
+  # Testing the dependency functions
+  print tool_tester.find_dependencies( "This is a test string.", "pattern" )
+
 
 Installation
 ------------
@@ -94,14 +108,15 @@ Instructions to install the required dependency for nlpnet:
 
 That's it! The nlpnet parser should now be able to be used.
 
+
 Patch Notes
 -------------
 
-( Latest ) v1.3.7: Bug fixes & minor updates
+( Latest ) v1.4.0: Feature additions and some minor updates
 
-- First version of the accuracy tester released
-- Another round of bug fixes. Some of the bugs found can cause aspects of regex4dummies to not be usable ( and crash your programs ), so if you encounter any bugs be sure to update to v1.3.7
-- GUI update. The GUI should be compatible with the latest version of regex4dummies now ( it is not backwards compatible, however, so update to the latest version of the library to get full functionality ).
+- Two new functions have been added! The tokenizer function will return the tokenized version of the string passed using the given parser ( pattern, nlpnet, or nltk ). The dependency function will return the string with the added dependency information using a specific parser( pattern, nltk, or nlpnet )
+- FuzzyWuzzy is the new applicability score. In the past, it has been pretty hard to find a good way to implement the applicability score, and this has been reflected in the quality of the score. Hopefully, this update will greatly improve the accuracy of this score
+- Small topic finder update
 
 
 Contributing
