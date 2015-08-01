@@ -48,6 +48,11 @@ class TopicFinder:
         #print ""
         #print "Frequency Distribution: " + str( topics_freqdist.most_common( len( topics ) + 1 ) )
 
+        for topic_index in range( 0, len( topics ) ):
+            for word in string.split( ' ' ):
+                if topics[ topic_index ] == word.lower():
+                    topics[ topic_index ] = word
+
         return topics
 
 
