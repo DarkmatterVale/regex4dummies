@@ -20,21 +20,8 @@ Features:
 
 ## Roadmap
 
-As of 7/25/15, this is what is left to complete:
+Please see the issues page for the project if you would like to see all of the features that are planned to be implemented.
 
-- High Priority ( short-term, completed within 3 months from 6/28/15 ):
-  - Examples
-    - All functions need to have specific examples on how to use them. These examples need to be specific and easy to understand
-  - Parsers
-    - Update comparison to be more effective in determining whether two sentences/patterns are the same
-    - nltk
-      - Independent and dependent clause separator
-- Medium/Long Priority ( mid-term and long-term, hopefully completed within a year ):
-  - Machine Learning implemented to allow use of multiple grammatical "styles"
-  - Add tokenizer function. Allows the user to get a more-accurate tokenized sentence ( accomplished by using multiple tokenizers and some machine learning implemented )
-  - Add sentiment analysis function
-
-This is just a short list. Please see the issues webpage for the project if you would like to see all of the features that are planned to be implemented
 
 ## Usage
 
