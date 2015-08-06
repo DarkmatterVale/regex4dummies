@@ -64,7 +64,7 @@ path = path.split( r"/" )
 path = '/'.join( path[ 0 : len( path ) - 1 ] ) + '/nlpnet_dependency/'
 
 # Download the dependencies & extract
-"""current_directory = os.getcwd()
+current_directory = os.getcwd()
 
 os.mkdir( path )
 os.chdir( path )
@@ -74,7 +74,7 @@ tar = tarfile.open( path + 'dependency-en.tgz', 'r:gz' )
 tar.extractall( path )
 os.remove( path + 'dependency-en.tgz' )
 
-os.chdir( current_directory )"""
+os.chdir( current_directory )
 
 # Testing the 'nlpnet' parser
 print regex.compare_strings( 'nlpnet', False, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
