@@ -191,10 +191,10 @@ class Main:
         #test_4 = "This is the fourth test string. Like the last string, this string is about computers and is a continuation of the last conversation. Computers are very likely to instead help us. Although many scientists believe that I am incorrect, a number of other very smart scientists agree with me."
 
         # Creating correct information
-        correct_patterns            = [ 100, 100, "This is the first test string.", 100, 100, "This is the second test string.", 100, 100, "This is the third test string." ]
-        correct_pattern_information = { "This is the first test string." : ["This", "is", "string", [], 75, 100], "This is the second test string." : ["This", "is", "string", [], 75, 100], "This is the third test string." : ["This", "is", "string", [], 75, 100] }
-        correct_topics = [ "Catcher", "Rye", "Lord", "Flies", "Ralph", "Holden" ]
-        correct_literal_patterns    = [ [ 0, 100, "Throughout the" ], [ 0, 100, "the Lord" ], [ 0, 100, ] ]
+        correct_patterns            = [ ]
+        correct_pattern_information = { }
+        correct_topics = [ [ "Catcher", "Rye", "Lord", "Flies", "Ralph", "Holden" ], [], [], [] ]
+        correct_literal_patterns    = [ [ 0, 100, "Throughout the" ], [ 0, 100, "the Lord" ], [ 0, 100, "the red hunting hat" ], [ 0, 100, "the red" ], [ 0, 100, "the red hunting" ], [ 0, 100, "is a" ] ]
 
         #correct_patterns            = [ 100, 100, "This is the first test string.", 100, 100, "This is the second test string.", 100, 100, "This is the third test string." ]
         #correct_pattern_information = { "This is the first test string." : ["This", "is", "string", [], 75, 100], "This is the second test string." : ["This", "is", "string", [], 75, 100], "This is the third test string." : ["This", "is", "string", [], 75, 100] }
@@ -377,13 +377,19 @@ class Main:
         regex = regex4dummies()
 
         # Identifying topics discovered by the parsers in the most recently compared set of strings
-        test_topics = regex.get_pattern_topics()
+        test_topics = regex.get_pattern_topics( strings )
+
+        # Identifying total length/number of correct topics
+        total_topics = 0
+        for topics in  correct_topics:
+            total_topics += len( topics )
 
         # Comparing topics & Generating topic score
         topic_score = 0
-        for topic in correct_topics:
-            if topic in test_topics[ 0 ]:
-                topic_score += 100 / len( correct_topics )
+        for topic_index in range( 0, len( correct_topics ) ):
+            for topic in correct_topics[ topic_index ]:
+                if topic in test_topics[ topic_index ]:
+                    topic_score += 100 / total_topics
 
         # Creating the information surrounding the test used to debug regex4dummies
         topic_score_info = "Topics Identified: " + str( test_topics ) + "\n\n" + "Correct Topics: " + str( correct_topics )

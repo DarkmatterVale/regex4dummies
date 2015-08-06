@@ -59,18 +59,18 @@ class regex4dummies:
 
     # This function returns the information for each sentence/pattern that was identified.
     # This is only useful if semantic parsing is implemented; otherwise, {} will be returned
-    def get_sentence_information( self ):
+    def get_pattern_information( self ):
         global compare_object
 
-        return compare_object.get_sentence_information()
+        return compare_object.get_pattern_information()
 
 
-    def get_pattern_topics( self ):
+    def get_pattern_topics( self, strings_to_categorize ):
         """ Returns the list of topics that the parsers identified """
 
         global compare_object
 
-        return compare_object.get_pattern_topics()
+        return compare_object.get_pattern_topics( strings_to_categorize )
 
 
     def tokenize( self, parser, string ):
@@ -96,14 +96,14 @@ if __name__ == '__main__':
     regex = regex4dummies()
 
     # Printing the semantic patterns within this string
-    print "Patterns: " + str( regex.compare_strings( 'nltk', False, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it? It is currently four pm.", "what time is it here?", "what time is it", "This is the cat's hat", "That is the cat's hat" ] ) )
+    print "Patterns: " + str( regex.compare_strings( 'default', True, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it? It is currently four pm.", "what time is it here?", "what time is it", "This is the cat's hat", "That is the cat's hat" ] ) )
 
     # Displaying the topics that were identified by the parsers in the most recently compared set of strings
-    print "Topics: " + str( regex.get_pattern_topics() )
+    print "Topics: " + str( regex.get_pattern_topics( [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it? It is currently four pm.", "what time is it here?", "what time is it", "This is the cat's hat", "That is the cat's hat" ] ) )
     print ""
 
     # Displaying all of the "meaning" in these sentences
-    sentence_information = regex.get_sentence_information()
+    sentence_information = regex.get_pattern_information()
     for sentence in sentence_information:
         print "[ Pattern ]            : " + sentence.pattern
         print "[ Subject ]            : " + sentence.subject

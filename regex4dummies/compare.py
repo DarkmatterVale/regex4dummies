@@ -31,7 +31,7 @@ This class accomplishes the bulk of regex4dummies' work. Below is a short list o
 Class information:
 
 - name: compare
-- version: 1.3.5
+- version: 1.4.1
 
 """
 
@@ -148,7 +148,7 @@ class compare:
         return patterns
 
     # All patterns with associated information will be returned from this method as a list of pattern_detail classes
-    def get_sentence_information( self ):
+    def get_pattern_information( self ):
         # Getting global variables
         global sentence_information
         global strings_parsed
@@ -174,15 +174,13 @@ class compare:
         return final_pattern_information
 
 
-    def get_pattern_topics( self ):
+    def get_pattern_topics( self, strings_to_categorize ):
         """ This function will find all of the topics from the strings most recently compared """
-
-        global strings_parsed
 
         string_topic_finder = TopicFinder()
 
         topics = []
-        for string in strings_parsed:
+        for string in strings_to_categorize:
             identified_topics = string_topic_finder.identify_topics( string )
 
             if identified_topics != []:
