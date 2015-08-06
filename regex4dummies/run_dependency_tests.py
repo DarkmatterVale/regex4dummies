@@ -73,7 +73,7 @@ class run_dependency_tests:
             compare_nltk.compare_strings( [ "what time is it here?", "This is the cat's hat" ], False, 'nltk'  )
 
             # If that was successfuly, getting information
-            sentence_information = compare_nltk.get_sentence_information()
+            sentence_information = compare_nltk.get_pattern_information()
             for sentence in sentence_information:
                 my_pattern           = "[ Pattern ]          : " + sentence.pattern
                 my_subject           = "[ Subject ]          : " + sentence.subject
@@ -99,7 +99,7 @@ class run_dependency_tests:
             compare_nlpnet.compare_strings( [ "what time is it here?", "This is the cat's hat" ], False, 'nlpnet'  )
 
             # If that was successfuly, getting information
-            sentence_information = compare_nlpnet.get_sentence_information()
+            sentence_information = compare_nlpnet.get_pattern_information()
             for sentence in sentence_information:
                 my_pattern           = "[ Pattern ]          : " + sentence.pattern
                 my_subject           = "[ Subject ]          : " + sentence.subject
