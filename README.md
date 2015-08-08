@@ -46,6 +46,8 @@ If you would like to contriubte, please fork the repository and create a PR with
 
 Please see LICENSE.txt for information about the MIT license
 
+Copyright (c) 2015 Vale Tolpegin. All rights reserved.
+
 ## Citations
 
 Citations for nlpnet:
