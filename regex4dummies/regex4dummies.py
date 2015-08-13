@@ -15,7 +15,7 @@ from toolkit import Toolkit
 Class information:
 
 - name: regex4dummies
-- version: 1.4.0
+- version: 1.4.1
 
 """
 
@@ -25,7 +25,7 @@ class regex4dummies:
     global compare_object
 
     # Setting global version variable which contains the version of this library
-    __version__ = 'regex4dummies version: 1.4.0'
+    __version__ = 'regex4dummies version: 1.4.1'
 
 
     # Empty constructor method
@@ -71,14 +71,6 @@ class regex4dummies:
         global compare_object
 
         return compare_object.get_pattern_topics( strings_to_categorize )
-
-
-    def tokenize( self, parser, string ):
-        """ Returns the tokenized string using the given parser """
-
-        global compare_object
-
-        return
 
 
 # If a user mistakingly runs this library believing it is a program, inform the user that it is not a program

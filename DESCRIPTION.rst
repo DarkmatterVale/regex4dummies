@@ -112,11 +112,9 @@ That's it! The nlpnet parser should now be able to be used.
 Patch Notes
 -------------
 
-( Latest ) v1.4.0: Feature additions and some minor updates
+( Latest ) v1.4.1: Toolkit bug fix
 
-- Two new functions have been added! The tokenizer function will return the tokenized version of the string passed using the given parser ( pattern, nlpnet, or nltk ). The dependency function will return the string with the added dependency information using a specific parser( pattern, nltk, or nlpnet )
-- FuzzyWuzzy is the new applicability score. In the past, it has been pretty hard to find a good way to implement the applicability score, and this has been reflected in the quality of the score. Hopefully, this update will greatly improve the accuracy of this score
-- Small topic finder update
+- The toolkit functions should now work. There was an import typo in the code which caused it to break. I apologize for the late fix!
 
 
 Contributing
