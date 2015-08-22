@@ -267,7 +267,7 @@ progress[value]::-webkit-progress-value {
 }
 
 .contact .pad-bottom {
-  padding-bottom: 150px;
+  padding-bottom: 75px;
 }
 
 .contact .medium-text {
@@ -329,6 +329,20 @@ progress[value]::-webkit-progress-value {
 
 .doc_body h5 {
   display: block;
+}
+
+.doc_return {
+  font-size: 10px;
+  background-color: #FFFFFF;
+  padding-bottom: 100px;
+}
+
+.doc_return a {
+  color: #696969;
+}
+
+.doc_return a:hover {
+  text-decoration: none;
 }
 
 /* Header Nav */
