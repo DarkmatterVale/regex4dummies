@@ -11,7 +11,7 @@ Class information:
 """
 
 import nltk
-#from nltk import FreqDist
+from nltk import FreqDist
 
 class TopicFinder:
 
@@ -35,18 +35,32 @@ class TopicFinder:
         named_entities = nltk.ne_chunk(nltk.pos_tag(nltk.word_tokenize( string )), binary=True)
         named_entities = nltk.chunk.tree2conlltags(named_entities)
 
+        # Getting named entities in a text
         for entity in named_entities:
             if "NE" in entity[2]:
                 if entity not in topics:
                     topics.append( entity[0] )
 
-        #topics_freqdist = FreqDist( topics )
+        # Getting other nounds in a text. These could be topics as well as named entities
+        lowered_string = string.lower()
+        for tag in nltk.pos_tag(nltk.word_tokenize( lowered_string )):
+            if "NN" in tag[ 1 ]:
+                add_to_topics = True
+
+                for topic in topics:
+                    if topic.lower() == tag[ 0 ]:
+                        add_to_topics = False
+
+                if add_to_topics:
+                    topics.append( tag[ 0 ] )
+
+        topics_freqdist = FreqDist( topics )
         #
         #print "Unshortened           : " + str( topics )
         #print ""
         #print "Shortened             : " + str( list( set( topics ) ) )
         #print ""
-        #print "Frequency Distribution: " + str( topics_freqdist.most_common( len( topics ) + 1 ) )
+        print "Frequency Distribution: " + str( topics_freqdist.most_common( len( topics ) + 1 ) )
 
         for topic_index in range( 0, len( topics ) ):
             for word in string.split( ' ' ):
@@ -58,7 +72,3 @@ class TopicFinder:
 
 if __name__ == '__main__':
     pass
-
-    #test_topic_finder = TopicFinder()
-
-    #test_topic_finder.identify_topics( test_string )
