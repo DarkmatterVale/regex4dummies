@@ -60,15 +60,45 @@ class TopicFinder:
         #print ""
         #print "Shortened             : " + str( list( set( topics ) ) )
         #print ""
-        print "Frequency Distribution: " + str( topics_freqdist.most_common( len( topics ) + 1 ) )
+        #print "Frequency Distribution: " + str( topics_freqdist.most_common( len( topics ) + 1 ) )
 
         for topic_index in range( 0, len( topics ) ):
             for word in string.split( ' ' ):
                 if topics[ topic_index ] == word.lower():
                     topics[ topic_index ] = word
 
-        return topics
+        # Getting the frequency distribution
+        topics_frequencies_list = topics_freqdist.most_common( len( topics ) + 1 )
+
+        # Testing to see whether any topics are mentioned more than once
+        multiple_topic_references = False
+        for topic in topics_frequencies_list:
+            if topic[ 1 ] > 1:
+                multiple_topic_references = True
+
+                break
+
+        # If there is at least 1 topic that is reference more than once, then remove all of the single-referenced topics
+        final_topics = []
+        if multiple_topic_references:
+            for topic_index in range( 0, len( topics_frequencies_list ) ):
+                if topics_frequencies_list[ topic_index ][ 1 ] == 1:
+                    pass
+                else:
+                    final_topics.append( [ topics_frequencies_list[ topic_index ][ 0 ], topics_frequencies_list[ topic_index ][ 1 ] ] )
+
+                    break
+        else:
+            for topic_index in range( 0, len( topics_frequencies_list ) ):
+                final_topics.append( [ topics_frequencies_list[ topic_index ][ 0 ], topics_frequencies_list[ topic_index ][ 1 ] ] )
+
+        # Returning final topics list
+        return final_topics
 
 
 if __name__ == '__main__':
     pass
+
+    #test_topic_finder = TopicFinder()
+
+    #print test_topic_finder.identify_topics( test_string )
