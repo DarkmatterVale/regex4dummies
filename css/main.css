@@ -44,6 +44,19 @@ a.no-hover-dec:hover {
   text-align: center;
 }
 
+/* Projects */
+
+.projects {
+  text-align: left;
+  padding: 50px 0 0 0;
+  /*background-color: #00FA9A;*/
+  background-color: #D3D3D3;
+}
+
+.projects .pad-top {
+  padding-top: 100px;
+}
+
 /* Features */
 
 .features {
