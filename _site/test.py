@@ -1,11 +1,13 @@
-# Importing the main library
-from regex4dummies import regex4dummies
-
 # Importing other required libraries
-import os, sys
+import os
 from subprocess import *
 import re
+import sys
+
 import tarfile
+
+# Importing the main library
+from regex4dummies import regex4dummies
 
 
 """
@@ -18,7 +20,7 @@ Test information:
     - pattern parser
     - nlpnet parser
 
-Version: 1.3.2
+Version: 1.3.6
 
 """
 
@@ -31,7 +33,7 @@ print regex.__version__
 
 # Testing the 'nltk' parser
 print regex.compare_strings( 'nltk', False, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
-sentence_information = regex.get_sentence_information()
+sentence_information = regex.get_pattern_information()
 for sentence in sentence_information:
     print "[ Pattern ]          : " + sentence.pattern
     print "[ Subject ]          : " + sentence.subject
@@ -42,7 +44,7 @@ for sentence in sentence_information:
 
 # Testing the 'pattern' parser
 print regex.compare_strings( 'pattern', False, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
-sentence_information = regex.get_sentence_information()
+sentence_information = regex.get_pattern_information()
 for sentence in sentence_information:
     print "[ Pattern ]          : " + sentence.pattern
     print "[ Subject ]          : " + sentence.subject
@@ -76,7 +78,7 @@ os.chdir( current_directory )
 
 # Testing the 'nlpnet' parser
 print regex.compare_strings( 'nlpnet', False, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
-sentence_information = regex.get_sentence_information()
+sentence_information = regex.get_pattern_information()
 for sentence in sentence_information:
     print "[ Pattern ]          : " + sentence.pattern
     print "[ Subject ]          : " + sentence.subject
@@ -86,8 +88,8 @@ for sentence in sentence_information:
 
 
 # Testing literal parsing
-print regex.compare_strings( '', True, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
-sentence_information = regex.get_sentence_information()
+print regex.compare_strings( 'default', True, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
+sentence_information = regex.get_pattern_information()
 for sentence in sentence_information:
     print "[ Pattern ]          : " + sentence.pattern
     print "[ Subject ]          : " + sentence.subject

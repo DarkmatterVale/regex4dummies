@@ -7,12 +7,13 @@ import re
 
 # Parsing related libraries
 import re
-from textblob import TextBlob
-from textblob.parsers import PatternParser
-from pattern.en import parse
 from pattern_detail import pattern_detail
 from literal_parsing import literal_parsing
 from semantic_parsing import semantic_parsing
+import nltk
+from operator import itemgetter
+
+from topic_finder import TopicFinder
 
 """
 
@@ -30,7 +31,7 @@ This class accomplishes the bulk of regex4dummies' work. Below is a short list o
 Class information:
 
 - name: compare
-- version: 1.3.3
+- version: 1.4.1
 
 """
 
@@ -147,7 +148,7 @@ class compare:
         return patterns
 
     # All patterns with associated information will be returned from this method as a list of pattern_detail classes
-    def get_sentence_information( self ):
+    def get_pattern_information( self ):
         # Getting global variables
         global sentence_information
         global strings_parsed
@@ -171,6 +172,22 @@ class compare:
 
         # Returning the assembled information
         return final_pattern_information
+
+
+    def get_pattern_topics( self, strings_to_categorize ):
+        """ This function will find all of the topics from the strings most recently compared """
+
+        string_topic_finder = TopicFinder()
+
+        topics = []
+        for string in strings_to_categorize:
+            identified_topics = string_topic_finder.identify_topics( string )
+
+            if identified_topics != []:
+                topics.append( identified_topics )
+
+        return topics
+
 
     # This function is used to return the reliability score of a pattern
     def get_reliability_score( self, pattern ):

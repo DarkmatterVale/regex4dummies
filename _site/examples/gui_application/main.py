@@ -1,6 +1,8 @@
 __author__ = 'Vale Tolpegin'
 
-import os, sys, re
+import os
+import sys
+import re
 import Tkinter as tk
 import ttk as ttk
 import tkMessageBox
@@ -8,8 +10,10 @@ import tkFileDialog
 import ScrolledText
 import threading
 import time
-from regex4dummies import regex4dummies
+
 from textblob import TextBlob
+
+from regex4dummies import regex4dummies
 
 """
 
@@ -20,7 +24,7 @@ Class information:
 
 """
 
-class main( tk.Tk ):
+class Main( tk.Tk ):
     def __init__( self, *args, **kwargs ):
         tk.Tk.__init__(self, *args, **kwargs)
 
@@ -100,9 +104,10 @@ class main( tk.Tk ):
                     sentences.append( str( sentence ) )
 
                 regex = regex4dummies()
-                final_literal_text = regex.compare_strings( '', True, sentences )
+                final_literal_text = regex.compare_strings( 'default', True, sentences )
                 final_literal_information = ""
 
+                # Getting parsed data to display
                 sentence_information = regex.get_sentence_information()
                 for sentence in sentence_information:
                     final_literal_information = "[ Pattern ]          : " + sentence.pattern
@@ -111,7 +116,7 @@ class main( tk.Tk ):
                     final_literal_information = "[ Object ]           : " + sentence.object[0] + "\n"
                     final_literal_information = "[ Reliability Score ]: " + str( sentence.reliability_score ) + "\n"
 
-                final_semantic_text = regex.compare_strings( 'pattern', False, sentences )
+                final_semantic_text = regex.compare_strings( '', False, sentences )
                 final_semantic_information = ""
 
                 sentence_information = regex.get_sentence_information()
@@ -122,8 +127,13 @@ class main( tk.Tk ):
                     final_semantic_information = "[ Object ]           : " + sentence.object[0] + "\n"
                     final_semantic_information = "[ Reliability Score ]: " + str( sentence.reliability_score ) + "\n"
 
-                final_text = "Literal Parse:\n" + str( final_literal_text ) + "\n\nInformation:\n" + final_literal_information + "\n---------------------------------\n\n" + "Semantic Parse:\n" + str( final_semantic_text ) + "\n\nInformation:\n" + final_semantic_information
+                # Getting possible topics for semantic information
+                topics = regex.get_pattern_topics()
 
+                # Preparing final display data
+                final_text = "Literal Parse:\n" + str( final_literal_text ) + "\n\nInformation:\n" + final_literal_information + "\n---------------------------------\n\n" + "Semantic Parse:\n" + str( final_semantic_text ) + "\n\nInformation:\n" + final_semantic_information + "\n\nTopics:\n" + str( topics )
+
+                # Displaying final data
                 self.output_text['state'] = 'normal'
                 self.output_text.delete( "1.0", tk.END )
                 self.output_text.insert( "1.0", final_text )
@@ -137,6 +147,6 @@ class main( tk.Tk ):
 
 
 if __name__ == '__main__':
-    main_gui = main()
+    main_gui = Main()
 
     main_gui.mainloop()

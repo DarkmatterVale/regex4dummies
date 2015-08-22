@@ -11,7 +11,7 @@ with open(path.join(here, 'DESCRIPTION.rst')) as f:
 setup(
     name = 'regex4dummies',
 
-    version = '1.3.3',
+    version = '1.4.1',
 
     description = 'A NLP library that simplifies pattern finding in strings',
     long_description = description_file,
@@ -37,7 +37,7 @@ setup(
 
     packages = find_packages(),
 
-    install_requires = [ 'pattern', 'TextBlob', 'nltk', 'nlpnet', 'numpy' ],
+    install_requires = [ 'pattern', 'TextBlob', 'nltk', 'nlpnet', 'numpy', 'fuzzywuzzy', 'python-Levenshtein' ],
 
     keywords = [ 'TextBlob', 'NLTK', 'Pattern', 'NLP' ],
 )

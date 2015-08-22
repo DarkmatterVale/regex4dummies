@@ -20,21 +20,8 @@ Features:
 
 ## Roadmap
 
-As of 7/13/15, this is what is left to complete:
+Please see the issues page for the project if you would like to see all of the features that are planned to be implemented.
 
-- High Priority ( short-term, completed within 3 months from 6/28/15 ):
-  - Examples
-    - All functions need to have specific examples on how to use them. These examples need to be specific and easy to understand
-  - Parsers
-    - Update comparison to be more effective in determining whether two sentences/patterns are the same
-    - nltk
-      - Gather indirect object as well as direct object
-      - Be able to identify word case ( for verbs, present, past, future, etc ) & use that information to make sure some patterns are not removed due to case differences
-      - Independent and dependent clause separator
-    - pattern
-      - Be able to identify word case ( for verbs, present, past, future, etc ) & use that information to make sure some patterns are not removed due to case differences
-- Medium/Long Priority ( mid-term and long-term, hopefully completed within a year ):
-  - Machine Learning implemented-this will allow the parser to learn different "styles" of grammatical syntax, helping it be more accurate ( hopefully )
 
 ## Usage
 
@@ -58,6 +45,8 @@ If you would like to contriubte, please fork the repository and create a PR with
 ## License
 
 Please see LICENSE.txt for information about the MIT license
+
+Copyright (c) 2015 Vale Tolpegin. All rights reserved.
 
 ## Citations
 
