@@ -82,7 +82,7 @@ if __name__ == '__main__':
     print "http://github.com/DarkmatterVale/regex4dummies"
     print ""
 
-    exit( 0 )
+    #exit( 0 )
 
     # Test Set
     regex = regex4dummies()
@@ -114,3 +114,8 @@ if __name__ == '__main__':
 
     # Testing the dependency functions
     print tool_tester.find_dependencies( "This is a test string.", "pattern" )
+
+    # Printing the literal patterns within this string
+    print ""
+    print "Patterns: " + str( regex.compare_strings( 'nltk', False, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it? It is currently four pm.", "what time is it here?", "what time is it", "This is the cat's hat", "That is the cat's hat" ] ) )
+    print ""
