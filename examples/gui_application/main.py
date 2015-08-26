@@ -107,31 +107,68 @@ class Main( tk.Tk ):
                 final_literal_text = regex.compare_strings( 'default', True, sentences )
                 final_literal_information = ""
 
-                # Getting parsed data to display
-                sentence_information = regex.get_sentence_information()
-                for sentence in sentence_information:
-                    final_literal_information = "[ Pattern ]          : " + sentence.pattern
-                    final_literal_information = "[ Subject ]          : " + sentence.subject + "\n"
-                    final_literal_information = "[ Verb ]             : " + sentence.verb + "\n"
-                    final_literal_information = "[ Object ]           : " + sentence.object[0] + "\n"
-                    final_literal_information = "[ Reliability Score ]: " + str( sentence.reliability_score ) + "\n"
+                # Getting tokenized string and dependencies ( if library is up to date )
+                if regex.__version__ == "1.4.2":
+                    # Getting parsed data to display
+                    sentence_information = regex.get_pattern_information()
+                    for sentence in sentence_information:
+                        final_literal_information = "[ Pattern ]          : " + sentence.pattern
+                        final_literal_information = "[ Subject ]          : " + sentence.subject + "\n"
+                        final_literal_information = "[ Verb ]             : " + sentence.verb + "\n"
+                        final_literal_information = "[ Object ]           : " + sentence.object[0] + "\n"
+                        final_literal_information = "[ Reliability Score ]: " + str( sentence.reliability_score ) + "\n"
 
-                final_semantic_text = regex.compare_strings( '', False, sentences )
-                final_semantic_information = ""
+                    final_semantic_text = regex.compare_strings( '', False, sentences )
+                    final_semantic_information = ""
 
-                sentence_information = regex.get_sentence_information()
-                for sentence in sentence_information:
-                    final_semantic_information = "[ Pattern ]          : " + sentence.pattern
-                    final_semantic_information = "[ Subject ]          : " + sentence.subject + "\n"
-                    final_semantic_information = "[ Verb ]             : " + sentence.verb + "\n"
-                    final_semantic_information = "[ Object ]           : " + sentence.object[0] + "\n"
-                    final_semantic_information = "[ Reliability Score ]: " + str( sentence.reliability_score ) + "\n"
+                    sentence_information = regex.get_pattern_information()
+                    for sentence in sentence_information:
+                        final_semantic_information = "[ Pattern ]          : " + sentence.pattern
+                        final_semantic_information = "[ Subject ]          : " + sentence.subject + "\n"
+                        final_semantic_information = "[ Verb ]             : " + sentence.verb + "\n"
+                        final_semantic_information = "[ Object ]           : " + sentence.object[0] + "\n"
+                        final_semantic_information = "[ Reliability Score ]: " + str( sentence.reliability_score ) + "\n"
 
-                # Getting possible topics for semantic information
-                topics = regex.get_pattern_topics()
+                    # Getting possible topics for semantic information
+                    topics = regex.get_pattern_topics()
 
-                # Preparing final display data
-                final_text = "Literal Parse:\n" + str( final_literal_text ) + "\n\nInformation:\n" + final_literal_information + "\n---------------------------------\n\n" + "Semantic Parse:\n" + str( final_semantic_text ) + "\n\nInformation:\n" + final_semantic_information + "\n\nTopics:\n" + str( topics )
+                    # Instantiating toolkit object
+                    gui_toolkit = Toolkit()
+
+                    # Getting the tokenized input
+                    tokenized_input = gui_toolkit.tokenize( input_text, "pattern" )
+
+                    # Getting the dependency input
+                    dependency_input = gui_toolkit.find_dependencies( input_text, "pattern" )
+
+                    # Preparing final display data
+                    final_text = "Literal Parse:\n" + str( final_literal_text ) + "\n\nInformation:\n" + final_literal_information + "\n---------------------------------\n\n" + "Semantic Parse:\n" + str( final_semantic_text ) + "\n\nInformation:\n" + final_semantic_information + "\n\nTopics:\n" + str( topics ) + "\n\nTokenized input:\n" + str( tokenized_input ) + "\n\nDependencies of input:\n" + str( dependency_input )
+                else:
+                    # Getting parsed data to display
+                    sentence_information = regex.get_sentence_information()
+                    for sentence in sentence_information:
+                        final_literal_information = "[ Pattern ]          : " + sentence.pattern
+                        final_literal_information = "[ Subject ]          : " + sentence.subject + "\n"
+                        final_literal_information = "[ Verb ]             : " + sentence.verb + "\n"
+                        final_literal_information = "[ Object ]           : " + sentence.object[0] + "\n"
+                        final_literal_information = "[ Reliability Score ]: " + str( sentence.reliability_score ) + "\n"
+
+                    final_semantic_text = regex.compare_strings( '', False, sentences )
+                    final_semantic_information = ""
+
+                    sentence_information = regex.get_sentence_information()
+                    for sentence in sentence_information:
+                        final_semantic_information = "[ Pattern ]          : " + sentence.pattern
+                        final_semantic_information = "[ Subject ]          : " + sentence.subject + "\n"
+                        final_semantic_information = "[ Verb ]             : " + sentence.verb + "\n"
+                        final_semantic_information = "[ Object ]           : " + sentence.object[0] + "\n"
+                        final_semantic_information = "[ Reliability Score ]: " + str( sentence.reliability_score ) + "\n"
+
+                    # Getting possible topics for semantic information
+                    topics = regex.get_pattern_topics()
+
+                    # Preparing final display data
+                    final_text = "Literal Parse:\n" + str( final_literal_text ) + "\n\nInformation:\n" + final_literal_information + "\n---------------------------------\n\n" + "Semantic Parse:\n" + str( final_semantic_text ) + "\n\nInformation:\n" + final_semantic_information + "\n\nTopics:\n" + str( topics )
 
                 # Displaying final data
                 self.output_text['state'] = 'normal'

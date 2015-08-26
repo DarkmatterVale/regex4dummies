@@ -6,7 +6,7 @@ TopicFinder identifies the possible topics of a string.
 
 Class information:
 - name: TopicFinder
-- version: 1.4.0
+- version: 1.4.2
 
 """
 
@@ -21,7 +21,7 @@ class TopicFinder:
         pass
 
 
-    def identify_topics( self, string ):
+    def identify_topics( self, strings ):
         """Topic identifier function.
 
         inputs:
@@ -30,6 +30,11 @@ class TopicFinder:
         outputs:
         -- list: A list containing the topics of a string
         """
+
+        # Creating final string from the addition of each string
+        string = ""
+        for individual_string in strings:
+            string += " " + individual_string
 
         topics = []
         named_entities = nltk.ne_chunk(nltk.pos_tag(nltk.word_tokenize( string )), binary=True)
@@ -83,11 +88,9 @@ class TopicFinder:
         if multiple_topic_references:
             for topic_index in range( 0, len( topics_frequencies_list ) ):
                 if topics_frequencies_list[ topic_index ][ 1 ] == 1:
-                    pass
+                    break
                 else:
                     final_topics.append( [ topics_frequencies_list[ topic_index ][ 0 ], topics_frequencies_list[ topic_index ][ 1 ] ] )
-
-                    break
         else:
             for topic_index in range( 0, len( topics_frequencies_list ) ):
                 final_topics.append( [ topics_frequencies_list[ topic_index ][ 0 ], topics_frequencies_list[ topic_index ][ 1 ] ] )
@@ -98,7 +101,3 @@ class TopicFinder:
 
 if __name__ == '__main__':
     pass
-
-    #test_topic_finder = TopicFinder()
-
-    #print test_topic_finder.identify_topics( test_string )

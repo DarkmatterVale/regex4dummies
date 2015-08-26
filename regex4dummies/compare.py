@@ -179,12 +179,7 @@ class compare:
 
         string_topic_finder = TopicFinder()
 
-        topics = []
-        for string in strings_to_categorize:
-            identified_topics = string_topic_finder.identify_topics( string )
-
-            if identified_topics != []:
-                topics.append( identified_topics )
+        topics = string_topic_finder.identify_topics( strings_to_categorize )
 
         return topics
 

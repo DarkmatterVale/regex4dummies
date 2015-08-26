@@ -15,7 +15,7 @@ from toolkit import Toolkit
 Class information:
 
 - name: regex4dummies
-- version: 1.4.1
+- version: 1.4.2
 
 """
 
@@ -25,7 +25,7 @@ class regex4dummies:
     global compare_object
 
     # Setting global version variable which contains the version of this library
-    __version__ = 'regex4dummies version: 1.4.1'
+    __version__ = 'regex4dummies version: 1.4.2'
 
 
     # Empty constructor method

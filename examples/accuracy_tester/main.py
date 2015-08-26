@@ -15,7 +15,7 @@ from regex4dummies import regex4dummies
 Class information:
 
 - name: main
-- version: 1.3.7
+- version: 1.4.2
 
 This is an accuracy tester for regex4dummies. It will test all components of the library and determine how effective it is at accomplishing its goal
 
@@ -185,46 +185,11 @@ class Main:
         test_4 = """In both the Catcher and the Rye and the Lord of the Flies, the red hunting hat and the conch both have emotional attachments to the people that use them. Near the end of the Catcher in the Rye, Holden is spending time with his little sister in a park when it begins to rain. To help keep her from getting wet, he gives it to her. He does this because she is growing up, although it makes him sad that he is losing his most prized possession. The conch eventually fails to keep the peace, however, and two separate groups emerge one vicious and violent led by Jack, and another calm and controlled led by Ralph. At the end of the book Ralph attempts to gain control over Jack and his violent followers, but he fails miserably with Piggy dying and the conch being destroyed, followed by a time where the silence was complete. This quote shows that the conch was something very important, and the destruction of it was unexpected and not intended. Although the conch and Holdens red hunting hat are very different, they both have strong emotional connections with the people that surround them, helping Holden stay sane by keeping him happy and showing him the bright side of things, and helping Ralph and the others stay positive about their chances of rescue."""
         test_5 = """Both the conch in the Lord of the Flies and the red hunting hat in the Catcher in the Rye have emotional connections with other characters although they are very different in other purposes and usages of them. Possessions, like the conch and the red hunting hat, can be used in many different ways. Many possessions, regardless or their cost, can be emotionally attached the to the consumer. In addition, possessions can have many different uses. These could range from emotional attachments to being a toy for kids."""
 
-        #test_1 = "This is the first test string. Cats are very unique animals. In addition to being pets, they are wild animals. There are a number of different kinds of cats. Lions and cheetahs included, there are three kinds of cats."
-        #test_2 = "This is the second test string. Dogs, unlike cats, are not a unique kind of animal. Dogs are pets, wild animals, and some are even in between being wild and pets. Unlike cats, there are many different kinds of dogs. Wolves, for instance, are a kind of dog."
-        #test_3 = "This is the third test string. This string is about computers. Many people argue that artificially intelligent computers will take over the world. In fact, I disagree with this view. I believe that computers will not turn against us."
-        #test_4 = "This is the fourth test string. Like the last string, this string is about computers and is a continuation of the last conversation. Computers are very likely to instead help us. Although many scientists believe that I am incorrect, a number of other very smart scientists agree with me."
-
         # Creating correct information
         correct_patterns            = [ ]
         correct_pattern_information = { }
-        correct_topics = [ [ "Catcher", "Rye", "Lord", "Flies", "Ralph", "Holden" ], [], [], [] ]
+        correct_topics = [ "Catcher", "Rye", "Lord", "Flies", "Ralph", "Holden" ]
         correct_literal_patterns    = [ [ 0, 100, "Throughout the" ], [ 0, 100, "the Lord" ], [ 0, 100, "the red hunting hat" ], [ 0, 100, "the red" ], [ 0, 100, "the red hunting" ], [ 0, 100, "is a" ] ]
-
-        #correct_patterns            = [ 100, 100, "This is the first test string.", 100, 100, "This is the second test string.", 100, 100, "This is the third test string." ]
-        #correct_pattern_information = { "This is the first test string." : ["This", "is", "string", [], 75, 100], "This is the second test string." : ["This", "is", "string", [], 75, 100], "This is the third test string." : ["This", "is", "string", [], 75, 100] }
-        #correct_topics = [ "cats", "dogs", "computers" ]
-        #correct_literal_patterns    = [ [ 0, 100, "This is" ], [ 0, 100, "This is the" ], [ 0, 100, "test string." ], [ 0, 100, "is about computers" ], [ 0, 100, "this string" ], [ 0, 100, "about computers" ], [ 0, 100, "kinds of" ], [ 0, 100, "are a" ], [ 0, 100, "is the" ], [ 0, 100, "string is" ] ]
-
-        """
-        Tests to make sure the above strings work without any issues/bugs arising.
-
-        regex = regex4dummies()
-
-        # Printing the semantic patterns within this string
-        print "Patterns: " + str( regex.compare_strings( 'nlpnet', False, [ test_1, test_2, test_3, test_4 ] ) )
-
-        # Displaying the topics that were identified by the parsers in the most recently compared set of strings
-        print "Topics: " + str( regex.get_pattern_topics() )
-        print ""
-
-        # Displaying all of the "meaning" in these sentences
-        sentence_information = regex.get_sentence_information()
-        for sentence in sentence_information:
-            print "[ Pattern ]            : " + sentence.pattern
-            print "[ Subject ]            : " + sentence.subject
-            print "[ Verb ]               : " + sentence.verb
-            print "[ Object ]             : " + sentence.object[0]
-            print "[ Prep Phrases ]       : " + str( sentence.prepositional_phrases )
-            print "[ Reliability Score ]  : " + str( sentence.reliability_score )
-            print "[ Applicability Score ]: " + str( sentence.applicability_score )
-            print ""
-        #"""
 
         # ************************************************************
         # Beginning tests
@@ -238,12 +203,12 @@ class Main:
 
         # Processing the raw data for the nltk parser
         print "Beginning nltk tests"
-        #nltk_score, nltk_score_info = self.process_raw_data_semantic( "nltk", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
+        nltk_score, nltk_score_info = self.process_raw_data_semantic( "nltk", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
         print "nltk tests completed"
 
         # Processing the raw data for the pattern parser
         print "Beginning pattern tests"
-        #pattern_score, pattern_score_info = self.process_raw_data_semantic( "pattern", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
+        pattern_score, pattern_score_info = self.process_raw_data_semantic( "pattern", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
         print "pattern tests completed"
 
         # Processing the raw data for the nlpnet parser
@@ -281,7 +246,7 @@ class Main:
 
         # Gathering and comparing the "meaning" in these sentences
         test_information = {}
-        sentence_information = regex.get_sentence_information()
+        sentence_information = regex.get_pattern_information()
         for sentence in sentence_information:
             # Getting information from the test sentence
             test_pattern = sentence.pattern
@@ -336,7 +301,10 @@ class Main:
             compare_index += 1
 
         # Generating the semantic score
-        compatibility_score = compatibility_score / compare_index
+        if compare_index != 0:
+            compatibility_score = compatibility_score / compare_index
+        else:
+            compatibility_score = 100
 
         compatibility_score_info = str( test_information ) + "\n\n"
         compatibility_score_info += str( information[1] )
@@ -379,17 +347,14 @@ class Main:
         # Identifying topics discovered by the parsers in the most recently compared set of strings
         test_topics = regex.get_pattern_topics( strings )
 
-        # Identifying total length/number of correct topics
-        total_topics = 0
-        for topics in  correct_topics:
-            total_topics += len( topics )
-
         # Comparing topics & Generating topic score
         topic_score = 0
-        for topic_index in range( 0, len( correct_topics ) ):
-            for topic in correct_topics[ topic_index ]:
-                if topic in test_topics[ topic_index ]:
-                    topic_score += 100 / total_topics
+        for topic in correct_topics:
+            for test_topic in test_topics:
+                if topic == test_topic[ 0 ]:
+                    topic_score += 100 / len( correct_topics )
+
+                    break
 
         # Creating the information surrounding the test used to debug regex4dummies
         topic_score_info = "Topics Identified: " + str( test_topics ) + "\n\n" + "Correct Topics: " + str( correct_topics )
