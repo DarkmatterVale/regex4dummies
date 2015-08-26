@@ -213,7 +213,7 @@ class Main:
 
         # Processing the raw data for the nlpnet parser
         print "Beginning nlpnet tests"
-        #nlpnet_score, nlpnet_score_info = self.process_raw_data_semantic( "nlpnet", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
+        nlpnet_score, nlpnet_score_info = self.process_raw_data_semantic( "nlpnet", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
         print "nlpnet tests completed"
 
         # Processing the raw data for the literal parser
@@ -222,7 +222,7 @@ class Main:
         print "literal parser tests completed"
 
         print "Beginning tri-parser tests"
-        #tri_parser_score, tri_parser_score_info = self.process_raw_data_semantic( "", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
+        tri_parser_score, tri_parser_score_info = self.process_raw_data_semantic( "", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
         print "tri-parser tests completed"
 
         print "Beginning topic score tests"

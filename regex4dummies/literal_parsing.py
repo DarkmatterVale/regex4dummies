@@ -7,17 +7,21 @@ from textblob import TextBlob
 Class information:
 
 - name: literal_parsing
-- version: 1.4.1
+- version: 1.4.2
 
 """
 
 class literal_parsing:
     def __init__( self, *args, **kwargs ):
+        """ Blank constructor """
+
         pass
 
     def parse( self, base_string, test_string, pattern_arg, parser ):
+        """ Returns the parsed version of the incoming text """
+
         if parser == "default":
-            return self.default_parser( base_string, test_string, pattern_arg );
+            return self.default_parser( base_string, test_string, pattern_arg )
         else:
             print ""
             print "A valid parser was not chosen. Please choose any of the following parsers: "
@@ -27,6 +31,7 @@ class literal_parsing:
             exit( 0 )
 
     def default_parser( self, base_string, test_string, pattern_arg ):
+        """ Parsing code for the default literal parser """
         # Setting basic sentence information
         sentence_information = {}
 
@@ -133,4 +138,38 @@ class literal_parsing:
 
         patterns += test_sentence_info
 
-        return patterns, sentence_information
+        return self.remove_sub_patterns( patterns, sentence_information, [ base_string, test_string ] )
+
+
+    def remove_sub_patterns( self, patterns, pattern_information, strings ):
+        """ Removes sub patterns, which are patterns within patterns.
+
+        The sub patterns are not referenced in any context other than the context of the "parent" pattern, therefore making them sub patterns and
+        not individual patterns that just happen to occur within other patterns.
+        """
+
+        # Creating new variables that will store the final information to
+        final_patterns = []
+
+        # Looking for sub patterns in each of the strings
+        if patterns != []:
+            if len( patterns ) != 1:
+                for string in strings:
+                    base_blob = TextBlob( strings[ 0 ] )
+                    for sentence in base_blob.sentences:
+                        for outer_pattern_index in range( 0, len( patterns ) - 1 ):
+                            for inner_pattern_index in range( outer_pattern_index, len( patterns ) ):
+                                if patterns[ outer_pattern_index ] not in final_patterns and patterns[ inner_pattern_index ] not in final_patterns:
+                                    if patterns[ inner_pattern_index ] in patterns[ outer_pattern_index ]:
+                                        if patterns[ inner_pattern_index ] in sentence and patterns[ outer_pattern_index ] in sentence:
+                                            final_patterns.append( patterns[ outer_pattern_index ] )
+                                    elif patterns[ outer_pattern_index ] in patterns[ inner_pattern_index ]:
+                                        if patterns[ inner_pattern_index ] in sentence and patterns[ outer_pattern_index ] in sentence:
+                                            final_patterns.append( patterns[ inner_pattern_index ] )
+                                    elif patterns[ inner_pattern_index ] not in patterns[ outer_pattern_index ] and patterns[ outer_pattern_index ] not in patterns[ inner_pattern_index ]:
+                                        final_patterns.append( patterns[ outer_pattern_index ] )
+                                        final_patterns.append( patterns[ inner_pattern_index ] )
+            else:
+                final_patterns = patterns
+
+        return final_patterns, pattern_information

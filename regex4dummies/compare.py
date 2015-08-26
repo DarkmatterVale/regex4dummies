@@ -39,9 +39,12 @@ class compare:
     global sentence_information
     global strings_parsed
 
-    # Empty constructor
+
     def __init__( self, *args, **kwargs ):
+        """ Blank constructor """
+
         pass
+
 
     # This method is called by the main regex4dummies class, and calls all further methods to find strings
     def compare_strings( self, strings, literal, parser_name ):
@@ -75,11 +78,14 @@ class compare:
         for pattern in patterns:
             if keyword != '':
                 if keyword in pattern:
+                    #TODO: Implement keyword search here
+
                     compiled_patterns += [ self.get_reliability_score( pattern ), self.get_applicability_score( pattern ), pattern ]
             else:
                 compiled_patterns += [ self.get_reliability_score( pattern ), self.get_applicability_score( pattern ), pattern ]
 
         return compiled_patterns
+
 
     # Recursive function that compares all strings and determins reliability score, applicability score, and pattern
     def find_patterns( self, strings, current_index, literal_find, patterns_arg, parser_name ):
@@ -106,6 +112,7 @@ class compare:
         # return patterns
         return patterns
 
+
     # This function identifies patterns in 2 strings
     def find_semantic_patterns( self, base_string, test_string, pattern_arg, parser_name ):
         # Getting global variables
@@ -131,6 +138,7 @@ class compare:
             # return patterns
             return patterns
 
+
     def find_literal_patterns( self, base_string, test_string, pattern_arg, parser_name ):
         # Getting global variables
         global sentence_information
@@ -146,6 +154,7 @@ class compare:
 
         # Returning the patterns found
         return patterns
+
 
     # All patterns with associated information will be returned from this method as a list of pattern_detail classes
     def get_pattern_information( self ):
@@ -193,6 +202,7 @@ class compare:
         for compiled_pattern in sentence_information:
             if compiled_pattern == pattern:
                 return sentence_information[ compiled_pattern ][ 4 ] * 100 / len( strings_parsed )
+
 
     def get_applicability_score( self, pattern ):
         # Getting global variables
