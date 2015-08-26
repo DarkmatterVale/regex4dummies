@@ -154,22 +154,25 @@ class literal_parsing:
         # Looking for sub patterns in each of the strings
         if patterns != []:
             if len( patterns ) != 1:
-                for string in strings:
-                    base_blob = TextBlob( strings[ 0 ] )
-                    for sentence in base_blob.sentences:
-                        for outer_pattern_index in range( 0, len( patterns ) - 1 ):
-                            for inner_pattern_index in range( outer_pattern_index, len( patterns ) ):
-                                if patterns[ outer_pattern_index ] not in final_patterns and patterns[ inner_pattern_index ] not in final_patterns:
-                                    if patterns[ inner_pattern_index ] in patterns[ outer_pattern_index ]:
-                                        if patterns[ inner_pattern_index ] in sentence and patterns[ outer_pattern_index ] in sentence:
-                                            final_patterns.append( patterns[ outer_pattern_index ] )
-                                    elif patterns[ outer_pattern_index ] in patterns[ inner_pattern_index ]:
-                                        if patterns[ inner_pattern_index ] in sentence and patterns[ outer_pattern_index ] in sentence:
-                                            final_patterns.append( patterns[ inner_pattern_index ] )
-                                    elif patterns[ inner_pattern_index ] not in patterns[ outer_pattern_index ] and patterns[ outer_pattern_index ] not in patterns[ inner_pattern_index ]:
-                                        final_patterns.append( patterns[ outer_pattern_index ] )
-                                        final_patterns.append( patterns[ inner_pattern_index ] )
+                for outer_pattern_index in range( 0, len( patterns ) - 1 ):
+                    for inner_pattern_index in range( outer_pattern_index, len( patterns ) ):
+                        add_to_pattern = True
+                        for pattern in final_patterns:
+                            if patterns[ outer_pattern_index ] in pattern or patterns[ inner_pattern_index ] in pattern:
+                                add_to_pattern = False
+
+                                break
+
+                        if add_to_pattern:
+                            if len( patterns[ outer_pattern_index ] ) > len( patterns[ inner_pattern_index ] ):
+                                final_patterns.append( patterns[ outer_pattern_index ] )
+                            else:
+                                final_patterns.append( patterns[ inner_pattern_index ] )
+
             else:
                 final_patterns = patterns
+
+            print "TEST"
+            print final_patterns
 
         return final_patterns, pattern_information
