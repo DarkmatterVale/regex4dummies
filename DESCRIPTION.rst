@@ -4,7 +4,7 @@ regex4dummies: A Simple Way To Find Patterns
 .. image:: https://travis-ci.org/DarkmatterVale/regex4dummies.svg?branch=master
     :target: https://travis-ci.org/DarkmatterVale/regex4dummies
 
-Simple pattern finding in strings and natural language processing.
+Simple pattern finding in strings and natural language processing. Checkout regex4dummies' website at https://darkmattervale.github.io/regex4dummies/
 
 
 Features
@@ -13,6 +13,8 @@ Features
 - Automatic pattern detection ( semantic and literal )
 - Multiple parsers ( implementations of nltk, pattern, and nlpnet )
 - Keyword searching to find specific phrases
+- Topic analysis
+- Tokenizer and sentence dependency identifier
 
 
 Roadmap
@@ -35,6 +37,7 @@ regex4dummies is very easy to use. Simply import the library, get some strings, 
 .. code-block:: Python
 
   from regex4dummies import regex4dummies
+  from regex4dummies import Toolkit
 
   # Creating strings
   strings = [ "This is the first test string.", "This is the second test string." ]
@@ -112,9 +115,15 @@ That's it! The nlpnet parser should now be able to be used.
 Patch Notes
 -------------
 
-( Latest ) v1.4.1: Toolkit bug fix
+( Latest ) v1.4.2: Miscellaneous Update & overall performance improvement
 
-- The toolkit functions should now work. There was an import typo in the code which caused it to break. I apologize for the late fix!
+- Accuracy tester is a lot better ( except for semantic comparisons ). A new "corpus" will be added soon to get accurate semantic comparisons
+- Literal parser improvements ( which are numerous ). Multiple bug fixes, sub-patterns are not gathered ( patterns within a larger pattern no longer count as individual patterns ), and some general improvements
+- Behind-the-scenes work to update code and make it more flexible for future updates
+- GUI update. It is now backwards compatible
+- Toolkit update! It should now work, and I apologize for it not working in previous updates
+- Topic analyzer update. It should find more topics, as well as returning the topics in order from most-likely to be the main topic to least likely. In the future, an update will allow the extraction of the most important information as a whole ( not just the topics )
+- Source code is smaller. Removed some code that was not being used, helping reduce the size of the repository
 
 
 Contributing

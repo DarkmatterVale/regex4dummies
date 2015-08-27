@@ -189,8 +189,7 @@ class Main:
         correct_patterns            = [ ]
         correct_pattern_information = { }
         correct_topics = [ "Catcher", "Rye", "Lord", "Flies", "Ralph", "Holden" ]
-        correct_literal_patterns    = [ [ 0, 100, "Throughout the" ], [ 0, 100, "the Lord" ], [ 0, 100, "the red hunting hat" ], [ 0, 100, "the red" ], [ 0, 100, "the red hunting" ], [ 0, 100, "is a" ] ]
-
+        correct_literal_patterns    = [[100, 0, 'the red hunting hat'], [100, 0, 'the conch'], [100, 0, 'and the'], [100, 0, 'of the'], [50, 0, 'the Rye'], [100, 0, 'the Catcher'], [75, 0, 'the Catcher in the Rye,'], [75, 0, 'To help keep'], [75, 0, 'he is'], [50, 0, 'of the book'], [75, 0, 'Although the'], [50, 0, 'emotional connection'], [50, 0, 'growing up'], [50, 0, 'very different'], [50, 0, 'the peace'], [50, 0, 'Throughout the Catcher in the Rye, the red hunting'], [75, 0, 'the Lord of the Flies, the'], [50, 0, 'in a'], [75, 0, 'The conch'], [100, 0, 'control over'], [75, 0, 'attempts to'], [75, 0, 'shows that the'], [75, 0, 'Ralph and the'], [75, 0, 'the others'], [50, 0, 'and control'], [50, 0, 'Throughout the Lord of the Flies, the conch is seen'], [75, 0, 'to the people that use'], [75, 0, 'both have emotional attachments to'], [75, 0, 'Catcher and the Rye'], [100, 0, 'and the conch'], [75, 0, 'the Rye and'], [75, 0, 'In both'], [75, 0, 'conch and Holdens red hunting hat'], [75, 0, 'red hunting hat are'], [75, 0, 'the conch and'], [75, 0, 'Although the conch'], [75, 0, 'stay sane'], [75, 0, 'them, helping'], [75, 0, 'with the'], [50, 0, 'In The Catcher in'], [75, 0, 'does not'], [75, 0, 'it is'], [100, 0, 'on the island'], [100, 0, 'as a'], [75, 0, 'of power and'], [75, 0, 'a symbol of'], [50, 0, 'to a'], [75, 0, 'the red hunting hat does not'], [50, 0, 'order and peace'], [75, 0, 'at all'], [75, 0, 'maintain order.'], [75, 0, 'the conch is a symbol of'], [50, 0, 'and they'], [100, 0, 'power over others'], [75, 0, 'in the Lord of the Flies,'], [75, 0, 'others, while'], [50, 0, 'of a']]
         # ************************************************************
         # Beginning tests
         # ************************************************************
@@ -213,7 +212,7 @@ class Main:
 
         # Processing the raw data for the nlpnet parser
         print "Beginning nlpnet tests"
-        #nlpnet_score, nlpnet_score_info = self.process_raw_data_semantic( "nlpnet", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
+        nlpnet_score, nlpnet_score_info = self.process_raw_data_semantic( "nlpnet", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
         print "nlpnet tests completed"
 
         # Processing the raw data for the literal parser
@@ -222,7 +221,7 @@ class Main:
         print "literal parser tests completed"
 
         print "Beginning tri-parser tests"
-        #tri_parser_score, tri_parser_score_info = self.process_raw_data_semantic( "", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
+        tri_parser_score, tri_parser_score_info = self.process_raw_data_semantic( "", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
         print "tri-parser tests completed"
 
         print "Beginning topic score tests"
@@ -326,9 +325,9 @@ class Main:
         # Compare test_patterns to correct patterns ( patterns in the "golden standard" )
         score = 0.00
         score_info = ""
-        for compare_index in xrange( 0, len( test_patterns ) - 2, 3 ):
+        for compare_index in range( 0, len( test_patterns ) ):
             for correct_pattern in correct_patterns:
-                if test_patterns[ compare_index + 2 ] == correct_pattern[ 2 ]:
+                if test_patterns[ compare_index ][ 2 ] == correct_pattern[ 2 ]:
                     score += 100.00 / len( correct_patterns )
 
                     break

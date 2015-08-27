@@ -150,29 +150,56 @@ class literal_parsing:
 
         # Creating new variables that will store the final information to
         final_patterns = []
+        final_pattern_information = {}
 
         # Looking for sub patterns in each of the strings
         if patterns != []:
             if len( patterns ) != 1:
                 for outer_pattern_index in range( 0, len( patterns ) - 1 ):
                     for inner_pattern_index in range( outer_pattern_index, len( patterns ) ):
-                        add_to_pattern = True
+                        outer_add_to_pattern = True
+                        inner_add_to_pattern = True
                         for pattern in final_patterns:
-                            if patterns[ outer_pattern_index ] in pattern or patterns[ inner_pattern_index ] in pattern:
-                                add_to_pattern = False
+                            if patterns[ outer_pattern_index ] in pattern:
+                                outer_add_to_pattern = False
 
+                            if patterns[ inner_pattern_index ] in pattern:
+                                inner_add_to_pattern = False
+
+                            if inner_add_to_pattern == False and outer_add_to_pattern == False:
                                 break
 
-                        if add_to_pattern:
+                        if inner_add_to_pattern == True and outer_add_to_pattern == True:
                             if len( patterns[ outer_pattern_index ] ) > len( patterns[ inner_pattern_index ] ):
                                 final_patterns.append( patterns[ outer_pattern_index ] )
+
+                                try:
+                                    final_pattern_information[ patterns[ outer_pattern_index ] ] = pattern_information[ patterns[ outer_pattern_index ] ]
+                                except:
+                                    pass
                             else:
                                 final_patterns.append( patterns[ inner_pattern_index ] )
 
-            else:
-                final_patterns = patterns
+                                try:
+                                    final_pattern_information[ patterns[ inner_pattern_index ] ] = pattern_information[ patterns[ inner_pattern_index ] ]
+                                except:
+                                    pass
+                        elif inner_add_to_pattern == True and outer_add_to_pattern == False:
+                            final_patterns.append( patterns[ inner_pattern_index ] )
 
-            print "TEST"
-            print final_patterns
+                            try:
+                                final_pattern_information[ patterns[ inner_pattern_index ] ] = pattern_information[ patterns[ inner_pattern_index ] ]
+                            except:
+                                pass
+                        elif inner_add_to_pattern == False and outer_add_to_pattern == True:
+                            final_patterns.append( patterns[ outer_pattern_index ] )
 
-        return final_patterns, pattern_information
+                            try:
+                                final_pattern_information[ patterns[ outer_pattern_index ] ] = pattern_information[ patterns[ outer_pattern_index ] ]
+                            except:
+                                pass
+
+        if final_patterns == []:
+            final_patterns = patterns
+
+        return final_patterns, final_pattern_information

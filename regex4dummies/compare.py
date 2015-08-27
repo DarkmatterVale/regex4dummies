@@ -80,9 +80,9 @@ class compare:
                 if keyword in pattern:
                     #TODO: Implement keyword search here
 
-                    compiled_patterns += [ self.get_reliability_score( pattern ), self.get_applicability_score( pattern ), pattern ]
+                    compiled_patterns += [ [ self.get_reliability_score( pattern ), self.get_applicability_score( pattern ), pattern ] ]
             else:
-                compiled_patterns += [ self.get_reliability_score( pattern ), self.get_applicability_score( pattern ), pattern ]
+                compiled_patterns += [ [ self.get_reliability_score( pattern ), self.get_applicability_score( pattern ), pattern ] ]
 
         return compiled_patterns
 
@@ -201,7 +201,12 @@ class compare:
 
         for compiled_pattern in sentence_information:
             if compiled_pattern == pattern:
-                return sentence_information[ compiled_pattern ][ 4 ] * 100 / len( strings_parsed )
+                score = sentence_information[ compiled_pattern ][ 4 ] * 100 / len( strings_parsed )
+
+                if score > 100:
+                    return 100
+                else:
+                    return score
 
 
     def get_applicability_score( self, pattern ):

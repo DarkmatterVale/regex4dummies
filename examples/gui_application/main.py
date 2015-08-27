@@ -15,12 +15,17 @@ from textblob import TextBlob
 
 from regex4dummies import regex4dummies
 
+try:
+    from regex4dummies import Toolkit
+except:
+    pass
+
 """
 
 Class information:
 
 - name: main
-- version: 1.3.4
+- version: 1.4.2
 
 """
 
