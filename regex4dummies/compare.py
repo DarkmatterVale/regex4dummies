@@ -10,8 +10,6 @@ import re
 from pattern_detail import pattern_detail
 from literal_parsing import literal_parsing
 from semantic_parsing import semantic_parsing
-import nltk
-from operator import itemgetter
 
 from topic_finder import TopicFinder
 
