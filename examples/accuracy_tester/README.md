@@ -4,5 +4,5 @@ The accuracy tester is both an example and a client. It can be called by the use
 
 # Version Info
 
-- Version: 0.0
-- Stable : NO
+- Version: 1.4.2
+- Stable : Yes
