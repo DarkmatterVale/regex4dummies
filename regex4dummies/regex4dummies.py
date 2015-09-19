@@ -88,7 +88,16 @@ if __name__ == '__main__':
     regex = regex4dummies()
 
     # Printing the semantic patterns within this string
+    print "Semantic Patterns ( single phrase ): " + str( regex.compare_strings( 'nltk', False, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake. Back at your desk, I poured and killed him a rattlesnake and some more rattlesnake. How does that sound." ] ) )
+    print ""
+
+    # Printing the semantic patterns with a keyword within this string
+    print "Semantic Patterns ( keyword ): " + str( regex.compare_strings( 'nltk', False, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it? It is currently four pm.", "what time is it here?", "what time is it", "This is the cat's hat", "That is the cat's hat", "keyword=cat" ] ) )
+    print ""
+
+    # Printing the semantic patterns within this string
     print "Semantic Patterns: " + str( regex.compare_strings( 'nltk', False, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it? It is currently four pm.", "what time is it here?", "what time is it", "This is the cat's hat", "That is the cat's hat" ] ) )
+    print ""
 
     # Displaying the topics that were identified by the parsers in the most recently compared set of strings
     print "Topics: " + str( regex.get_pattern_topics( [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it? It is currently four pm.", "what time is it here?", "what time is it", "This is the cat's hat", "That is the cat's hat" ] ) )

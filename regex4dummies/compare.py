@@ -10,6 +10,7 @@ import re
 from pattern_detail import pattern_detail
 from literal_parsing import literal_parsing
 from semantic_parsing import semantic_parsing
+from textblob import TextBlob
 
 from topic_finder import TopicFinder
 
@@ -59,12 +60,19 @@ class compare:
 
         # Find the keyword
         keyword = ""
-        for string in strings:
-            if 'keyword=' in string:
-                keyword = re.sub( 'keyword=', '', string )
+        if len( strings ) > 1:
+            for string in strings:
+                if 'keyword=' in string:
+                    keyword = re.sub( 'keyword=', '', string )
 
-        # Call find_patterns( strings )
-        patterns = self.find_patterns( strings, 0, literal, [], parser_name )
+            # Call find_patterns( strings )
+            patterns = self.find_patterns( strings, 0, literal, [], parser_name )
+        else:
+            # Identifying patterns based on sentences
+            strings = self.split_string( strings )
+
+            # Identifying patterns
+            patterns = self.find_patterns( strings, 0, literal, [], parser_name )
 
         # After patterns are identified in strings, complete final processing
         #   1. Find reliability score
@@ -76,8 +84,6 @@ class compare:
         for pattern in patterns:
             if keyword != '':
                 if keyword in pattern:
-                    #TODO: Implement keyword search here
-
                     compiled_patterns += [ [ self.get_reliability_score( pattern ), self.get_applicability_score( pattern ), pattern ] ]
             else:
                 compiled_patterns += [ [ self.get_reliability_score( pattern ), self.get_applicability_score( pattern ), pattern ] ]
@@ -215,3 +221,24 @@ class compare:
         for compiled_pattern in sentence_information:
             if compiled_pattern == pattern:
                 return sentence_information[ compiled_pattern ][ 5 ]
+
+
+    def split_string( self, strings ):
+        """
+        Returns the first string in strings,
+        splitup by sentences.
+        """
+
+        # Setting up a variables
+        string_to_split = strings[ 0 ]
+        updated_strings = []
+
+        # Creating a textblob from the string_to_split
+        string_textblob = TextBlob( string_to_split )
+
+        # Going through the sentences & splitting
+        for sentence in string_textblob.sentences:
+            updated_strings.append( str( sentence ) )
+
+        # Returning sentences
+        return updated_strings
