@@ -118,13 +118,30 @@ if __name__ == '__main__':
     # Testing the toolkit functions
     tool_tester = Toolkit()
 
-    # Testing the tokenizer functions
-    print tool_tester.tokenize( "This is a test string.", "pattern" )
+    # Testing NLTK functions
+    print "NLTK Toolkit tests:"
+    # tokenizer function
+    print tool_tester.tokenize( "This is a test string.", "nltk" )
+    # dependency function
+    print tool_tester.find_dependencies( "This is a test string.", "nltk" )
+    print ""
 
-    # Testing the dependency functions
+    # Testing Pattern functions
+    print "Pattern Toolkit tests:"
+    # tokenizer function
+    print tool_tester.tokenize( "This is a test string.", "pattern" )
+    # dependency function
     print tool_tester.find_dependencies( "This is a test string.", "pattern" )
+    print ""
+
+    # Testing Nlpnet functions
+    print "Nlpnet Toolkit tests:"
+    # tokenizer function
+    print tool_tester.tokenize( "This is a test string.", "nlpnet" )
+    # dependency function
+    print tool_tester.find_dependencies( "This is a test string.", "nlpnet" )
+    print ""
 
     # Printing the literal patterns within this string
-    print ""
     print "Literal Patterns: " + str( regex.compare_strings( 'default', True, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it? It is currently four pm.", "what time is it here?", "what time is it", "This is the cat's hat", "That is the cat's hat" ] ) )
     print ""
