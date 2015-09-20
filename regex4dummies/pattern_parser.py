@@ -32,7 +32,14 @@ class PATTERN:
     def tokenize( self, tokenize_string ):
         """ Returns the tokenized version of tokenize_string, which is just a normal English sentence """
 
-        return parse( tokenize_string )
+        return parse( tokenize_string,
+            tokenize = True,         # Split punctuation marks from words?
+            tags = True,         # Parse part-of-speech tags? (NN, JJ, ...)
+            chunks = False,         # Parse chunks? (NP, VP, PNP, ...)
+            relations = False,        # Parse chunk relations? (-SBJ, -OBJ, ...)
+            lemmata = False,        # Parse lemmata? (ate => eat)
+            encoding = 'utf-8',       # Input string encoding.
+            tagset = None )
 
 
     def find_dependencies( self, dependency_string ):
