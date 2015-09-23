@@ -72,6 +72,16 @@ class regex4dummies:
 
         return compare_object.get_pattern_topics( strings_to_categorize )
 
+    def extract_important_information( self, text_to_summarize ):
+        """
+        Returns the important information within the
+        given text
+        """
+
+        global compare_object
+
+        return compare_object.extract_important_information( text_to_summarize )
+
 
 # If a user mistakingly runs this library believing it is a program, inform the user that it is not a program
 if __name__ == '__main__':

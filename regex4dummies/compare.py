@@ -197,6 +197,21 @@ class compare:
         return topics
 
 
+    def extract_important_information( self, string_to_summarize ):
+        """
+        Returns the important information within the text given
+        """
+
+        # Creating all variables needed
+        topic_object = TopicFinder()
+
+        # Getting the important information
+        important_information = topic_object.gather_important_information( string_to_summarize )
+
+        # Returning the important information
+        return important_information
+
+
     # This function is used to return the reliability score of a pattern
     def get_reliability_score( self, pattern ):
         # Getting global variables

@@ -109,9 +109,6 @@ class TopicFinder:
         # Creating TextBlob to extract sentences from text
         input_textblob = TextBlob( ' '.join( text ) )
 
-        # Setting up variables
-        important_information = []
-
         # Getting the topics of a text ( ranked most important to least important )
         topics = self.identify_topics( text )
 
@@ -143,11 +140,8 @@ class TopicFinder:
         for sentence in ranked_sentences:
             clean_sentences.append( sentence[ 0 ] )
 
-        # Assigning the important information variable its contents
-        important_information = [ topics, clean_sentences ]
-
         # Returning the final important information
-        return important_information
+        return clean_sentences
 
 
     def update_ranks( self, ranked_sentences, sentence_info, add_index ):
