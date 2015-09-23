@@ -12,6 +12,7 @@ Class information:
 
 import nltk
 from nltk import FreqDist
+from textblob import TextBlob
 
 class TopicFinder:
 
@@ -99,5 +100,85 @@ class TopicFinder:
         return final_topics
 
 
+    def gather_important_information( self, text ):
+        """
+        Returns the most important information within a text
+        based on its topics.
+        """
+
+        # Creating TextBlob to extract sentences from text
+        input_textblob = TextBlob( ' '.join( text ) )
+
+        # Setting up variables
+        important_information = []
+
+        # Getting the topics of a text ( ranked most important to least important )
+        topics = self.identify_topics( text )
+
+        # Getting the sentences with the topics in them
+        important_sentences = []
+        for sentence in input_textblob.sentences:
+            sentence_text = str( sentence )
+            add_to_important_sentences = False
+            topic_counter = 0
+
+            for topic in topics:
+                if topic[ 0 ] in sentence_text:
+                    add_to_important_sentences = True
+                    topic_counter += 1
+
+            if add_to_important_sentences:
+                important_sentences.append( [ sentence_text, topic_counter ] )
+
+        # Ranking the sentences
+        ranked_sentences = []
+        for sentence, topic_counter in important_sentences:
+            if ranked_sentences == []:
+                ranked_sentences.append( [ sentence, topic_counter ] )
+            else:
+                ranked_sentences = self.update_ranks( ranked_sentences, [ sentence, topic_counter ], 0 )
+
+        # Removing unnecessary information from the sentences
+        clean_sentences = []
+        for sentence in ranked_sentences:
+            clean_sentences.append( sentence[ 0 ] )
+
+        # Assigning the important information variable its contents
+        important_information = [ topics, clean_sentences ]
+
+        # Returning the final important information
+        return important_information
+
+
+    def update_ranks( self, ranked_sentences, sentence_info, add_index ):
+        """
+        Updates the ranks of the variable ranked_sentences
+        """
+
+        # Gathering information
+        sentence = sentence_info[ 0 ]
+        topic_counter = sentence_info[ 1 ]
+
+        if add_index >= len( ranked_sentences ):
+            ranked_sentences.insert( len( ranked_sentences ), [ sentence, topic_counter ] )
+        else:
+            # Updating information
+            if ranked_sentences[ add_index ][ 1 ] > int( topic_counter ):
+                ranked_sentences = self.update_ranks( ranked_sentences, [ sentence, topic_counter ], add_index + 1 )
+            else:
+                ranked_sentences.insert( add_index, [ sentence, topic_counter ] )
+
+        # Returning updated ranked sentences
+        return ranked_sentences
+
+
 if __name__ == '__main__':
-    pass
+    exit( 0 )
+
+    string_to_test_topics = [ """Test string goes here.""" ]
+
+    topic_tester = TopicFinder()
+
+    for item in topic_tester.gather_important_information( string_to_test_topics ):
+        print item
+        print ""
