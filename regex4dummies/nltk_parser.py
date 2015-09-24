@@ -16,16 +16,23 @@ import os
 
 from textblob import TextBlob
 import nltk
-from nltk.stem.porter import *
 from fuzzywuzzy import fuzz
+
+from normalizer import Normalizer
 
 
 class NLTK:
+    global nltk_normalizer
 
     def __init__( self, *args, **kwargs ):
-        """ Blank constructor method """
+        """
+        Constructor method, initializes variables.
+        """
 
-        pass
+        global nltk_normalizer
+
+        # Initializing variables
+        nltk_normalizer = Normalizer()
 
 
     def tokenize( self, tokenize_string ):
@@ -326,19 +333,10 @@ class NLTK:
     def normalize_sentence_info( self, sentence_info ):
         """ Normalizes all of the incoming text to a standard """
 
-        # Create a stemmer object
-        stemmer = PorterStemmer()
+        global nltk_normalizer
 
-        # Normalizing sthe patterns
-        # Make the subject, verb, and object lowercase
-        sentence_info[0] = sentence_info[0].lower()
-        sentence_info[1] = sentence_info[1].lower()
-        sentence_info[2] = sentence_info[2].lower()
-
-        # Implement stemming
-        sentence_info[0] = stemmer.stem( sentence_info[0] )
-        sentence_info[1] = stemmer.stem( sentence_info[1] )
-        sentence_info[2] = stemmer.stem( sentence_info[2] )
+        # Normalizing text
+        sentence_info = nltk_normalizer.normalize_sentence_info( sentence_info )
 
         # Return normalized information
         return sentence_info

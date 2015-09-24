@@ -9,6 +9,11 @@ Normalizes the incoming text and returns said normalized text
 
 """
 
+
+from nltk.stem.porter import *
+import nltk
+
+
 class Normalizer:
 
 
@@ -18,7 +23,7 @@ class Normalizer:
         pass
 
 
-    def nomalize( self, text ):
+    def normalize_sentence_info( self, sentence_info ):
         """ Method to normalize text
 
         This is accomplished by:
@@ -31,6 +36,19 @@ class Normalizer:
         - text: String containing the text to normalize
         """
 
-        #TODO: Implement text normalizing
+        # Create a stemmer object
+        stemmer = PorterStemmer()
 
-        return text
+        # Normalizing sthe patterns
+        # Make the subject, verb, and object lowercase
+        sentence_info[0] = sentence_info[0].lower()
+        sentence_info[1] = sentence_info[1].lower()
+        sentence_info[2] = sentence_info[2].lower()
+
+        # Implement stemming
+        sentence_info[0] = stemmer.stem( sentence_info[0] )
+        sentence_info[1] = stemmer.stem( sentence_info[1] )
+        sentence_info[2] = stemmer.stem( sentence_info[2] )
+
+        # Return normalized information
+        return sentence_info
