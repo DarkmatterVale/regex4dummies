@@ -12,8 +12,8 @@ Features
 
 - Automatic pattern detection ( semantic and literal )
 - Multiple parsers ( implementations of nltk, pattern, and nlpnet )
-- Keyword searching to find specific phrases
-- Topic analysis
+- Keyword searching to find specific phrases within text
+- Topic analysis & Important information extraction
 - Tokenizer and sentence dependency identifier
 
 
@@ -24,7 +24,8 @@ Some features I plan to implement in the future:
 
 - Machine Learning. This will allow the parsers to learn multiple grammatical “styles” and be able to successfully parse a much wider selection of strings
 - Additional parsers
-- Continued improvements on the current parsers. This will be a long-term project, and additional details can be found on the main Github page
+- Phrase extractor. This can include verb phrases, noun phrases, prepositional phrases, etc
+- String comparison function. This will return a value that will determine how similar two strings are
 
 If you have feature requests, feel free to add an issue to the Github issue tracker. All contributions and requests are appreciated!
 
@@ -87,10 +88,17 @@ A newly released set of features include a tokenizer and dependency finder funct
   tool_tester = Toolkit()
 
   # Testing the tokenizer functions
-  print tool_tester.tokenize( "This is a test string.", "pattern" )
+  print tool_tester.tokenize( "This is a test string.", "" )
 
   # Testing the dependency functions
   print tool_tester.find_dependencies( "This is a test string.", "pattern" )
+
+Other features included are demonstrated below.
+
+.. code-block:: Python
+
+  # Testing the information extraction functions
+  regex.extract_important_information( [ "This is a test string." ] )
 
 
 Installation
@@ -115,15 +123,12 @@ That's it! The nlpnet parser should now be able to be used.
 Patch Notes
 -------------
 
-( Latest ) v1.4.2: Miscellaneous Update & overall performance improvement
+v1.4.3: Topic analysis, bug fixes, and code refactoring
 
-- Accuracy tester is a lot better ( except for semantic comparisons ). A new "corpus" will be added soon to get accurate semantic comparisons
-- Literal parser improvements ( which are numerous ). Multiple bug fixes, sub-patterns are not gathered ( patterns within a larger pattern no longer count as individual patterns ), and some general improvements
-- Behind-the-scenes work to update code and make it more flexible for future updates
-- GUI update. It is now backwards compatible
-- Toolkit update! It should now work, and I apologize for it not working in previous updates
-- Topic analyzer update. It should find more topics, as well as returning the topics in order from most-likely to be the main topic to least likely. In the future, an update will allow the extraction of the most important information as a whole ( not just the topics )
-- Source code is smaller. Removed some code that was not being used, helping reduce the size of the repository
+- Toolkit NLTK dependency bug. This could have caused the dependency function to not work, but it now does
+- Topic analysis update. There is a new function which allows you to extract the important information from within a text
+- Code refactoring. Tests have been redone, allowing for flexible updates in the future to be added with ease. In addition, a lot of other code has been changed
+- Toolkit POS Tagger update. The update brings an interesting feature which allows you to get the POS tag from all 3 parsers, and regex4dummies will tally up the results, giving you the choice to pick which tag you think is correct
 
 
 Contributing

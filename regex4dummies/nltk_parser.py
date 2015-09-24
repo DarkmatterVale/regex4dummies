@@ -5,7 +5,7 @@ __author__ = 'Vale Tolpegin'
 Class information:
 
 - Name: NLTK
-- Version: 1.4.0
+- Version: 1.4.3
 
 NLTK is used to manage the NLTK parser
 

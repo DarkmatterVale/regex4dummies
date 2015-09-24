@@ -5,7 +5,7 @@ __author__ = 'Vale Tolpegin'
 Class information:
 
 - Name: PATTERN
-- Version: 1.4.0
+- Version: 1.4.3
 
 PATTERN is used to manage the Pattern parser
 

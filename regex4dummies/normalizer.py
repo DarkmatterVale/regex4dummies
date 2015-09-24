@@ -3,7 +3,7 @@ __author__ = 'Vale Tolpegin'
 """
 
 - name: Normalizer
-- version: 1.4.2
+- version: 1.4.3
 
 Normalizes the incoming text and returns said normalized text
 

@@ -14,6 +14,7 @@ Features:
 - Multiple parsers ( implementations of nltk, pattern, and nlpnet )
 - Keyword searching to find specific phrases
 - Topic analysis
+- Important information extraction
 - Tokenizer and sentence dependency identifier
 
 

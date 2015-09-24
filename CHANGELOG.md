@@ -1,6 +1,13 @@
 # Changelog
 
-## ( Current ) v1.4.2: Miscellaneous Update & overall performance improvement
+## ( Current ) v1.4.3: Topic analysis, bug fixes, some code refactoring
+
+- Toolkit NLTK dependency bug. This could have caused the dependency function to not work, but it now does
+- Topic analysis update. There is a new function which allows you to extract the important information from within a text
+- Code refactoring. Tests have been redone, allowing for flexible updates in the future to be added with ease. In addition, a lot of other code has been changed
+- Toolkit POS Tagger update. The update brings an interesting feature which allows you to get the POS tag from all 3 parsers, and regex4dummies will tally up the results, giving you the choice to pick which tag you think is correct
+
+## v1.4.2: Miscellaneous Update & overall performance improvement
 
 - Accuracy tester is a lot better ( except for semantic comparisons ). A new "corpus" will be added soon to get accurate semantic comparisons
 - Literal parser improvements ( which are numerous ). Multiple bug fixes, sub-patterns are not gathered ( patterns within a larger pattern no longer count as individual patterns ), and some general improvements

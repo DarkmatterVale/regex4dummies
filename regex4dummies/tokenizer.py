@@ -4,7 +4,7 @@ __author__ = 'Vale Tolpegin'
 
 Class information:
 - name: Tokenizer
-- version: 1.4.0
+- version: 1.4.3
 
 Tokenizer provides regex4dummies an easy-to-use interface to the pattern, nltk, and nlpnet tokenizers
 

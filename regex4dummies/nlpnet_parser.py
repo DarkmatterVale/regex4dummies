@@ -5,7 +5,7 @@ __author__ = 'Vale Tolpegin'
 Class information:
 
 - Name: NLPNET
-- Version: 1.4.0
+- Version: 1.4.3
 
 NLPNET is used to manage the nlpnet parser
 

@@ -6,7 +6,7 @@ TopicFinder identifies the possible topics of a string.
 
 Class information:
 - name: TopicFinder
-- version: 1.4.2
+- version: 1.4.3
 
 """
 
