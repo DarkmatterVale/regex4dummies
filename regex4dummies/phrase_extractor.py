@@ -11,6 +11,9 @@ Class information:
 """
 
 
+from textblob import TextBlob
+
+
 class PhraseExtractor:
 
     def __init__( self, *args, **kwargs ):
@@ -39,6 +42,11 @@ class PhraseExtractor:
 
         # Instantiating variables
         noun_phrases = []
+
+        # Creating a TextBlob object to get the noun phrases from the text
+        phrase_chunker_blob = TextBlob( text )
+        for phrase in phrase_chunker_blob.noun_phrases:
+            noun_phrases.append( str( phrase ) )
 
         # Returning the found noun_phrases
         return noun_phrases

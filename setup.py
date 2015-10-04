@@ -27,7 +27,18 @@ setup(
         'Development Status :: 3 - Alpha',
 
         'Intended Audience :: Developers',
+        'Intended Audience :: Education',
+        'Intended Audience :: Information Technology',
+        'Intended Audience :: Science/Research',
 
+        'Topic :: Scientific/Engineering',
+        'Topic :: Scientific/Engineering :: Artificial Intelligence',
+        'Topic :: Scientific/Engineering :: Human Machine Interfaces',
+        'Topic :: Scientific/Engineering :: Information Analysis',
+        'Topic :: Text Processing',
+        'Topic :: Text Processing :: Filters',
+        'Topic :: Text Processing :: General',
+        'Topic :: Text Processing :: Indexing',
         'Topic :: Text Processing :: Linguistic',
 
         'License :: OSI Approved :: MIT License',
