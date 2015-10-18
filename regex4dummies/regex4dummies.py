@@ -7,7 +7,7 @@ import re
 
 # Other
 from compare import compare
-from run_dependency_tests import run_dependency_tests
+from test_dependencies import run_dependency_tests
 from toolkit import Toolkit
 
 """

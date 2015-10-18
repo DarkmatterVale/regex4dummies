@@ -6,9 +6,9 @@ import sys
 import re
 
 # Parsing related libraries
-import re
 from pattern_detail import pattern_detail
-from literal_parsing import literal_parsing
+from literal_parsers import *
+#from literal_parsing import literal_parsing
 from semantic_parsing import semantic_parsing
 from textblob import TextBlob
 
