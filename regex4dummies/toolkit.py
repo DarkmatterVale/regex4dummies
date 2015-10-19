@@ -12,13 +12,36 @@ Class information:
 
 from dependency import Dependency
 from tokenizer import Tokenizer
+from phrase_extractor import PhraseExtractor
 
 class Toolkit:
 
     def __init__( self, *args, **kwargs ):
-        """ Blank constructor method """
+        """
+        Constructor method.
+        """
 
-        pass
+        self.extractor = PhraseExtractor()
+
+
+    def extract_noun_phrases( self, text ):
+        """
+        Extracts the noun phrases out of a passed
+        text.
+        """
+
+        # Getting noun phrases & returning them
+        return self.extractor.extract_noun_phrases( text )
+
+
+    def extract_verb_phrases( self, text ):
+        """
+        Extracts the verb phrases out of a passed
+        text.
+        """
+
+        # Getting verb phrases & returning them
+        return self.extractor.extract_verb_phrases( text )
 
 
     def tokenize( self, string_to_tokenize, parser ):

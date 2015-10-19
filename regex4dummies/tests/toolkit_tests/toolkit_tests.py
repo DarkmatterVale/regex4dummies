@@ -45,7 +45,9 @@ class ToolkiTests:
         # Testing general functions
         print "General Toolkit tests:"
         # tokenizer function
-        print tool_tester.tokenize( "This is a test string.", "" )
+        print "Tokenized average: " + str( tool_tester.tokenize( "This is a test string.", "" ) )
+        print "Noun Phrases: " + str( tool_tester.extract_noun_phrases( "This is a test string." ) )
+        print "Verb Phrases: " + str( tool_tester.extract_verb_phrases( "This is a test string." ) )
         print ""
 
         # Clearing screen

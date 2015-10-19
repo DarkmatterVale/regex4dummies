@@ -8,10 +8,16 @@ Class information:
 - name: PhraseExtractor
 - version: 1.4.4
 
+TODO:
+- Implement multi parser phrase extraction (do not rely on a single parser to get the phrases extracted)
+
 """
 
 
+import re
+
 from textblob import TextBlob
+from dependency import Dependency
 
 
 class PhraseExtractor:
@@ -60,6 +66,27 @@ class PhraseExtractor:
 
         # Instantiating variables
         verb_phrases = []
+        verb_phrase_extractor = Dependency()
+
+        # Getting verb phrases using the Pattern parser
+        dependencies = verb_phrase_extractor.find_dependencies( text, 'pattern' ).split( ' ' )
+
+        for dependency_index in range( 0, len( dependencies ) ):
+            # Check to see if the word is a verb or part of a verb phrase
+            if "VP-" in dependencies[ dependency_index ]:
+                # Check to see if the last word was part of a verb phrase
+                if dependency_index != 0 and "VP-" in dependencies[ dependency_index - 1 ]:
+                    # Since it was, append this verb onto the last verb phrase
+                    verb_phrases[ len( verb_phrases ) ] += " " + re.sub( '/.*', '', dependencies[ dependency_index ] )
+
+                    # Continue on to the next word in the sentence
+                    continue
+
+                # Remove the ending information, leaving the word
+                cleaned_word = re.sub( '/.*', '', dependencies[ dependency_index ] )
+
+                # Add the word to the verb phrase
+                verb_phrases.append( cleaned_word )
 
         # Returning the found verb_phrases
         return verb_phrases
