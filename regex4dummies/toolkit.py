@@ -6,7 +6,7 @@ The toolkit class manages all NLP related functions of regex4dummies. This allow
 
 Class information:
 - name: toolkit
-- version: 1.4.0
+- version: 1.4.4
 
 """
 
@@ -24,47 +24,47 @@ class Toolkit:
         self.extractor = PhraseExtractor()
 
 
-    def extract_noun_phrases( self, text ):
+    def extract_noun_phrases( self, **kwargs ):
         """
         Extracts the noun phrases out of a passed
         text.
         """
 
         # Getting noun phrases & returning them
-        return self.extractor.extract_noun_phrases( text )
+        return self.extractor.extract_noun_phrases( kwargs.get("text") )
 
 
-    def extract_verb_phrases( self, text ):
+    def extract_verb_phrases( self, **kwargs ):
         """
         Extracts the verb phrases out of a passed
         text.
         """
 
         # Getting verb phrases & returning them
-        return self.extractor.extract_verb_phrases( text )
+        return self.extractor.extract_verb_phrases( kwargs.get("text") )
 
 
-    def extract_prepositional_phrases( self, text ):
+    def extract_prepositional_phrases( self, **kwargs ):
         """
         Extracts the prepositional phrases out of a
         passed text.
         """
 
         # Getting the prepositional phrases & returning them
-        return self.extractor.extract_prepositional_phrases( text )
+        return self.extractor.extract_prepositional_phrases( kwargs.get("text") )
 
 
-    def tokenize( self, string_to_tokenize, parser ):
+    def tokenize( self, **kwargs ):
         """ Returns the tokenized string using a parser """
 
         string_tokenizer = Tokenizer()
 
-        return string_tokenizer.tokenize( string_to_tokenize, parser )
+        return string_tokenizer.tokenize( kwargs.get("text"), kwargs.get("parser") )
 
 
-    def find_dependencies( self, string_to_get_dependencies, parser ):
+    def find_dependencies( self, **kwargs ):
         """ Returns the string with dependencies identified using the given parser """
 
         dependency_finder = Dependency()
 
-        return dependency_finder.find_dependencies( string_to_get_dependencies, parser )
+        return dependency_finder.find_dependencies( kwargs.get("text"), kwargs.get("parser") )
