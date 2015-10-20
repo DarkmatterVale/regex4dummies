@@ -18,6 +18,8 @@ import re
 
 from textblob import TextBlob
 from dependency import Dependency
+from semantic_parsers import NLTK
+import nltk
 
 
 class PhraseExtractor:
@@ -100,6 +102,33 @@ class PhraseExtractor:
 
         # Instantiating variables
         prepositional_phrases = []
+        prepositional_phrase_extractor = NLTK()
+
+        # Getting prepositional phrases
+        prepositional_phrases = prepositional_phrase_extractor.find_prepositional_phrases( text, text, nltk.pos_tag( nltk.word_tokenize( str( text ) ) ) ).split( '...' )
+        prepositional_phrases = prepositional_phrases[ 0 : len( prepositional_phrases ) - 1 ]
+
+        # Normalizing the phrases
+        prepositional_phrases = self.normalize_text( prepositional_phrases )
 
         # Returning the found prepositional_phrases
         return prepositional_phrases
+
+
+    def normalize_text( self, text ):
+        """
+        Returns the normalized version
+        of the passed text variable.
+        """
+
+        # Instantiating variables
+        normalized_text = text
+
+        # Removing spaces at the start of each entry
+        for phrase_index in range( 0, len( normalized_text ) ):
+            if normalized_text[ phrase_index ] != '':
+                if normalized_text[ phrase_index ][ 0 ] == " ":
+                    normalized_text[ phrase_index ] = normalized_text[ phrase_index ][ 1 : ]
+
+        # Returning normalized text
+        return normalized_text

@@ -48,6 +48,7 @@ class ToolkiTests:
         print "Tokenized average: " + str( tool_tester.tokenize( "This is a test string.", "" ) )
         print "Noun Phrases: " + str( tool_tester.extract_noun_phrases( "This is a test string." ) )
         print "Verb Phrases: " + str( tool_tester.extract_verb_phrases( "This is a test string." ) )
+        print "Prepositional Phrases: " + str( tool_tester.extract_prepositional_phrases( "This is a test string in the house." ) )
         print ""
 
         # Clearing screen

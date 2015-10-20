@@ -44,6 +44,16 @@ class Toolkit:
         return self.extractor.extract_verb_phrases( text )
 
 
+    def extract_prepositional_phrases( self, text ):
+        """
+        Extracts the prepositional phrases out of a
+        passed text.
+        """
+
+        # Getting the prepositional phrases & returning them
+        return self.extractor.extract_prepositional_phrases( text )
+
+
     def tokenize( self, string_to_tokenize, parser ):
         """ Returns the tokenized string using a parser """
 
