@@ -1,11 +1,5 @@
 __author__ = 'Vale Tolpegin'
 
-# System related libraries
-import os
-import sys
-import re
-
-# Other
 from compare import Compare
 from test_dependencies import run_dependency_tests
 from toolkit import Toolkit

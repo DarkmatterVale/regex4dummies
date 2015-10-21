@@ -22,17 +22,14 @@ from normalizer import Normalizer
 
 
 class NLTK:
-    global nltk_normalizer
 
     def __init__( self, *args, **kwargs ):
         """
         Constructor method, initializes variables.
         """
 
-        global nltk_normalizer
-
         # Initializing variables
-        nltk_normalizer = Normalizer()
+        self.nltk_normalizer = Normalizer()
 
 
     def tokenize( self, tokenize_string ):
@@ -333,10 +330,8 @@ class NLTK:
     def normalize_sentence_info( self, sentence_info ):
         """ Normalizes all of the incoming text to a standard """
 
-        global nltk_normalizer
-
         # Normalizing text
-        sentence_info = nltk_normalizer.normalize_sentence_info( sentence_info )
+        sentence_info = self.nltk_normalizer.normalize_sentence_info( sentence_info )
 
         # Return normalized information
         return sentence_info

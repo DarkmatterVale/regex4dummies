@@ -7,7 +7,7 @@ Current list of examples included in this project:
 
 Current list of applications included in this project:
 - GUI Application
-  - Version: 1.0
+  - Version: 1.4.2
   - Stable : Yes
   - Info   : A GUI that allows the use of this library without any programming knowledge required
 - Accuracy Tester

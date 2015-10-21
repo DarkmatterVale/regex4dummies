@@ -5,7 +5,7 @@ __author__ = 'Vale Tolpegin'
 Class information:
 
 - Name: NLPNET
-- Version: 1.4.3
+- Version: 1.4.4
 
 NLPNET is used to manage the nlpnet parser
 
@@ -23,17 +23,14 @@ from normalizer import Normalizer
 
 
 class NLPNET:
-    global nlpnet_normalizer
 
     def __init__( self, *args, **kwargs ):
         """
         Constructor method, initializes variables.
         """
 
-        global nlpnet_normalizer
-
         # Initializing variables
-        nlpnet_normalizer = Normalizer()
+        self.nlpnet_normalizer = Normalizer()
 
 
     def tokenize( self, tokenize_string ):
@@ -183,10 +180,8 @@ class NLPNET:
     def normalize_sentence_info( self, sentence_info ):
         """ Normalizes all of the incoming text to a standard """
 
-        global nlpnet_normalizer
-
         # Normalizing text
-        sentence_info = nlpnet_normalizer.normalize_sentence_info( sentence_info )
+        sentence_info = self.nlpnet_normalizer.normalize_sentence_info( sentence_info )
 
         # Return normalized information
         return sentence_info

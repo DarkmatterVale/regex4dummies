@@ -16,7 +16,6 @@ import nltk
 
 class Normalizer:
 
-
     def __init__( self ):
         """ Blank constructor """
 

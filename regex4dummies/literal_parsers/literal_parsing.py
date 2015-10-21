@@ -11,14 +11,19 @@ Class information:
 
 """
 
+
 class literal_parsing:
+
     def __init__( self, *args, **kwargs ):
         """ Blank constructor """
 
         pass
 
+
     def parse( self, base_string, test_string, pattern_arg, parser ):
-        """ Returns the parsed version of the incoming text """
+        """
+        Returns the parsed version of the incoming text.
+        """
 
         if parser == "default":
             return self.default_parser( base_string, test_string, pattern_arg )
@@ -30,8 +35,12 @@ class literal_parsing:
 
             exit( 0 )
 
+
     def default_parser( self, base_string, test_string, pattern_arg ):
-        """ Parsing code for the default literal parser """
+        """
+        Parsing code for the default literal parser.
+        """
+
         # Setting basic sentence information
         sentence_information = {}
 
@@ -142,10 +151,12 @@ class literal_parsing:
 
 
     def remove_sub_patterns( self, patterns, pattern_information, strings ):
-        """ Removes sub patterns, which are patterns within patterns.
+        """
+        Removes sub patterns, which are patterns within patterns.
 
-        The sub patterns are not referenced in any context other than the context of the "parent" pattern, therefore making them sub patterns and
-        not individual patterns that just happen to occur within other patterns.
+        The sub patterns are not referenced in any context other than the context of the
+        "parent" pattern, therefore making them sub patterns and not individual patterns
+        that just happen to occur within other patterns.
         """
 
         # Creating new variables that will store the final information to

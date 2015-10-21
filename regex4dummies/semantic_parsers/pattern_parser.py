@@ -23,17 +23,14 @@ from normalizer import Normalizer
 
 
 class PATTERN:
-    global pattern_normalizer
 
     def __init__( self, *args, **kwargs ):
         """
         Constructor method, initializes variables.
         """
 
-        global pattern_normalizer
-
         # Initializing variables
-        pattern_normalizer = Normalizer()
+        self.pattern_normalizer = Normalizer()
 
 
     def tokenize( self, tokenize_string ):
@@ -149,10 +146,8 @@ class PATTERN:
     def normalize_sentence_info( self, sentence_info ):
         """ Normalizes all of the incoming text to a standard """
 
-        global pattern_normalizer
-
         # Normalizing text
-        sentence_info = pattern_normalizer.normalize_sentence_info( sentence_info )
+        sentence_info = self.pattern_normalizer.normalize_sentence_info( sentence_info )
 
         # Return normalized information
         return sentence_info
@@ -229,7 +224,7 @@ class PATTERN:
                             elif patterns == []:
                                 patterns += [ test_sentence[ len( test_sentence ) - 1 ] ]
 
-                                sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ] = test_sentence[ 0 : len( test_sentence ) - 1 ]
+                                sentence_information[   test_sentence[ len( test_sentence ) - 1 ] ] = test_sentence[ 0 : len( test_sentence ) - 1 ]
                                 # Updating reliability score
                                 try:
                                     sentence_information[ test_sentence[ len( test_sentence ) - 1 ] ][ 4 ] += 1
