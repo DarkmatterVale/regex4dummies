@@ -68,4 +68,4 @@ class Toolkit:
 
         dependency_finder = Dependency()
 
-        return dependency_finder.find_dependencies( kwargs.get("text"), kwargs.get("parser") )
+        return dependency_finder.find_dependencies( text=kwargs.get("text"), parser=kwargs.get("parser"), response_type=kwargs.get("response_type") )

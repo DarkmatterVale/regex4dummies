@@ -36,6 +36,7 @@ class ToolkiTests:
         print tool_tester.tokenize( text="This is a test string.", parser="pattern" )
         # dependency function
         print tool_tester.find_dependencies( text="This is a test string.", parser="pattern" )
+        print tool_tester.find_dependencies( text="This is a test string.", parser="pattern", response_type="simplified" )
         print ""
 
         # Testing Nlpnet functions
@@ -44,6 +45,7 @@ class ToolkiTests:
         print tool_tester.tokenize( text="This is a test string.", parser="nlpnet" )
         # dependency function
         print tool_tester.find_dependencies( text="This is a test string.", parser="nlpnet" )
+        print tool_tester.find_dependencies( text="This is a test string.", parser="nlpnet", response_type="simplified" )
         print ""
 
         # Testing general functions

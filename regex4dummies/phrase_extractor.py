@@ -71,7 +71,7 @@ class PhraseExtractor:
         verb_phrase_extractor = Dependency()
 
         # Getting verb phrases using the Pattern parser
-        dependencies = verb_phrase_extractor.find_dependencies( text, 'pattern' ).split( ' ' )
+        dependencies = verb_phrase_extractor.find_dependencies( text=text, parser='pattern' ).split( ' ' )
 
         for dependency_index in range( 0, len( dependencies ) ):
             # Check to see if the word is a verb or part of a verb phrase
