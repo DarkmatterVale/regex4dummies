@@ -20,7 +20,7 @@ Test information:
     - pattern parser
     - nlpnet parser
 
-Version: 1.3.6
+Version: 1.4.4
 
 """
 
@@ -32,7 +32,7 @@ regex = regex4dummies()
 print regex.__version__
 
 # Testing the 'nltk' parser
-print regex.compare_strings( 'nltk', False, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
+print regex.compare_strings( parser='nltk', pattern_detection="semantic", text=[ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
 sentence_information = regex.get_pattern_information()
 for sentence in sentence_information:
     print "[ Pattern ]          : " + sentence.pattern
@@ -43,7 +43,7 @@ for sentence in sentence_information:
 
 
 # Testing the 'pattern' parser
-print regex.compare_strings( 'pattern', False, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
+print regex.compare_strings( parser='pattern', pattern_detection="semantic", text=[ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
 sentence_information = regex.get_pattern_information()
 for sentence in sentence_information:
     print "[ Pattern ]          : " + sentence.pattern
@@ -77,7 +77,7 @@ os.remove( path + 'dependency-en.tgz' )
 os.chdir( current_directory )
 
 # Testing the 'nlpnet' parser
-print regex.compare_strings( 'nlpnet', False, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
+print regex.compare_strings( parser='nlpnet', pattern_detection="semantic", text=[ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
 sentence_information = regex.get_pattern_information()
 for sentence in sentence_information:
     print "[ Pattern ]          : " + sentence.pattern
@@ -88,7 +88,7 @@ for sentence in sentence_information:
 
 
 # Testing literal parsing
-print regex.compare_strings( 'default', True, [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
+print regex.compare_strings( parser='default', pattern_detection="literal", text=[ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat" ] )
 sentence_information = regex.get_pattern_information()
 for sentence in sentence_information:
     print "[ Pattern ]          : " + sentence.pattern

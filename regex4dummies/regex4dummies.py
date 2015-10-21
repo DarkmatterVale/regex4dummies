@@ -6,7 +6,7 @@ import sys
 import re
 
 # Other
-from compare import compare
+from compare import Compare
 from test_dependencies import run_dependency_tests
 from toolkit import Toolkit
 
@@ -31,7 +31,7 @@ class regex4dummies:
         """
 
         # Instantiating compare object to be used
-        self.compare_object = compare()
+        self.compare_object = Compare()
 
 
     def compare_strings( self, **kwargs ):
@@ -51,9 +51,9 @@ class regex4dummies:
 
         # Call compare_strings of compare object & return output
         if kwargs.get("pattern_detection") == "literal":
-            return self.compare_object.compare_strings( kwargs.get("text"), True, kwargs.get("parser") )
+            return self.compare_object.compare_strings( text=kwargs.get("text"), pattern_detection=True, parser=kwargs.get("parser") )
         else:
-            return self.compare_object.compare_strings( kwargs.get("text"), False, kwargs.get("parser") )
+            return self.compare_object.compare_strings( text=kwargs.get("text"), pattern_detection=False, parser=kwargs.get("parser") )
 
 
     def get_pattern_information( self ):

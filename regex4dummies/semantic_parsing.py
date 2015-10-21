@@ -11,10 +11,6 @@ import nltk
 import nlpnet
 
 from semantic_parsers import *
-#from nltk_parser import NLTK
-#from pattern_parser import PATTERN
-#from nlpnet_parser import NLPNET
-
 
 """
 
@@ -24,6 +20,7 @@ Class information:
 - version: 1.3.6
 
 """
+
 
 class semantic_parsing:
     def __init__( self, *args, **kwargs ):

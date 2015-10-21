@@ -1,14 +1,11 @@
 __author__ = 'Vale Tolpegin'
 
 # System related libraries
-import os
-import sys
 import re
 
 # Parsing related libraries
 from pattern_detail import pattern_detail
 from literal_parsers import *
-#from literal_parsing import literal_parsing
 from semantic_parsing import semantic_parsing
 from textblob import TextBlob
 
@@ -29,15 +26,13 @@ This class accomplishes the bulk of regex4dummies' work. Below is a short list o
 
 Class information:
 
-- name: compare
-- version: 1.4.3
+- name: Compare
+- version: 1.4.4
 
 """
 
-class compare:
-    global sentence_information
-    global strings_parsed
 
+class Compare:
 
     def __init__( self, *args, **kwargs ):
         """ Blank constructor """
@@ -45,34 +40,34 @@ class compare:
         pass
 
 
-    # This method is called by the main regex4dummies class, and calls all further methods to find strings
-    def compare_strings( self, strings, literal, parser_name ):
-        # Getting global variables
-        global sentence_information
-        global strings_parsed
+    def compare_strings( self, **kwargs ):
+        """
+        This method is called by the main regex4dummies class, and calls all further methods
+        find patterns within strings.
+        """
 
-        # Update global variables
-        strings_parsed = strings
+        # Update self variables
+        self.strings_parsed = kwargs.get("text")
 
         # Reset variables
         patterns = []
-        sentence_information = {}
+        self.sentence_information = {}
 
         # Find the keyword
         keyword = ""
-        if len( strings ) > 1:
-            for string in strings:
+        if len( kwargs.get("text") ) > 1:
+            for string in kwargs.get("text"):
                 if 'keyword=' in string:
                     keyword = re.sub( 'keyword=', '', string )
 
             # Call find_patterns( strings )
-            patterns = self.find_patterns( strings, 0, literal, [], parser_name )
+            patterns = self.find_patterns( kwargs.get("text"), 0, kwargs.get("pattern_detection"), [], kwargs.get("parser") )
         else:
             # Identifying patterns based on sentences
-            strings = self.split_string( strings )
+            strings = self.split_string( kwargs.get("text") )
 
             # Identifying patterns
-            patterns = self.find_patterns( strings, 0, literal, [], parser_name )
+            patterns = self.find_patterns( strings, 0, kwargs.get("pattern_detection"), [], kwargs.get("parser") )
 
         # After patterns are identified in strings, complete final processing
         #   1. Find reliability score
@@ -91,8 +86,13 @@ class compare:
         return compiled_patterns
 
 
-    # Recursive function that compares all strings and determins reliability score, applicability score, and pattern
     def find_patterns( self, strings, current_index, literal_find, patterns_arg, parser_name ):
+        """
+        Recursive function that compares all strings and determins reliability score,
+        applicability score, and pattern.
+        """
+
+        # Setting up variables
         patterns = patterns_arg
 
         if not literal_find:
@@ -117,10 +117,10 @@ class compare:
         return patterns
 
 
-    # This function identifies patterns in 2 strings
     def find_semantic_patterns( self, base_string, test_string, pattern_arg, parser_name ):
-        # Getting global variables
-        global sentence_information
+        """
+        This function identifies semantic patterns in 2 strings.
+        """
 
         # Instantiating a new semantic_parsing class object
         semantic_pattern_parser = semantic_parsing()
@@ -130,22 +130,23 @@ class compare:
             patterns, pattern_information = semantic_pattern_parser.parse( base_string, test_string, pattern_arg, parser_name )
 
             # Appending the pattern information to the global sentence_information variable
-            sentence_information.update( pattern_information )
+            self.sentence_information.update( pattern_information )
 
             return patterns
         else:
             patterns, pattern_information = semantic_pattern_parser.parse( base_string, test_string, pattern_arg, parser_name )
 
             # Appending the pattern information to the global sentence_information variable
-            sentence_information.update( pattern_information )
+            self.sentence_information.update( pattern_information )
 
             # return patterns
             return patterns
 
 
     def find_literal_patterns( self, base_string, test_string, pattern_arg, parser_name ):
-        # Getting global variables
-        global sentence_information
+        """
+        Identifies literal patterns in 2 strings.
+        """
 
         # Instantiating a new literal_parsing class object
         literal_pattern_parser = literal_parsing()
@@ -154,32 +155,32 @@ class compare:
         patterns, pattern_information = literal_pattern_parser.parse( base_string, test_string, pattern_arg, parser_name )
 
         # Appending the pattern information to the global sentence_information variable
-        sentence_information.update( pattern_information )
+        self.sentence_information.update( pattern_information )
 
         # Returning the patterns found
         return patterns
 
 
-    # All patterns with associated information will be returned from this method as a list of pattern_detail classes
     def get_pattern_information( self ):
-        # Getting global variables
-        global sentence_information
-        global strings_parsed
+        """
+        All patterns with associated information will be returned from this method as
+        a list of pattern_detail classes.
+        """
 
         # Creating a variable to hold the assembled pattern information. All of the pattern data will be converted into a pattern_detail object
         final_pattern_information = []
 
         # Getting patterns and printing them
-        for sentence in sentence_information:
+        for sentence in self.sentence_information:
             pattern_info = pattern_detail()
 
             pattern_info.pattern               = sentence
-            pattern_info.subject               = sentence_information[ sentence ][ 0 ]
-            pattern_info.verb                  = sentence_information[ sentence ][ 1 ]
-            pattern_info.object                = [ sentence_information[ sentence ][ 2 ] ]
-            pattern_info.prepositional_phrases = sentence_information[ sentence ][ 3 ]
-            pattern_info.reliability_score     = sentence_information[ sentence ][ 4 ] * 100 / len( strings_parsed )
-            pattern_info.applicability_score   = sentence_information[ sentence ][ 5 ]
+            pattern_info.subject               = self.sentence_information[ sentence ][ 0 ]
+            pattern_info.verb                  = self.sentence_information[ sentence ][ 1 ]
+            pattern_info.object                = [ self.sentence_information[ sentence ][ 2 ] ]
+            pattern_info.prepositional_phrases = self.sentence_information[ sentence ][ 3 ]
+            pattern_info.reliability_score     = self.sentence_information[ sentence ][ 4 ] * 100 / len( self.strings_parsed )
+            pattern_info.applicability_score   = self.sentence_information[ sentence ][ 5 ]
 
             final_pattern_information.append( pattern_info )
 
@@ -188,7 +189,9 @@ class compare:
 
 
     def get_pattern_topics( self, strings_to_categorize ):
-        """ This function will find all of the topics from the strings most recently compared """
+        """
+        This function will find all of the topics from the strings most recently compared.
+        """
 
         string_topic_finder = TopicFinder()
 
@@ -212,15 +215,14 @@ class compare:
         return important_information
 
 
-    # This function is used to return the reliability score of a pattern
     def get_reliability_score( self, pattern ):
-        # Getting global variables
-        global sentence_information
-        global strings_parsed
+        """
+        Used to return the reliability score of a pattern.
+        """
 
-        for compiled_pattern in sentence_information:
+        for compiled_pattern in self.sentence_information:
             if compiled_pattern == pattern:
-                score = sentence_information[ compiled_pattern ][ 4 ] * 100 / len( strings_parsed )
+                score = self.sentence_information[ compiled_pattern ][ 4 ] * 100 / len( self.strings_parsed )
 
                 if score > 100:
                     return 100
@@ -229,19 +231,18 @@ class compare:
 
 
     def get_applicability_score( self, pattern ):
-        # Getting global variables
-        global sentence_information
-        global strings_parsed
+        """
+        Used to get the applicability score of a pattern
+        """
 
-        for compiled_pattern in sentence_information:
+        for compiled_pattern in self.sentence_information:
             if compiled_pattern == pattern:
-                return sentence_information[ compiled_pattern ][ 5 ]
+                return self.sentence_information[ compiled_pattern ][ 5 ]
 
 
     def split_string( self, strings ):
         """
-        Returns the first string in strings,
-        splitup by sentences.
+        Returns the first string in strings, splitup by sentences.
         """
 
         # Setting up a variables

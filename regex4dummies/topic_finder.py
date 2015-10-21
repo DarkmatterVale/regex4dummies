@@ -14,6 +14,7 @@ import nltk
 from nltk import FreqDist
 from textblob import TextBlob
 
+
 class TopicFinder:
 
     def __init__( self, *args, **kwargs ):

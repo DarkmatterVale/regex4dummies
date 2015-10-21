@@ -14,6 +14,7 @@ from dependency import Dependency
 from tokenizer import Tokenizer
 from phrase_extractor import PhraseExtractor
 
+
 class Toolkit:
 
     def __init__( self, *args, **kwargs ):

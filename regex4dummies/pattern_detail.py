@@ -17,35 +17,23 @@ All of these values can be referenced from an object of this class.
 Class information:
 
 - name: pattern_detail
-- version: 1.1.3
+- version: 1.4.4
 
 """
 
+
 class pattern_detail:
-    # Creating global values
-    global pattern
-    global subject
-    global verb
-    global object
-    global prepositional_phrases
-    global reliability_score
-    global applicability_score
 
-    def __init__( self, *args, **kwargs ):
-        # Getting global variables
-        global pattern
-        global subject
-        global verb
-        global object
-        global prepositional_phrases
-        global reliability_score
-        global applicability_score
+    def __init__( self, **kwargs ):
+        """
+        Constructor.
+        """
 
-        # Setting the global variables
-        pattern               = ""
-        subject               = ""
-        verb                  = ""
-        object                = []
-        prepositional_phrases = []
-        reliability_score     = 0
-        applicability_score   = 0
+        # Setting up variables
+        self.pattern               = ""
+        self.subject               = ""
+        self.verb                  = ""
+        self.object                = []
+        self.prepositional_phrases = []
+        self.reliability_score     = 0
+        self.applicability_score   = 0

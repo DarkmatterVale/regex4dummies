@@ -10,7 +10,7 @@ import nlpnet
 from textblob import TextBlob
 
 # Importing parsing related classes
-from compare import compare
+from compare import Compare
 from gui_downloader import gui_downloader
 
 # Importing GUI related classes
