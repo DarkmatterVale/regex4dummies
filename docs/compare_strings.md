@@ -49,7 +49,7 @@ name_comparer = regex4dummies()
 There are three arguments that are required to be passed to the compare_strings() function, in this format:
 
 ```
-compare_strings( parser, literal_parsing, string_list )
+compare_strings( parser=parser, pattern_detection=literal_parsing, text=string_list )
 ```
 
 - parser : This is which parser you would like to use. There are currently two options:

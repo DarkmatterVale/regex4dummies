@@ -21,6 +21,23 @@ class semantic_parsing:
             return self.use_pattern( base_string, test_string, pattern_arg )
         elif parser_name == 'nlpnet':
             return self.use_nlpnet( base_string, test_string, pattern_arg )
+        elif parser_name == '':
+            parsed_data = []
+            parsed_data.append( self.use_nltk( base_string, test_string, [] ) )
+            parsed_data.append( self.use_pattern( base_string, test_string, [] ) )
+            parsed_data.append( self.use_nlpnet( base_string, test_string, [] ) )
+
+            return self.full_pattern_comparison( parsed_data, pattern_arg )
+        else:
+            print ""
+            print "A valid parser was not chosen. Please choose any of the following parsers: "
+            print "- 'nlpnet'"
+            print "- 'pattern'"
+            print "- 'nltk'"
+            print "- ''"
+            print ""
+
+            exit( 0 )
 ```
 
 You will need to add your parser to the if statement "chain", like below:
