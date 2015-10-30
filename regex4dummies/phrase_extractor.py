@@ -37,9 +37,12 @@ class PhraseExtractor:
         """
 
         # Getting the different kinds of phrases
+        noun_phrases = self.extract_noun_phrases( text )
+        verb_phrases = self.extract_verb_phrases( text )
+        prepositional_phrases = self.extract_prepositional_phrases( text )
 
         # Returing the dictionary/JSON-encoded response
-        return {}
+        return { "noun_phrases" : noun_phrases, "verb_phrases" : verb_phrases, "prepositional_phrases" : prepositional_phrases }
 
 
     def extract_noun_phrases( self, text ):
