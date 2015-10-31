@@ -53,7 +53,8 @@ class ToolkiTests:
         # tokenizer function
         print "Tokenized average: " + str( tool_tester.tokenize( text="This is a test string.", parser="" ) )
         print "Noun Phrases: " + str( tool_tester.extract_noun_phrases( text="This is a test string." ) )
-        print "Verb Phrases: " + str( tool_tester.extract_verb_phrases( text="This is a test string." ) )
+        print "Verb Phrases(Pattern): " + str( tool_tester.extract_verb_phrases( text="This is a test string.", parser="pattern" ) )
+        print "Verb Phrases(Nlpnet): " + str( tool_tester.extract_verb_phrases( text="This is a test string.", parser="nlpnet" ) )
         print "Prepositional Phrases: " + str( tool_tester.extract_prepositional_phrases( text="This is a test string in the house." ) )
         print ""
 

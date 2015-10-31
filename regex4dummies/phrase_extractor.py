@@ -30,22 +30,22 @@ class PhraseExtractor:
         pass
 
 
-    def extract_phrases( self, text ):
+    def extract_phrases( self, **kwargs ):
         """
         Returns the phrases found in a sentence,
         in the form of a dictionary.
         """
 
         # Getting the different kinds of phrases
-        noun_phrases = self.extract_noun_phrases( text )
-        verb_phrases = self.extract_verb_phrases( text )
-        prepositional_phrases = self.extract_prepositional_phrases( text )
+        noun_phrases = self.extract_noun_phrases( kwargs.get("text") )
+        verb_phrases = self.extract_verb_phrases( kwargs.get("text") )
+        prepositional_phrases = self.extract_prepositional_phrases( kwargs.get("text") )
 
         # Returing the dictionary/JSON-encoded response
         return { "noun_phrases" : noun_phrases, "verb_phrases" : verb_phrases, "prepositional_phrases" : prepositional_phrases }
 
 
-    def extract_noun_phrases( self, text ):
+    def extract_noun_phrases( self, **kwargs ):
         """
         Returns the noun phrases found within
         a text.
@@ -55,7 +55,7 @@ class PhraseExtractor:
         noun_phrases = []
 
         # Creating a TextBlob object to get the noun phrases from the text
-        phrase_chunker_blob = TextBlob( text )
+        phrase_chunker_blob = TextBlob( kwargs.get("text") )
         for phrase in phrase_chunker_blob.noun_phrases:
             noun_phrases.append( str( phrase ) )
 
@@ -63,7 +63,7 @@ class PhraseExtractor:
         return noun_phrases
 
 
-    def extract_verb_phrases( self, text ):
+    def extract_verb_phrases( self, **kwargs ):
         """
         Returns the verb phrases found within
         a text.
@@ -74,30 +74,33 @@ class PhraseExtractor:
         verb_phrase_extractor = Dependency()
 
         # Getting verb phrases using the Pattern parser
-        dependencies = verb_phrase_extractor.find_dependencies( text=text, parser='pattern' ).split( ' ' )
+        dependencies = verb_phrase_extractor.find_dependencies( text=kwargs.get("text"), parser=kwargs.get("parser") ).split( ' ' )
 
-        for dependency_index in range( 0, len( dependencies ) ):
-            # Check to see if the word is a verb or part of a verb phrase
-            if "VP-" in dependencies[ dependency_index ]:
-                # Check to see if the last word was part of a verb phrase
-                if dependency_index != 0 and "VP-" in dependencies[ dependency_index - 1 ]:
-                    # Since it was, append this verb onto the last verb phrase
-                    verb_phrases[ len( verb_phrases ) ] += " " + re.sub( '/.*', '', dependencies[ dependency_index ] )
+        if kwargs.get("parser").lower() != "nltk":
+            for dependency_index in range( 0, len( dependencies ) ):
+                # Check to see if the word is a verb or part of a verb phrase
+                if "VP-" in dependencies[ dependency_index ]:
+                    # Check to see if the last word was part of a verb phrase
+                    if dependency_index != 0 and "VP-" in dependencies[ dependency_index - 1 ]:
+                        # Since it was, append this verb onto the last verb phrase
+                        verb_phrases[ len( verb_phrases ) ] += " " + re.sub( '/.*', '', dependencies[ dependency_index ] )
 
-                    # Continue on to the next word in the sentence
-                    continue
+                        # Continue on to the next word in the sentence
+                        continue
 
-                # Remove the ending information, leaving the word
-                cleaned_word = re.sub( '/.*', '', dependencies[ dependency_index ] )
+                    # Remove the ending information, leaving the word
+                    cleaned_word = re.sub( '/.*', '', dependencies[ dependency_index ] )
 
-                # Add the word to the verb phrase
-                verb_phrases.append( cleaned_word )
+                    # Add the word to the verb phrase
+                    verb_phrases.append( cleaned_word )
+        else:
+            print "PHRASES : " + str( dependencies )
 
         # Returning the found verb_phrases
         return verb_phrases
 
 
-    def extract_prepositional_phrases( self, text ):
+    def extract_prepositional_phrases( self, **kwargs ):
         """
         Returns the prepositional phrases found
         within a text.
@@ -108,7 +111,7 @@ class PhraseExtractor:
         prepositional_phrase_extractor = NLTK()
 
         # Getting prepositional phrases
-        prepositional_phrases = prepositional_phrase_extractor.find_prepositional_phrases( text, text, nltk.pos_tag( nltk.word_tokenize( str( text ) ) ) ).split( '...' )
+        prepositional_phrases = prepositional_phrase_extractor.find_prepositional_phrases( kwargs.get("text"), kwargs.get("text"), nltk.pos_tag( nltk.word_tokenize( str( kwargs.get("text") ) ) ) ).split( '...' )
         prepositional_phrases = prepositional_phrases[ 0 : len( prepositional_phrases ) - 1 ]
 
         # Normalizing the phrases

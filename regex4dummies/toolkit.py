@@ -32,7 +32,7 @@ class Toolkit:
         """
 
         # Getting noun phrases & returning them
-        return self.extractor.extract_noun_phrases( kwargs.get("text") )
+        return self.extractor.extract_noun_phrases( text=kwargs.get("text"), parser=kwargs.get("parser") )
 
 
     def extract_verb_phrases( self, **kwargs ):
@@ -42,7 +42,7 @@ class Toolkit:
         """
 
         # Getting verb phrases & returning them
-        return self.extractor.extract_verb_phrases( kwargs.get("text") )
+        return self.extractor.extract_verb_phrases( text=kwargs.get("text"), parser=kwargs.get("parser") )
 
 
     def extract_prepositional_phrases( self, **kwargs ):
@@ -52,7 +52,7 @@ class Toolkit:
         """
 
         # Getting the prepositional phrases & returning them
-        return self.extractor.extract_prepositional_phrases( kwargs.get("text") )
+        return self.extractor.extract_prepositional_phrases( text=kwargs.get("text"), parser=kwargs.get("parser") )
 
 
     def tokenize( self, **kwargs ):

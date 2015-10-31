@@ -26,7 +26,8 @@ class Dependency:
 
     def find_dependencies( self, **kwargs ):
         """
-        Interface method to regex4dummies returning the sentence dependencies gathered by given parser.
+        Interface method to regex4dummies returning
+        the sentence dependencies gathered by given parser.
         """
 
         if type(kwargs.get("response_type")) == str:
