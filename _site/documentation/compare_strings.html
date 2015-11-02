@@ -66,13 +66,13 @@ To compare strings, they must be formatted in a specific way. If they are not fo
 As is stated in the name of this library, it is designed for dumb and lazy people to be able to use without getting stuck. That being said, it does not mean that this library is not versatile or useful. When you compare a set of strings ( see below for examples ), you must use the following format to get proper results from the parser:
 <br><br>
 <pre><code>
-[ "String 1", "String 2", "String 3", "keyword=Your keyword" ]
+text=[ "String 1", "String 2", "String 3", "keyword=Your keyword" ]
 </code></pre>
 <br>
-If you do not have a keyword, simply ignore the your keyword part.
+If you do not have a keyword, simply ignore the your keyword entry.
 <br><br>
 <pre><code>
-[ "String 1", "String 2", "String 3" ]
+text=[ "String 1", "String 2", "String 3" ]
 </code></pre>
 <br>
 You can compare as many strings as you would like.
@@ -98,26 +98,35 @@ string_1 = """ My name is John Hill and I like to program artificial intelligenc
 string_2 = """ John Hill watches his computer learn. """
 
 if __name__ == '__main__':
-combined_list = {}
-combined_list.append( string_1 )
-combined_list.append( string_2 )
+  combined_list = {}
+  combined_list.append( string_1 )
+  combined_list.append( string_2 )
 
-name_comparer = regex4dummies()
+  name_comparer = regex4dummies()
 </code></pre>
 <br>
 There are three arguments that are required to be passed to the compare_strings() function, in this format:
 <br><br>
 <pre><code>
-compare_strings( parser, literal_parsing, string_list )
+compare_strings( parser=parser, pattern_detection="semantic", text=string_list )
 </code></pre>
 <br>
-- parser : This is which parser you would like to use. There are currently two options:<br>
-- 'nltk' : This is a parser using nltk's POS tagger and a custom-made recursive grammar parser ( which is still under development, but should be usable and give good results )
-<br>- 'pattern' : This is a parser using pattern's built-in POS tagger and parser. None of this is custom made and this is very well developed. However, it still have a high rate of "failure", or incorrect results
-<br>- 'nlpnet' : This is a parser that has about a 90% correct rate. It is all built-in and is a little slow, but is very effective for short strings
-<br>- 'default' : If using the literal parser, the 'default' parser must be used
-<br>- literal_parsing : If this is true, a literal parse will be applied to the set of strings. If false, a semantic parse will be applied using the specified parser
-<br>- string_list : This is covered in detail in the above section, so please look there for in-depth information about this argument
+Arguements:
+<br>
+<ul>
+- "parser" : This is which parser you would like to use. There are currently three options:<br>
+<li>'nltk' : This is a parser using nltk's POS tagger and a custom-made recursive grammar parser ( which is still under development, but should be usable and give good results )</li>
+<li>'pattern' : This is a parser using pattern's built-in POS tagger and parser. None of this is custom made and this is very well developed. However, it still have a high rate of "failure", or incorrect results</li>
+<li>'nlpnet' : This is a parser that has about a 90% correct rate. It is all built-in and is a little slow, but is very effective for short strings</li>
+<li>'default' : If using the literal parser, the 'default' parser must be used</li>
+</ul>
+<ul>
+- "pattern_detection" : Determines the kind of patterns detected<br>
+<li>If this is set to "literal", a literal parse will be applied to the set of strings.</li>
+<li>If "semantic", a semantic parse will be applied using the specified parser</li>
+</ul>
+<ul>
+- "text" : This is covered in detail in the above section, so please look there for in-depth information about this argument
 <br><br>
 When the program is run, only one pattern will be printed. Below is the output. As seen, there is a 100% reliability score, and a 100% applicability score, followed by the pattern which is John Hill
 <br><br>
