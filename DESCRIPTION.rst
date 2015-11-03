@@ -15,6 +15,7 @@ Features
 - Keyword searching to find specific phrases within text
 - Topic analysis & Important information extraction
 - Tokenizer and sentence dependency identifier
+- Phrase extraction ( noun, verb, prepositional )
 
 
 Roadmap
@@ -46,10 +47,10 @@ regex4dummies is very easy to use. Simply import the library, get some strings, 
   regex = regex4dummies()
 
   # Identifying literal patterns in strings
-  print regex.compare_strings( 'default', True, strings )
+  print regex.compare_strings( parser='default', pattern_detection="literal", text=strings )
 
   # Identifying semantic patterns in strings using the nltk parser
-  print regex.compare_strings( 'nltk', False, strings )
+  print regex.compare_strings( parser='nltk', pattern_detection="semantic", text=strings )
 
 Above is regex4dummies in its simplest form. It allows for additional features as well, including:
 
@@ -59,11 +60,11 @@ Above is regex4dummies in its simplest form. It allows for additional features a
   print regex.__version__
 
   # To use the other parsers, replace the above line of code with either of the following:
-  # print regex.compare_strings( 'pattern', False, strings )
-  # print regex.compare_strings( 'nlpnet', False, strings )
+  # print regex.compare_strings( parser='pattern', pattern_detection="semantic", text=strings )
+  # print regex.compare_strings( parser='nlpnet', pattern_detection="semantic", text=strings )
 
   # To call all of the parsers, replace the above line of code with the following:
-  # print regex.compare_strings( '', False, strings )
+  # print regex.compare_strings( parser='', pattern_detection="semantic", text=strings )
 
   # To get the topics of the strings, call the get_pattern_topics function
   print regex.get_pattern_topics()
@@ -88,17 +89,17 @@ A newly released set of features include a tokenizer and dependency finder funct
   tool_tester = Toolkit()
 
   # Testing the tokenizer functions
-  print tool_tester.tokenize( "This is a test string.", "" )
+  print tool_tester.tokenize( text="This is a test string.", parser="" )
 
   # Testing the dependency functions
-  print tool_tester.find_dependencies( "This is a test string.", "pattern" )
+  print tool_tester.find_dependencies( text="This is a test string.", parser="pattern" )
 
 Other features included are demonstrated below.
 
 .. code-block:: Python
 
   # Testing the information extraction functions
-  regex.extract_important_information( [ "This is a test string." ] )
+  regex.extract_important_information( text=[ "This is a test string." ] )
 
 
 Installation
@@ -123,12 +124,14 @@ That's it! The nlpnet parser should now be able to be used.
 Patch Notes
 -------------
 
-v1.4.3: Topic analysis, bug fixes, and code refactoring
+v1.4.4: Bug updates, Phrase Extractor
 
-- Toolkit NLTK dependency bug. This could have caused the dependency function to not work, but it now does
-- Topic analysis update. There is a new function which allows you to extract the important information from within a text
-- Code refactoring. Tests have been redone, allowing for flexible updates in the future to be added with ease. In addition, a lot of other code has been changed
-- Toolkit POS Tagger update. The update brings an interesting feature which allows you to get the POS tag from all 3 parsers, and regex4dummies will tally up the results, giving you the choice to pick which tag you think is correct
+- More code refactoring. This time, I redid the structure of the main folder, making it simpler to understand
+- Updating code. Previously, I used global variables to store file-wide variables. This has now been changed and done properly through the self variable
+- User interface change. Instead of the confusing arguments that previously existed whenever calling a function, a new simpler interface has been created. Details are above
+- Multiple bug fixes
+- Added Phrase Extractor class. This allows the user to get noun, verb, and prepositional phrases within a text
+- Updated pip information and comments
 
 
 Contributing
