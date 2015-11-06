@@ -1,6 +1,15 @@
 # Changelog
 
-## ( Current ) v1.4.3: Topic analysis, bug fixes, some code refactoring
+## ( Current ) v1.4.4: Bug updates, Phrase Extractor
+
+- More code refactoring. This time, I redid the structure of the main folder, making it simpler to understand
+- Updating code. Previously, I used global variables to store file-wide variables. This has now been changed and done properly through the self variable
+- User interface change. Instead of the confusing arguments that previously existed whenever calling a function, a new simpler interface has been created. Details are above
+- Multiple bug fixes
+- Added Phrase Extractor class. This allows the user to get noun, verb, and prepositional phrases within a text
+- Updated pip information and comments
+
+## v1.4.3: Topic analysis, bug fixes, some code refactoring
 
 - Toolkit NLTK dependency bug. This could have caused the dependency function to not work, but it now does
 - Topic analysis update. There is a new function which allows you to extract the important information from within a text
