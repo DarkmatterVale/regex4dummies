@@ -101,6 +101,12 @@ Other features included are demonstrated below.
   # Testing the information extraction functions
   regex.extract_important_information( text=[ "This is a test string." ] )
 
+  # Testing the ability to extract phrases
+  print "Noun Phrases: " + str( tool_tester.extract_noun_phrases( text="This is a test string." ) )
+  print "Verb Phrases(Pattern): " + str( tool_tester.extract_verb_phrases( text="This is a test string.", parser="pattern" ) )
+  print "Verb Phrases(Nlpnet): " + str( tool_tester.extract_verb_phrases( text="This is a test string.", parser="nlpnet" ) )
+  print "Prepositional Phrases: " + str( tool_tester.extract_prepositional_phrases( text="This is a test string in the house." ) )
+
 
 Installation
 ------------
