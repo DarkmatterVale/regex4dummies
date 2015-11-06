@@ -73,10 +73,10 @@ class PhraseExtractor:
         verb_phrases = []
         verb_phrase_extractor = Dependency()
 
-        # Getting verb phrases using the Pattern parser
-        dependencies = verb_phrase_extractor.find_dependencies( text=kwargs.get("text"), parser=kwargs.get("parser") ).split( ' ' )
-
         if kwargs.get("parser").lower() != "nltk":
+            # Getting verb phrases using the passed parser (Pattern or NLPNET)
+            dependencies = verb_phrase_extractor.find_dependencies( text=kwargs.get("text"), parser=kwargs.get("parser") ).split( ' ' )
+
             for dependency_index in range( 0, len( dependencies ) ):
                 # Check to see if the word is a verb or part of a verb phrase
                 if "VP-" in dependencies[ dependency_index ]:
@@ -94,7 +94,11 @@ class PhraseExtractor:
                     # Add the word to the verb phrase
                     verb_phrases.append( cleaned_word )
         else:
-            print "PHRASES : " + str( dependencies )
+            # Getting verb phrases using the NLTK parser
+            dependencies = verb_phrase_extractor.find_dependencies( text=kwargs.get("text"), parser=kwargs.get("parser") )
+
+            # Adding the verbs to the verb_phrases
+            verb_phrases.append( dependencies[1][1] )
 
         # Returning the found verb_phrases
         return verb_phrases
