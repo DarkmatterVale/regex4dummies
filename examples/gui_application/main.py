@@ -1,8 +1,5 @@
 __author__ = 'Vale Tolpegin'
 
-import os
-import sys
-import re
 import Tkinter as tk
 import ttk as ttk
 import tkMessageBox
@@ -14,18 +11,13 @@ import time
 from textblob import TextBlob
 
 from regex4dummies import regex4dummies
-
-try:
-    from regex4dummies import Toolkit
-except:
-    pass
+from regex4dummies import Toolkit
 
 """
 
 Class information:
-
-- name: main
-- version: 1.4.2
+- Name: main
+- Version: 1.4.4
 
 """
 
@@ -93,8 +85,10 @@ class Main( tk.Tk ):
         text.daemon = True
         text.start()
 
+
     def handle_close( self ):
         exit( 0 )
+
 
     def generate_parsed_text( self ):
         while True:
@@ -109,11 +103,12 @@ class Main( tk.Tk ):
                     sentences.append( str( sentence ) )
 
                 regex = regex4dummies()
-                final_literal_text = regex.compare_strings( 'default', True, sentences )
-                final_literal_information = ""
 
                 # Getting tokenized string and dependencies ( if library is up to date )
-                if regex.__version__ == "1.4.2":
+                if regex.__version__ == "1.4.5":
+                    final_literal_text = regex.compare_strings( parser='default', pattern_detection="literal", text=sentences )
+                    final_literal_information = ""
+
                     # Getting parsed data to display
                     sentence_information = regex.get_pattern_information()
                     for sentence in sentence_information:
@@ -123,7 +118,7 @@ class Main( tk.Tk ):
                         final_literal_information = "[ Object ]           : " + sentence.object[0] + "\n"
                         final_literal_information = "[ Reliability Score ]: " + str( sentence.reliability_score ) + "\n"
 
-                    final_semantic_text = regex.compare_strings( '', False, sentences )
+                    final_semantic_text = regex.compare_strings( parser='', pattern_detection="semantic", text=sentences )
                     final_semantic_information = ""
 
                     sentence_information = regex.get_pattern_information()
@@ -135,20 +130,23 @@ class Main( tk.Tk ):
                         final_semantic_information = "[ Reliability Score ]: " + str( sentence.reliability_score ) + "\n"
 
                     # Getting possible topics for semantic information
-                    topics = regex.get_pattern_topics()
+                    topics = regex.get_topics( text=sentences )
 
                     # Instantiating toolkit object
                     gui_toolkit = Toolkit()
 
                     # Getting the tokenized input
-                    tokenized_input = gui_toolkit.tokenize( input_text, "pattern" )
+                    tokenized_input = gui_toolkit.tokenize( text=input_text, parser="pattern" )
 
                     # Getting the dependency input
-                    dependency_input = gui_toolkit.find_dependencies( input_text, "pattern" )
+                    dependency_input = gui_toolkit.find_dependencies( text=input_text, parser="pattern" )
 
                     # Preparing final display data
                     final_text = "Literal Parse:\n" + str( final_literal_text ) + "\n\nInformation:\n" + final_literal_information + "\n---------------------------------\n\n" + "Semantic Parse:\n" + str( final_semantic_text ) + "\n\nInformation:\n" + final_semantic_information + "\n\nTopics:\n" + str( topics ) + "\n\nTokenized input:\n" + str( tokenized_input ) + "\n\nDependencies of input:\n" + str( dependency_input )
                 else:
+                    final_literal_text = regex.compare_strings( 'default', True, sentences )
+                    final_literal_information = ""
+
                     # Getting parsed data to display
                     sentence_information = regex.get_sentence_information()
                     for sentence in sentence_information:

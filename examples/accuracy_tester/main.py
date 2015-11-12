@@ -9,52 +9,23 @@ import nlpnet
 
 # Importing required libraries
 from regex4dummies import regex4dummies
+from regex4dummies import Toolkit
 
 """
 
 Class information:
 
 - name: main
-- version: 1.4.2
+- version: 1.4.5
 
 This is an accuracy tester for regex4dummies. It will test all components of the library and determine how effective it is at accomplishing its goal
 
 """
 
 class Main:
-    # Global variables
-    global overall_score
-    global pattern_score
-    global pattern_score_info
-    global nltk_score
-    global nltk_score_info
-    global nlpnet_score
-    global nlpnet_score_info
-    global literal_score
-    global literal_score_info
-    global tri_parser_score
-    global tri_parser_score_info
-    global topic_score
-    global topic_score_info
-
 
     def __init__( self, *args, **kwargs ):
         """ Constructor method that will complete the tests and display the results """
-
-        # Getting global variables
-        global overall_score
-        global pattern_score
-        global pattern_score_info
-        global nltk_score
-        global nltk_score_info
-        global nlpnet_score
-        global nlpnet_score_info
-        global literal_score
-        global literal_score_info
-        global tri_parser_score
-        global tri_parser_score_info
-        global topic_score
-        global topic_score_info
 
         # Currently implemented functions that will be tested
         # This program performs a number of accuracy tests against the library. THey are:
@@ -100,45 +71,45 @@ class Main:
         print ""
         print ""
         print "***Score information***"
-        print "Overall Score    : " + str( overall_score )
+        print "Overall Score    : " + str( self.overall_score )
         print ""
-        print "NLTK Score       : " + str( nltk_score )
-        print "Pattern Score    : " + str( pattern_score )
-        print "nlpnet Score     : " + str( nlpnet_score )
-        print "Literal Score    : " + str( literal_score )
-        print "Tri-parser Score : " + str( tri_parser_score )
-        print "Topic Score      : " + str( topic_score )
+        print "NLTK Score       : " + str( self.nltk_score )
+        print "Pattern Score    : " + str( self.pattern_score )
+        print "nlpnet Score     : " + str( self.nlpnet_score )
+        print "Literal Score    : " + str( self.literal_score )
+        print "Tri-parser Score : " + str( self.tri_parser_score )
+        print "Topic Score      : " + str( self.topic_score )
         print ""
 
         # Showing other test-related information
         print "NLTK test details       "
         print "------------------------"
-        print nltk_score_info
+        print self.nltk_score_info
         print ""
 
         print "Pattern test details    "
         print "------------------------"
-        print pattern_score_info
+        print self.pattern_score_info
         print ""
 
         print "nlpnet test details     "
         print "------------------------"
-        print nlpnet_score_info
+        print self.nlpnet_score_info
         print ""
 
         print "Literal test details    "
         print "------------------------"
-        print literal_score_info
+        print self.literal_score_info
         print ""
 
         print "Tri-parser test details "
         print "------------------------"
-        print tri_parser_score_info
+        print self.tri_parser_score_info
         print ""
 
         print "Topic Score test details"
         print "------------------------"
-        print topic_score_info
+        print self.topic_score_info
         print ""
 
         print ""
@@ -147,36 +118,21 @@ class Main:
     def complete_tests( self ):
         """ This function will perform the above tests, and set the appropriate variables with test information """
 
-        # Getting global variables
-        global overall_score
-        global pattern_score
-        global pattern_score_info
-        global nltk_score
-        global nltk_score_info
-        global nlpnet_score
-        global nlpnet_score_info
-        global literal_score
-        global literal_score_info
-        global tri_parser_score
-        global tri_parser_score_info
-        global topic_score
-        global topic_score_info
-
         # Setting all of the scores to restart
-        overall_score    = 0
-        nltk_score       = 0
-        pattern_score    = 0
-        nlpnet_score     = 0
-        literal_score    = 0
-        tri_parser_score = 0
-        topic_score      = 0
+        self.overall_score    = 0
+        self.nltk_score       = 0
+        self.pattern_score    = 0
+        self.nlpnet_score     = 0
+        self.literal_score    = 0
+        self.tri_parser_score = 0
+        self.topic_score      = 0
 
-        nltk_score_info       = ""
-        pattern_score_info    = ""
-        nlpnet_score_info     = ""
-        literal_score_info    = ""
-        tri_parser_score_info = ""
-        topic_score_info      = ""
+        self.nltk_score_info       = ""
+        self.pattern_score_info    = ""
+        self.nlpnet_score_info     = ""
+        self.literal_score_info    = ""
+        self.tri_parser_score_info = ""
+        self.topic_score_info      = ""
 
         # Creating test-containing strings
         test_1 = """In The Catcher in the Rye and The Lord of the Flies, Ralphs conch and Holdens red hunting hat both have emotional attachments to many characters, and they are both used and applied differently in separate situations. Many different situations required the need of a leader in the Lord of the Flies, and the conch enabled Ralph to act as a leader by giving him authority over others, while Holden gets no power over others with the red hunting hat. Although the conch is a symbol of order and peace, in Catcher and the Rye the red hunting hat does not at all help keep peace or help Holden maintain order. In both books though, the conch and the red hunting hat are emotionally connected to the people that use them, helping people stay sane and happy."""
@@ -202,35 +158,35 @@ class Main:
 
         # Processing the raw data for the nltk parser
         print "Beginning nltk tests"
-        nltk_score, nltk_score_info = self.process_raw_data_semantic( "nltk", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
+        self.nltk_score, self.nltk_score_info = self.process_raw_data_semantic( "nltk", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
         print "nltk tests completed"
 
         # Processing the raw data for the pattern parser
         print "Beginning pattern tests"
-        pattern_score, pattern_score_info = self.process_raw_data_semantic( "pattern", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
+        self.pattern_score, self.pattern_score_info = self.process_raw_data_semantic( "pattern", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
         print "pattern tests completed"
 
         # Processing the raw data for the nlpnet parser
         print "Beginning nlpnet tests"
-        nlpnet_score, nlpnet_score_info = self.process_raw_data_semantic( "nlpnet", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
+        self.nlpnet_score, self.nlpnet_score_info = self.process_raw_data_semantic( "nlpnet", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
         print "nlpnet tests completed"
 
         # Processing the raw data for the literal parser
         print "Beginning literal parser tests"
-        literal_score, literal_score_info = self.process_raw_data_literal( "default", [test_1, test_2, test_3, test_4], correct_literal_patterns )
+        self.literal_score, self.literal_score_info = self.process_raw_data_literal( "default", [test_1, test_2, test_3, test_4], correct_literal_patterns )
         print "literal parser tests completed"
 
         print "Beginning tri-parser tests"
-        tri_parser_score, tri_parser_score_info = self.process_raw_data_semantic( "", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
+        self.tri_parser_score, self.tri_parser_score_info = self.process_raw_data_semantic( "", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
         print "tri-parser tests completed"
 
         print "Beginning topic score tests"
-        topic_score, topic_score_info = self.process_topics( [test_1, test_2, test_3, test_4], correct_topics )
+        self.topic_score, self.topic_score_info = self.process_topics( [test_1, test_2, test_3, test_4], correct_topics )
         print "topic score tests completed"
 
-        overall_score = ( ( nltk_score + pattern_score + nlpnet_score + literal_score ) / 4 ) * 0.50
-        overall_score += topic_score * 0.25
-        overall_score += tri_parser_score * 0.25
+        self.overall_score = ( ( self.nltk_score + self.pattern_score + self.nlpnet_score + self.literal_score ) / 4 ) * 0.50
+        self.overall_score += self.topic_score * 0.25
+        self.overall_score += self.tri_parser_score * 0.25
 
 
     def process_raw_data_semantic( self, parser_name, information, correct_topics ):
@@ -241,7 +197,7 @@ class Main:
         regex = regex4dummies()
 
         # Getting the semantic patterns within the test strings
-        regex.compare_strings( parser_name, False, information[ 0 ] )
+        regex.compare_strings( parser=parser_name, pattern_detection="semantic", text=information[ 0 ] )
 
         # Gathering and comparing the "meaning" in these sentences
         test_information = {}
@@ -320,7 +276,7 @@ class Main:
         regex = regex4dummies()
 
         # Printing the semantic patterns within this string
-        test_patterns = regex.compare_strings( parser_name, True, strings )
+        test_patterns = regex.compare_strings( parser=parser_name, pattern_detection="literal", text=strings )
 
         # Compare test_patterns to correct patterns ( patterns in the "golden standard" )
         score = 0.00
@@ -344,7 +300,7 @@ class Main:
         regex = regex4dummies()
 
         # Identifying topics discovered by the parsers in the most recently compared set of strings
-        test_topics = regex.get_pattern_topics( strings )
+        test_topics = regex.get_topics( text=strings )
 
         # Comparing topics & Generating topic score
         topic_score = 0

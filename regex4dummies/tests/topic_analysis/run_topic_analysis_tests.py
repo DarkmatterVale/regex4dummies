@@ -29,7 +29,7 @@ But now, student-people have found a world that is not too different from our ow
 
         # Displaying the topics that were identified by the parsers in the most recently compared set of strings
         #print "Topics: " + str( regex.get_pattern_topics( [ "Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it? It is currently four pm.", "what time is it here?", "what time is it", "This is the cat's hat", "That is the cat's hat" ] ) )
-        print "Topics: " + str( regex.get_pattern_topics( text=[ string_to_test_topics ] ) )
+        print "Topics: " + str( regex.get_topics( text=[ string_to_test_topics ] ) )
         print ""
 
         # Displaying the important information found within the text

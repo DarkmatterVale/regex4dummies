@@ -9,14 +9,14 @@ from toolkit import Toolkit
 Class information:
 
 - name: regex4dummies
-- version: 1.4.4
+- version: 1.4.5
 
 """
 
 # Main class that handles all interaction between the user/programmer and the compare class which does all of the heavy lifting
 class regex4dummies:
     # Setting global version variable which contains the version of this library
-    __version__ = '1.4.4'
+    __version__ = '1.4.5'
 
 
     def __init__( self, **kwargs ):
@@ -59,7 +59,7 @@ class regex4dummies:
         return self.compare_object.get_pattern_information()
 
 
-    def get_pattern_topics( self, **kwargs ):
+    def get_topics( self, **kwargs ):
         """ Returns the list of topics that the parsers identified """
 
         return self.compare_object.get_pattern_topics( kwargs.get("text") )

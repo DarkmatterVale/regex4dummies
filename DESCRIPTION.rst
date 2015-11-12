@@ -66,8 +66,8 @@ Above is regex4dummies in its simplest form. It allows for additional features a
   # To call all of the parsers, replace the above line of code with the following:
   # print regex.compare_strings( parser='', pattern_detection="semantic", text=strings )
 
-  # To get the topics of the strings, call the get_pattern_topics function
-  print regex.get_pattern_topics( text=strings )
+  # To get the topics of the strings, call the get_topics function
+  print regex.get_topics( text=strings )
 
   # Printing pattern information
   pattern_information = regex.get_sentence_information()
