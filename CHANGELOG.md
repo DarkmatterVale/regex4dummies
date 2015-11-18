@@ -1,6 +1,12 @@
 # Changelog
 
-## ( Current ) v1.4.4: Bug updates, Phrase Extractor
+## ( Current ) v1.4.5: More bugs, string compare function
+
+- Fixed bug with NLTK verb phrase extractor
+- Added a string compare function
+- Example application code refactoring
+
+## v1.4.4: Bug updates, Phrase Extractor
 
 - More code refactoring. This time, I redid the structure of the main folder, making it simpler to understand
 - Updating code. Previously, I used global variables to store file-wide variables. This has now been changed and done properly through the self variable

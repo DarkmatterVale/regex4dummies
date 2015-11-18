@@ -48,6 +48,11 @@ class ToolkiTests:
         print tool_tester.find_dependencies( text="This is a test string.", parser="nlpnet", response_type="simplified" )
         print ""
 
+        # Testing string compare functions
+        print "String Comparison tests:"
+        print tool_tester.compare_strings( String1="This is a test string.", String2="This is a test string." )
+        print ""
+
         # Testing general functions
         print "General Toolkit tests:"
         # tokenizer function

@@ -13,6 +13,7 @@ Class information:
 from dependency import Dependency
 from tokenizer import Tokenizer
 from phrase_extractor import PhraseExtractor
+from string_compare import CompareStrings
 
 
 class Toolkit:
@@ -69,3 +70,14 @@ class Toolkit:
         dependency_finder = Dependency()
 
         return dependency_finder.find_dependencies( text=kwargs.get("text"), parser=kwargs.get("parser"), response_type=kwargs.get("response_type") )
+
+
+    def compare_strings( self, **kwargs ):
+        """
+        Returns the numerical value of the similarity between
+        two input strings.
+        """
+
+        string_comparer = CompareStrings()
+
+        return string_comparer.process( kwargs.get("String1"), kwargs.get("String2") )

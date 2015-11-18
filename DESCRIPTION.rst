@@ -130,14 +130,11 @@ That's it! The nlpnet parser should now be able to be used.
 Patch Notes
 -------------
 
-v1.4.4: Bug updates, Phrase Extractor
+v1.4.5: More bugs, string compare function
 
-- More code refactoring. This time, I redid the structure of the main folder, making it simpler to understand
-- Updating code. Previously, I used global variables to store file-wide variables. This has now been changed and done properly through the self variable
-- User interface change. Instead of the confusing arguments that previously existed whenever calling a function, a new simpler interface has been created. Details are above
-- Multiple bug fixes
-- Added Phrase Extractor class. This allows the user to get noun, verb, and prepositional phrases within a text
-- Updated pip information and comments
+- Fixed bug with NLTK verb phrase extractor
+- Added a string compare function
+- Example application code refactoring
 
 
 Contributing
