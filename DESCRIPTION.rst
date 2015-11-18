@@ -16,6 +16,7 @@ Features
 - Topic analysis & Important information extraction
 - Tokenizer and sentence dependency identifier
 - Phrase extraction ( noun, verb, prepositional )
+- String comparison
 
 
 Roadmap
@@ -25,8 +26,6 @@ Some features I plan to implement in the future:
 
 - Machine Learning. This will allow the parsers to learn multiple grammatical “styles” and be able to successfully parse a much wider selection of strings
 - Additional parsers
-- Phrase extractor. This can include verb phrases, noun phrases, prepositional phrases, etc
-- String comparison function. This will return a value that will determine how similar two strings are
 
 If you have feature requests, feel free to add an issue to the Github issue tracker. All contributions and requests are appreciated!
 
@@ -106,6 +105,8 @@ Other features included are demonstrated below.
   print "Verb Phrases(Pattern): " + str( tool_tester.extract_verb_phrases( text="This is a test string.", parser="pattern" ) )
   print "Verb Phrases(Nlpnet): " + str( tool_tester.extract_verb_phrases( text="This is a test string.", parser="nlpnet" ) )
   print "Prepositional Phrases: " + str( tool_tester.extract_prepositional_phrases( text="This is a test string in the house." ) )
+
+  print "String comparison: " + str( tool_tester.compare_strings( String1="This is a test string.", String2="This is a test string." ) )
 
 
 Installation
