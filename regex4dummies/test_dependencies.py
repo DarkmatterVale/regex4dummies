@@ -1,26 +1,18 @@
-__author__ = 'Vale Tolpegin'
-
-# Importing operating system related libraries
 import os, sys, re
 from subprocess import *
-
-# Importing other libraries needed for testing
+import tarfile
 import nltk
 import nlpnet
 from textblob import TextBlob
-
-# Importing parsing related classes
 from compare import Compare
 
 """
-
 This class will test to see whether the dependencies for the given parser are installed. In the event that they are not already installed, the program will ask the user whether to install them. If the user agrees, it will download and install the dependencies
 
 Class information:
 
 - name: run_dependency_tests
 - version: 1.4.6
-
 """
 
 class RunDependencyTests:
