@@ -1,7 +1,7 @@
 __author__ = 'Vale Tolpegin'
 
 # Importing operating system related libraries
-import os
+import os, sys, re
 from subprocess import *
 
 # Importing other libraries needed for testing
