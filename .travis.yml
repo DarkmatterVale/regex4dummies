@@ -1,4 +1,5 @@
 language: python
+
 python:
   - "2.7"
 
@@ -9,13 +10,9 @@ install:
   - pip install numpy
   - pip install nlpnet
   - pip install fuzzywuzzy
-  - pip install coveralls
   - pip install python-Levenshtein
   - python -m textblob.download_corpora
   - python -m nltk.downloader all
-
-after_success:
-  - coveralls
 
 script:
   - "python test.py"
