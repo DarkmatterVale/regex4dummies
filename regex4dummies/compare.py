@@ -8,7 +8,6 @@ from pattern_detail import pattern_detail
 from literal_parsers import *
 from semantic_parsing import semantic_parsing
 from textblob import TextBlob
-
 from topic_finder import TopicFinder
 
 """

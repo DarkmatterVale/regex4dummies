@@ -1,1 +1,1 @@
-from literal_parsing import literal_parsing
+from .literal_parsing import literal_parsing
