@@ -20,28 +20,6 @@ Test information:
 Version: 1.4.4
 """
 
-# Downloading all required dependencies for TextBlob
-os.system("python -m textblob.download_corpora")
-
-# Downloading all required dependencies for NLTK
-from nltk.data import find
-from nltk import download
-
-try:
-    find('stopwords.zip')
-except LookupError:
-    download('stopwords')
-
-try:
-    find('maxent_ne_chunker')
-except LookupError:
-    download('maxent_ne_chunker')
-
-try:
-    find('words')
-except LookupError:
-    download('words')
-
 # Creating test object
 regex = regex4dummies()
 tool_tester = Toolkit()
@@ -59,7 +37,6 @@ for sentence in sentence_information:
     print "[ Object ]           : " + sentence.object[0]
     print "[ Reliability Score ]: " + str(sentence.reliability_score)
 
-
 # Testing the 'pattern' parser
 print regex.compare_strings(parser='pattern', pattern_detection="semantic", text=["Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat"])
 sentence_information = regex.get_pattern_information()
@@ -70,30 +47,6 @@ for sentence in sentence_information:
     print "[ Object ]           : " + sentence.object[0]
     print "[ Reliability Score ]: " + str(sentence.reliability_score)
 
-
-# Installing required dependencies for the nlpnet parser
-# Getting nltk data path
-running = Popen(['python -c "import nltk;print nltk.data.path"'], stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
-stdin, stdout = running.communicate()
-
-# Setting the path that the nlpnet dependency will be downloaded from
-path = re.sub(r"\'", "", re.sub(r"\[", '', str(stdin.split('\n')[0].split(',')[0])))
-path = path.split(r"/")
-path = '/'.join(path[0 : len(path) - 1]) + '/nlpnet_dependency/'
-
-# Download the dependencies & extract
-current_directory = os.getcwd()
-
-os.mkdir(path)
-os.chdir(path)
-
-os.system("wget http://nilc.icmc.usp.br/nlpnet/data/dependency-en.tgz")
-tar = tarfile.open(path + 'dependency-en.tgz', 'r:gz')
-tar.extractall(path)
-os.remove(path + 'dependency-en.tgz')
-
-os.chdir(current_directory)
-
 # Testing the 'nlpnet' parser
 print regex.compare_strings(parser='nlpnet', pattern_detection="semantic", text=["Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat"])
 sentence_information = regex.get_pattern_information()
@@ -103,7 +56,6 @@ for sentence in sentence_information:
     print "[ Verb ]             : " + sentence.verb
     print "[ Object ]           : " + sentence.object[0]
     print "[ Reliability Score ]: " + str(sentence.reliability_score)
-
 
 # Testing literal parsing
 print regex.compare_strings(parser='default', pattern_detection="literal", text=["Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat"])
