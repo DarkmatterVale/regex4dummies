@@ -2,6 +2,7 @@ __author__ = 'Vale Tolpegin'
 
 # Importing operating system related libraries
 import os
+import sys
 
 # Importing other libraries needed for testing
 import nltk
