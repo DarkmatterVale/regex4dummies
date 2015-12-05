@@ -1,1 +1,1 @@
-from toolkit_tests import ToolkiTests
+from .toolkit_tests import ToolkitTests

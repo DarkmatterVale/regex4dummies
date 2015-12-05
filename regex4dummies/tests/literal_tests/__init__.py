@@ -1,1 +1,1 @@
-from literal_parser_tester import LiteralParserTests
+from .literal_parser_tester import LiteralParserTests

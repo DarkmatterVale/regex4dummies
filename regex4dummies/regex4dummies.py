@@ -1,47 +1,37 @@
-__author__ = 'Vale Tolpegin'
-
 from compare import Compare
-from test_dependencies import run_dependency_tests
-from toolkit import Toolkit
+from test_dependencies import RunDependencyTests
 
 """
 
 Class information:
 
 - name: regex4dummies
-- version: 1.4.5
+- version: 1.4.6
+- author: Vale Tolpegin
 
 """
 
-# Main class that handles all interaction between the user/programmer and the compare class which does all of the heavy lifting
 class regex4dummies:
     # Setting global version variable which contains the version of this library
-    __version__ = '1.4.5'
+    __version__ = '1.4.6'
 
-
-    def __init__( self, **kwargs ):
+    def __init__(self, **kwargs):
         """
         Constructor method.
         """
+
+        # Testing the system to make sure all dependencies are installed
+        RunDependencyTests()
 
         # Instantiating compare object to be used
         self.compare_object = Compare()
 
 
-    def compare_strings( self, **kwargs ):
+    def compare_strings(self, **kwargs ):
         """
         Function that is integral in communicating between a compare object and the user
         This function returns a 3-tuple array containing reliability score, applicability score, and pattern
         """
-
-        # Testing the system to make sure all dependencies are installed
-        if kwargs.get("pattern_detection") == "literal":
-            if kwargs.get("parser") == '':
-                test_install = run_dependency_tests()
-                test_install.test( 'pattern nltk nlpnet' )
-            else:
-                test_install = run_dependency_tests()
-                test_install.test( kwargs.get("parser") )
 
         # Call compare_strings of compare object & return output
         if kwargs.get("pattern_detection") == "literal":

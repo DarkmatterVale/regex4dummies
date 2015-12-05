@@ -11,8 +11,6 @@ install:
   - pip install nlpnet
   - pip install fuzzywuzzy
   - pip install python-Levenshtein
-  - python -m textblob.download_corpora
-  - python -m nltk.downloader all
 
 script:
   - "python test.py"

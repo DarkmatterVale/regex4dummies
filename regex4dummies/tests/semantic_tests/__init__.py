@@ -1,1 +1,1 @@
-from run_semantic_tests import RunSemanticTests
+from .run_semantic_tests import RunSemanticTests

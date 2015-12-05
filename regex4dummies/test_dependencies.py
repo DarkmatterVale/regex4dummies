@@ -2,7 +2,6 @@ __author__ = 'Vale Tolpegin'
 
 # Importing operating system related libraries
 import os
-import sys
 
 # Importing other libraries needed for testing
 import nltk
@@ -11,12 +10,6 @@ from textblob import TextBlob
 
 # Importing parsing related classes
 from compare import Compare
-from gui_downloader import gui_downloader
-
-# Importing GUI related classes
-import Tkinter as tk
-import ttk as ttk
-import tkMessageBox
 
 """
 
@@ -25,92 +18,106 @@ This class will test to see whether the dependencies for the given parser are in
 Class information:
 
 - name: run_dependency_tests
-- version: 1.3.2
+- version: 1.4.6
 
 """
 
-class run_dependency_tests:
-    # Blank constructor method
-    def __init__( self, *args, **kwargs ):
-        pass
+class RunDependencyTests:
+    def __init__(self, *args, **kwargs):
+        """
+        Test for dependencies.
+        """
 
-    def test( self, parser_name ):
+        self.test()
+
+    def test( self ):
+        """
+        Testing each dependency
+        """
+
         # Testing for textblob corpora which is used in most parsers
         self.test_for_textblob()
 
         # Testing for parser corpora for each parser
-        if parser_name.lower() == 'nltk':
-            self.test_for_nltk()
-        elif parser_name.lower() == 'nlpnet':
-            self.test_for_nlpnet()
-
-        return
+        self.test_for_nltk()
+        self.test_for_nlpnet()
 
     def test_for_textblob( self ):
-        # Attempting to use textblob. This will cause an error if the textblob corpora is not downloaded
-        try:
-            # Creating a textblob object
-            my_blob = TextBlob( "This is the first test sentence. This is the second test sentence. This it the third and final test sentence." )
+        """
+        Install textblob dependencies. It automatically
+        checks to see if dependencies are already
+        installed, so I do not need to do that.
+        """
 
-            # Testing to see whether the textblob corpora has been downloaded
-            for sentence in my_blob.sentences:
-                str_sentence = str( sentence )
-        except:
-            # If it didn't work, this means the dependencies are missing from the system
-            # The user will be asked whether he/she wants to install the dependencies. If so, they will be installed.
-            # Otherwise, the program will quit and an error will appear saying the dependencies must be installed to use that parser
-
-            textblob_downloader = gui_downloader()
-            textblob_downloader.download( "Would you like to download the dependencies for TextBlob? All parsers will not be able to be used until the dependencies are downloaded", "TextBlob Corpora", "45.7 MB" )
+        # Installing data
+        os.system("python -m textblob.download_corpora")
 
     def test_for_nltk( self ):
-        # Attempting to use nltk. This will cause an error if the corpora is not downloaded
+        """
+        Downloading all required NLTK dependencies.
+        """
+
+        from nltk.data import find
+        from nltk import download
+
+        # Download data if needed
         try:
-            # Creating a new compare object
-            compare_nltk = compare()
+            find('stopwords.zip')
+        except LookupError:
+            download('stopwords')
 
-            # Comparing using the nltk parser
-            compare_nltk.compare_strings( [ "what time is it here?", "This is the cat's hat" ], False, 'nltk'  )
+        try:
+            find('maxent_ne_chunker')
+        except LookupError:
+            download('maxent_ne_chunker')
 
-            # If that was successfuly, getting information
-            sentence_information = compare_nltk.get_pattern_information()
-            for sentence in sentence_information:
-                my_pattern           = "[ Pattern ]          : " + sentence.pattern
-                my_subject           = "[ Subject ]          : " + sentence.subject
-                my_verb              = "[ Verb ]             : " + sentence.verb
-                my_object            = "[ Object ]           : " + sentence.object[0]
-                my_preps             = "[ Prep Phrases ]     : " + str( sentence.prepositional_phrases )
-                my_reliability_score = "[ Reliability Score ]: " + str( sentence.reliability_score )
-        except:
-            # If it didn't work, this means the dependencies are missing from the system
-            # The user will be asked whether he/she wants to install the dependencies. If so, they will be installed.
-            # Otherwise, the program will quit and an error will appear saying the dependencies must be installed to use that parser
-
-            nltk_downloader = gui_downloader()
-            nltk_downloader.download( "Would you like to download the dependencies for nltk?\n\nThe nltk parser will not be able to be used until the dependencies are downloaded", "NLTK Corpora", "1 GB" )
+        try:
+            find('words')
+        except LookupError:
+            download('words')
 
     def test_for_nlpnet( self ):
-        # Attempting to use nlpnet. This will cause an error if the required dependencies are not downloaded
+        """
+        Attempting to use nlpnet. This will cause an
+        error if the required dependencies are not
+        downloaded.
+        """
+
         try:
             # Creating a new compare object
-            compare_nlpnet = compare()
+            compare_nlpnet = Compare()
 
             # Comparing using the nltk parser
-            compare_nlpnet.compare_strings( [ "what time is it here?", "This is the cat's hat" ], False, 'nlpnet'  )
+            compare_nlpnet.compare_strings(text=["what time is it here?", "This is the cat's hat"], pattern_detection=False, parser="nlpnet")
 
             # If that was successfuly, getting information
             sentence_information = compare_nlpnet.get_pattern_information()
             for sentence in sentence_information:
-                my_pattern           = "[ Pattern ]          : " + sentence.pattern
-                my_subject           = "[ Subject ]          : " + sentence.subject
-                my_verb              = "[ Verb ]             : " + sentence.verb
-                my_object            = "[ Object ]           : " + sentence.object[0]
-                my_preps             = "[ Prep Phrases ]     : " + str( sentence.prepositional_phrases )
-                my_reliability_score = "[ Reliability Score ]: " + str( sentence.reliability_score )
+                my_pattern = "[ Pattern ]          : " + sentence.pattern
+                my_subject = "[ Subject ]          : " + sentence.subject
+                my_verb = "[ Verb ]             : " + sentence.verb
+                my_object = "[ Object ]           : " + sentence.object[0]
+                my_preps = "[ Prep Phrases ]     : " + str(sentence.prepositional_phrases)
+                my_reliability_score = "[ Reliability Score ]: " + str(sentence.reliability_score)
         except:
-            # If it didn't work, this means the dependencies are missing from the system
-            # The user will be asked whether he/she wants to install the dependencies. If so, they will be installed.
-            # Otherwise, the program will quit and an error will appear saying the dependencies must be installed to use that parser
+            # Getting nltk data path
+            running = Popen( [ 'python -c "import nltk;print nltk.data.path"' ], stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True )
+            stdin, stdout = running.communicate()
 
-            nlpnet_downloader = gui_downloader()
-            nlpnet_downloader.download( "Would you like to download the dependencies for nlpnet?\n\nThe nlpnet parser will not be able to be used until the dependencies are downloaded", "NLPnet English Library", "400 MB" )
+            # Setting the path that the nlpnet dependency will be downloaded from
+            path = re.sub( r"\'", "", re.sub( r"\[", '', str( stdin.split( '\n' )[ 0 ].split( ',' )[ 0 ] ) ) )
+            path = path.split( r"/" )
+            path = '/'.join( path[ 0 : len( path ) - 1 ] ) + '/nlpnet_dependency/'
+
+            # Download the dependencies & extract
+            current_directory = os.getcwd()
+
+            os.mkdir( path )
+            os.chdir( path )
+
+            os.system( "wget http://nilc.icmc.usp.br/nlpnet/data/dependency-en.tgz" )
+            tar = tarfile.open( path + 'dependency-en.tgz', 'r:gz' )
+            tar.extractall( path )
+            os.remove( path + 'dependency-en.tgz' )
+
+            os.chdir( current_directory )
