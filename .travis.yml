@@ -11,6 +11,10 @@ install:
   - pip install nlpnet
   - pip install fuzzywuzzy
   - pip install python-Levenshtein
+  - pip install coveralls
+
+after_success:
+  - coveralls
 
 script:
   - "python test.py"
