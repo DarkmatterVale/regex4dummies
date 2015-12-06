@@ -6,6 +6,10 @@ engines:
     checks:
       E501:
         enabled: false
+  radon:
+    enabled: true
+  fixme:
+    enabled: true
 ratings:
    paths:
    - regex4dummies/**
