@@ -91,7 +91,7 @@ class PhraseExtractor:
             dependencies = verb_phrase_extractor.find_dependencies(text=kwargs.get("text"), parser=kwargs.get("parser"))
 
             # Adding the verbs to the verb_phrases
-            verb_phraes.append(dependencies[1][1])
+            verb_phrases.append(dependencies[1][1])
 
         # Returning the found verb_phrases
         return verb_phrases
