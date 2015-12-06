@@ -1,29 +1,25 @@
-__author__ = 'Vale Tolpegin'
-
-"""
-
-- name: Normalizer
-- version: 1.4.3
-
-Normalizes the incoming text and returns said normalized text
-
-"""
-
-
 from nltk.stem.porter import *
 import nltk
 
+"""
+Normalizes the incoming text and returns said normalized text
+
+Class information:
+- name: Normalizer
+- version: 1.4.3
+- author: Vale Tolpegin
+"""
+
 
 class Normalizer:
-
-    def __init__( self ):
+    def __init__(self):
         """ Blank constructor """
 
         pass
 
-
-    def normalize_sentence_info( self, sentence_info ):
-        """ Method to normalize text
+    def normalize_sentence_info(self, sentence_info):
+        """
+        Method to normalize text
 
         This is accomplished by:
         - Removing punctuation
@@ -45,9 +41,9 @@ class Normalizer:
         sentence_info[2] = sentence_info[2].lower()
 
         # Implement stemming
-        sentence_info[0] = stemmer.stem( sentence_info[0] )
-        sentence_info[1] = stemmer.stem( sentence_info[1] )
-        sentence_info[2] = stemmer.stem( sentence_info[2] )
+        sentence_info[0] = stemmer.stem(sentence_info[0])
+        sentence_info[1] = stemmer.stem(sentence_info[1])
+        sentence_info[2] = stemmer.stem(sentence_info[2])
 
         # Return normalized information
         return sentence_info

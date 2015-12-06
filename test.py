@@ -17,7 +17,7 @@ Test information:
     - pattern parser
     - nlpnet parser
 
-Version: 1.4.4
+Version: 1.4.6
 """
 
 # Creating test object
@@ -28,7 +28,7 @@ tool_tester = Toolkit()
 print(regex.__version__)
 
 # Testing the 'nltk' parser
-print regex.compare_strings(parser='nltk', pattern_detection="semantic", text=["Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat"])
+print(regex.compare_strings(parser='nltk', pattern_detection="semantic", text=["Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat"]))
 sentence_information = regex.get_pattern_information()
 for sentence in sentence_information:
     print "[ Pattern ]          : " + sentence.pattern

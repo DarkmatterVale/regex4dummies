@@ -14,6 +14,7 @@ This is an accuracy tester for regex4dummies. It will test all components of
 the library and determine how effective it is at accomplishing its goal.
 """
 
+
 class Main:
     def __init__(self, *args, **kwargs):
         """
@@ -146,30 +147,30 @@ class Main:
 
         # Processing the raw data for the nltk parser
         print("Beginning nltk tests")
-        self.nltk_score, self.nltk_score_info = self.process_raw_data_semantic( "nltk", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
+        self.nltk_score, self.nltk_score_info = self.process_raw_data_semantic("nltk", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics)
         print("nltk tests completed")
 
         # Processing the raw data for the pattern parser
         print("Beginning pattern tests")
-        self.pattern_score, self.pattern_score_info = self.process_raw_data_semantic( "pattern", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
+        self.pattern_score, self.pattern_score_info = self.process_raw_data_semantic("pattern", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics)
         print("pattern tests completed")
 
         # Processing the raw data for the nlpnet parser
         print("Beginning nlpnet tests")
-        self.nlpnet_score, self.nlpnet_score_info = self.process_raw_data_semantic( "nlpnet", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
+        self.nlpnet_score, self.nlpnet_score_info = self.process_raw_data_semantic("nlpnet", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics)
         print("nlpnet tests completed")
 
         # Processing the raw data for the literal parser
         print("Beginning literal parser tests")
-        self.literal_score, self.literal_score_info = self.process_raw_data_literal( "default", [test_1, test_2, test_3, test_4], correct_literal_patterns )
+        self.literal_score, self.literal_score_info = self.process_raw_data_literal("default", [test_1, test_2, test_3, test_4], correct_literal_patterns)
         print("literal parser tests completed")
 
         print("Beginning tri-parser tests")
-        self.tri_parser_score, self.tri_parser_score_info = self.process_raw_data_semantic( "", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics )
+        self.tri_parser_score, self.tri_parser_score_info = self.process_raw_data_semantic("", [[test_1, test_2, test_3, test_4], correct_pattern_information], correct_topics)
         print("tri-parser tests completed")
 
         print("Beginning topic score tests")
-        self.topic_score, self.topic_score_info = self.process_topics( [test_1, test_2, test_3, test_4], correct_topics )
+        self.topic_score, self.topic_score_info = self.process_topics([test_1, test_2, test_3, test_4], correct_topics)
         print("topic score tests completed")
 
         self.overall_score = ((self.nltk_score + self.pattern_score + self.nlpnet_score + self.literal_score) / 4) * 0.50
@@ -186,7 +187,7 @@ class Main:
         regex = regex4dummies()
 
         # Getting the semantic patterns within the test strings
-        regex.compare_strings(parser=parser_name, pattern_detection="semantic", text=information[ 0 ])
+        regex.compare_strings(parser=parser_name, pattern_detection="semantic", text=information[0])
 
         # Gathering and comparing the "meaning" in these sentences
         test_information = {}
@@ -216,12 +217,12 @@ class Main:
 
             try:
                 test_pattern = base_pattern
-                test_subject = test_information[ test_pattern ][ 0 ]
-                test_verb = test_information[ test_pattern ][ 1 ]
-                test_object = test_information[ test_pattern ][ 2 ]
-                test_prepositional_phrases = test_information[ test_pattern ][ 3 ]
-                test_reliability_score = test_information[ test_pattern ][ 4 ]
-                test_applicability_score = test_information[ test_pattern ][ 5 ]
+                test_subject = test_information[test_pattern][0]
+                test_verb = test_information[test_pattern][1]
+                test_object = test_information[test_pattern][2]
+                test_prepositional_phrases = test_information[test_pattern][3]
+                test_reliability_score = test_information[test_pattern][4]
+                test_applicability_score = test_information[test_pattern][5]
 
                 if test_subject == base_subject:
                     compatibility_score += 100 / 6

@@ -1,11 +1,12 @@
-"""
-This class runs tests for all of the functions of regex4dummies.
-"""
-
 from semantic_tests import RunSemanticTests
 from topic_analysis import RunTopicAnalysisTests
 from toolkit_tests import ToolkitTests
 from literal_tests import LiteralParserTests
+
+"""
+This class runs tests for all of the functions of regex4dummies.
+"""
+
 
 class MainTests:
     def __init__(self, *args, **kwargs):

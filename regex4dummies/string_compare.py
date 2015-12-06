@@ -1,5 +1,3 @@
-__author__  = 'Vale Tolpegin'
-
 from fuzzywuzzy import fuzz
 
 """
@@ -8,20 +6,19 @@ CompareStrings compares two strings and returns the numerical value of their sim
 Class information:
 - name: CompareStrings
 - version: 1.4.4
+- author: Vale Tolpegin
 """
 
 
 class CompareStrings:
-
-    def __init__( self, *args, **kwargs ):
+    def __init__(self, *args, **kwargs):
         """
         Blank constructor method.
         """
 
         pass
 
-
-    def process( self, base_string, test_string ):
+    def process(self, base_string, test_string):
         """
         This method is what is called by regex4dummies to compare
         two strings. It compares the string, then identifies
@@ -33,7 +30,7 @@ class CompareStrings:
         similarity_value = 0
 
         # Getting similarity
-        similarity_value = fuzz.ratio( base_string, test_string )
+        similarity_value = fuzz.ratio(base_string, test_string)
 
         # Returning the similarity value
         return similarity_value

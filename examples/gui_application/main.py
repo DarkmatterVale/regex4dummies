@@ -1,5 +1,3 @@
-__author__ = 'Vale Tolpegin'
-
 import Tkinter as tk
 import ttk as ttk
 import tkMessageBox
@@ -7,29 +5,27 @@ import tkFileDialog
 import ScrolledText
 import threading
 import time
-
 from textblob import TextBlob
-
 from regex4dummies import regex4dummies
 from regex4dummies import Toolkit
 
 """
-
 Class information:
-- Name: main
-- Version: 1.4.4
-
+- name: main
+- version: 1.4.6
+- author: Vale Tolpegin
 """
 
-class Main( tk.Tk ):
-    def __init__( self, *args, **kwargs ):
+
+class Main(tk.Tk):
+    def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
 
-        self.title( 'regex4dummies' )
+        self.title('regex4dummies')
 
         self.initialize()
 
-    def initialize( self ):
+    def initialize(self):
         self.grid()
 
         # Grid Design:
@@ -81,32 +77,30 @@ class Main( tk.Tk ):
 
         self.protocol("WM_DELETE_WINDOW", self.handle_close)
 
-        text = threading.Thread( target=self.generate_parsed_text)
+        text = threading.Thread(target=self.generate_parsed_text)
         text.daemon = True
         text.start()
 
-
-    def handle_close( self ):
+    def handle_close(self):
         exit( 0 )
 
-
-    def generate_parsed_text( self ):
+    def generate_parsed_text(self):
         while True:
-            input_text = self.input_text.get( "1.0", tk.END )
-            output_text = self.output_text.get( "1.0", tk.END )
+            input_text = self.input_text.get("1.0", tk.END)
+            output_text = self.output_text.get("1.0", tk.END)
 
-            if str( input_text ) != "Enter text to parse\n":
-                input_sentences = TextBlob( input_text ).sentences
+            if str(input_text) != "Enter text to parse\n":
+                input_sentences = TextBlob(input_text).sentences
                 sentences = []
 
                 for sentence in input_sentences:
-                    sentences.append( str( sentence ) )
+                    sentences.append(str(sentence))
 
                 regex = regex4dummies()
 
                 # Getting tokenized string and dependencies ( if library is up to date )
                 if regex.__version__ == "1.4.5":
-                    final_literal_text = regex.compare_strings( parser='default', pattern_detection="literal", text=sentences )
+                    final_literal_text = regex.compare_strings(parser='default', pattern_detection="literal", text=sentences)
                     final_literal_information = ""
 
                     # Getting parsed data to display
@@ -116,9 +110,9 @@ class Main( tk.Tk ):
                         final_literal_information = "[ Subject ]          : " + sentence.subject + "\n"
                         final_literal_information = "[ Verb ]             : " + sentence.verb + "\n"
                         final_literal_information = "[ Object ]           : " + sentence.object[0] + "\n"
-                        final_literal_information = "[ Reliability Score ]: " + str( sentence.reliability_score ) + "\n"
+                        final_literal_information = "[ Reliability Score ]: " + str(sentence.reliability_score) + "\n"
 
-                    final_semantic_text = regex.compare_strings( parser='', pattern_detection="semantic", text=sentences )
+                    final_semantic_text = regex.compare_strings(parser='', pattern_detection="semantic", text=sentences)
                     final_semantic_information = ""
 
                     sentence_information = regex.get_pattern_information()
@@ -127,24 +121,24 @@ class Main( tk.Tk ):
                         final_semantic_information = "[ Subject ]          : " + sentence.subject + "\n"
                         final_semantic_information = "[ Verb ]             : " + sentence.verb + "\n"
                         final_semantic_information = "[ Object ]           : " + sentence.object[0] + "\n"
-                        final_semantic_information = "[ Reliability Score ]: " + str( sentence.reliability_score ) + "\n"
+                        final_semantic_information = "[ Reliability Score ]: " + str(sentence.reliability_score) + "\n"
 
                     # Getting possible topics for semantic information
-                    topics = regex.get_topics( text=sentences )
+                    topics = regex.get_topics(text=sentences)
 
                     # Instantiating toolkit object
                     gui_toolkit = Toolkit()
 
                     # Getting the tokenized input
-                    tokenized_input = gui_toolkit.tokenize( text=input_text, parser="pattern" )
+                    tokenized_input = gui_toolkit.tokenize(text=input_text, parser="pattern")
 
                     # Getting the dependency input
-                    dependency_input = gui_toolkit.find_dependencies( text=input_text, parser="pattern" )
+                    dependency_input = gui_toolkit.find_dependencies(text=input_text, parser="pattern")
 
                     # Preparing final display data
-                    final_text = "Literal Parse:\n" + str( final_literal_text ) + "\n\nInformation:\n" + final_literal_information + "\n---------------------------------\n\n" + "Semantic Parse:\n" + str( final_semantic_text ) + "\n\nInformation:\n" + final_semantic_information + "\n\nTopics:\n" + str( topics ) + "\n\nTokenized input:\n" + str( tokenized_input ) + "\n\nDependencies of input:\n" + str( dependency_input )
+                    final_text = "Literal Parse:\n" + str(final_literal_text) + "\n\nInformation:\n" + final_literal_information + "\n---------------------------------\n\n" + "Semantic Parse:\n" + str(final_semantic_text) + "\n\nInformation:\n" + final_semantic_information + "\n\nTopics:\n" + str(topics) + "\n\nTokenized input:\n" + str(tokenized_input) + "\n\nDependencies of input:\n" + str(dependency_input)
                 else:
-                    final_literal_text = regex.compare_strings( 'default', True, sentences )
+                    final_literal_text = regex.compare_strings('default', True, sentences)
                     final_literal_information = ""
 
                     # Getting parsed data to display
@@ -154,9 +148,9 @@ class Main( tk.Tk ):
                         final_literal_information = "[ Subject ]          : " + sentence.subject + "\n"
                         final_literal_information = "[ Verb ]             : " + sentence.verb + "\n"
                         final_literal_information = "[ Object ]           : " + sentence.object[0] + "\n"
-                        final_literal_information = "[ Reliability Score ]: " + str( sentence.reliability_score ) + "\n"
+                        final_literal_information = "[ Reliability Score ]: " + str(sentence.reliability_score) + "\n"
 
-                    final_semantic_text = regex.compare_strings( '', False, sentences )
+                    final_semantic_text = regex.compare_strings('', False, sentences)
                     final_semantic_information = ""
 
                     sentence_information = regex.get_sentence_information()
@@ -165,26 +159,25 @@ class Main( tk.Tk ):
                         final_semantic_information = "[ Subject ]          : " + sentence.subject + "\n"
                         final_semantic_information = "[ Verb ]             : " + sentence.verb + "\n"
                         final_semantic_information = "[ Object ]           : " + sentence.object[0] + "\n"
-                        final_semantic_information = "[ Reliability Score ]: " + str( sentence.reliability_score ) + "\n"
+                        final_semantic_information = "[ Reliability Score ]: " + str(sentence.reliability_score) + "\n"
 
                     # Getting possible topics for semantic information
                     topics = regex.get_pattern_topics()
 
                     # Preparing final display data
-                    final_text = "Literal Parse:\n" + str( final_literal_text ) + "\n\nInformation:\n" + final_literal_information + "\n---------------------------------\n\n" + "Semantic Parse:\n" + str( final_semantic_text ) + "\n\nInformation:\n" + final_semantic_information + "\n\nTopics:\n" + str( topics )
+                    final_text = "Literal Parse:\n" + str(final_literal_text) + "\n\nInformation:\n" + final_literal_information + "\n---------------------------------\n\n" + "Semantic Parse:\n" + str(final_semantic_text) + "\n\nInformation:\n" + final_semantic_information + "\n\nTopics:\n" + str(topics)
 
                 # Displaying final data
                 self.output_text['state'] = 'normal'
-                self.output_text.delete( "1.0", tk.END )
-                self.output_text.insert( "1.0", final_text )
+                self.output_text.delete("1.0", tk.END)
+                self.output_text.insert("1.0", final_text)
                 self.output_text['state'] = 'disabled'
             elif output_text != "":
                 self.output_text['state'] = 'normal'
-                self.output_text.delete( "1.0", tk.END )
+                self.output_text.delete("1.0", tk.END)
                 self.output_text['state'] = 'disabled'
 
-            time.sleep( 1 )
-
+            time.sleep(1)
 
 if __name__ == '__main__':
     main_gui = Main()

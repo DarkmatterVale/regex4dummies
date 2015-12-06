@@ -5,4 +5,4 @@ from tests import MainTests
 
 # Running tests
 tester = MainTests()
-tester.run_tests( regex4dummies(), Toolkit() )
+tester.run_tests(regex4dummies(), Toolkit())
