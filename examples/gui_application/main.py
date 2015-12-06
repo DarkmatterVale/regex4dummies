@@ -82,7 +82,7 @@ class Main(tk.Tk):
         text.start()
 
     def handle_close(self):
-        exit( 0 )
+        exit(0)
 
     def generate_parsed_text(self):
         while True:
