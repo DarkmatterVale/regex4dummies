@@ -2,6 +2,7 @@
 Class Version: 1.4.6
 """
 
+
 class ToolkitTests:
     def __init__(self, **kwargs):
         """
@@ -55,7 +56,7 @@ class ToolkitTests:
         print("General Toolkit tests:")
         # tokenizer function
         print("Tokenized average: " + str(tool_tester.tokenize(text="This is a test string.", parser="")))
-        print("Noun Phrases: " + str(tool_tester.extract_noun_phrases( text="This is a test string.")))
+        print("Noun Phrases: " + str(tool_tester.extract_noun_phrases(text="This is a test string.")))
         print("Verb Phrases(NLTK): " + str(tool_tester.extract_verb_phrases(text="This is a test string.", parser="nltk")))
         print("Verb Phrases(Pattern): " + str(tool_tester.extract_verb_phrases(text="This is a test string.", parser="pattern")))
         print("Verb Phrases(Nlpnet): " + str(tool_tester.extract_verb_phrases(text="This is a test string.", parser="nlpnet")))

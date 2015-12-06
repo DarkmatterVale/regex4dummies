@@ -25,7 +25,7 @@ regex = regex4dummies()
 tool_tester = Toolkit()
 
 # Testing version variable
-print regex.__version__
+print(regex.__version__)
 
 # Testing the 'nltk' parser
 print regex.compare_strings(parser='nltk', pattern_detection="semantic", text=["Back at my desk, I poured and killed him a rattlesnake and some more rattlesnake", "the cat and the mouse in the house is sitting, in the house, on the mat", "time is it?", "what time is it here?", "This is the cat's hat"])

@@ -1,5 +1,3 @@
-__author__ = 'Vale Tolpegin'
-
 import os
 from pattern.en import parse
 from textblob import TextBlob
@@ -7,20 +5,20 @@ from regex4dummies import regex4dummies
 from regex4dummies import Toolkit
 
 """
-
 Class information:
 
 - name: main
 - version: 1.4.6
 
-This is an accuracy tester for regex4dummies. It will test all components of the library and determine how effective it is at accomplishing its goal
-
+This is an accuracy tester for regex4dummies. It will test all components of
+the library and determine how effective it is at accomplishing its goal.
 """
 
 class Main:
     def __init__(self, *args, **kwargs):
         """
-        Constructor method that will complete the tests and display the results.
+        Constructor method that will complete the tests and display the
+        results.
         """
 
         # Currently implemented functions that will be tested
@@ -48,42 +46,34 @@ class Main:
         print("")
         print("*" * 75)
         print("regex4dummies Accuracy Tester")
-        print("")
-        print("Each test is valued in the following way ( 0 - 100 ): ")
+        print("\nEach test is valued in the following way ( 0 - 100 ): ")
         print("* 100 - 90     : regex4dummies is consistently performing well and should be able to handle complex data")
         print("* 89 - 80      : regex4dummies is performing well, but does not perform well consistently and probably cannot handle very complicated data")
         print("* 79 - 70      : regex4dummies' performance is consistently poor and regex4dummies is probably not capable of parsing compex strings")
-        print("* 69 and below : regex4dummies is doing poorly and is considered still under development"
-        print("")
-        print("Please understand that these scores will not be a very accurate representation of regex4dummies' performance across the board. English is complicated and it is difficult to test every possible 'kind' of sentence.")
+        print("* 69 and below : regex4dummies is doing poorly and is considered still under development")
+        print("\nPlease understand that these scores will not be a very accurate representation of regex4dummies' performance across the board. English is complicated and it is difficult to test every possible 'kind' of sentence.")
         print("*" * 75)
-        print("")
-        print("***Beginning Tests***")
+        print("\n***Beginning Tests***")
 
         # Completing tests
         self.complete_tests()
 
         print("***Tests Completed***")
-        print("")
-        print("")
-        print("***Score information***")
+        print("\n\n***Score information***")
         print("Overall Score    : " + str(self.overall_score))
-        print("")
-        print("NLTK Score       : " + str(self.nltk_score))
+        print("\nNLTK Score       : " + str(self.nltk_score))
         print("Pattern Score    : " + str(self.pattern_score))
         print("nlpnet Score     : " + str(self.nlpnet_score))
         print("Literal Score    : " + str(self.literal_score))
         print("Tri-parser Score : " + str(self.tri_parser_score))
         print("Topic Score      : " + str(self.topic_score))
-        print("")
 
         # Showing other test-related information
-        print("NLTK test details       ")
+        print("\nNLTK test details       ")
         print("------------------------")
         print(self.nltk_score_info)
-        print("")
 
-        print("Pattern test details    ")
+        print("\nPattern test details    ")
         print("------------------------")
         print(self.pattern_score_info)
         print("")
@@ -112,7 +102,8 @@ class Main:
 
     def complete_tests(self):
         """
-        This function will perform the above tests, and set the appropriate variables with test information.
+        This function will perform the above tests, and set the appropriate
+        variables with test information.
         """
 
         # Setting all of the scores to restart
