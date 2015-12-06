@@ -15,3 +15,7 @@ ratings:
    - regex4dummies/**
    - examples/**
    - "**.py"
+exclude_paths:
+- "**.md"
+- "**.rst"
+- "setup.py"
