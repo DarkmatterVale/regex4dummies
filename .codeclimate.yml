@@ -6,3 +6,7 @@ engines:
     checks:
       E501:
         enabled: false
+ratings:
+   paths:
+   - regex4dummies/**
+   - examples/**
