@@ -10,4 +10,4 @@ ratings:
    paths:
    - regex4dummies/**
    - examples/**
-   - **.py
+   - "**.py"
