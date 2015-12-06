@@ -5,8 +5,9 @@ engines:
     enabled: true
     checks:
       E501:
-        enabled: false
+        enabled: true
 ratings:
    paths:
    - regex4dummies/**
    - examples/**
+   - **.py
