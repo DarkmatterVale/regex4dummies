@@ -5,7 +5,7 @@ engines:
     enabled: true
     checks:
       E501:
-        enabled: true
+        enabled: false
 ratings:
    paths:
    - regex4dummies/**
