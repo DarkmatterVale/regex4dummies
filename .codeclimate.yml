@@ -1,8 +1,8 @@
+languages:
+   Python: true
 engines:
-  # ... CONFIG CONTENT ...
   pep8:
     enabled: true
-    # ... CONFIG CONTENT ...
     checks:
       E501:
         enabled: false
