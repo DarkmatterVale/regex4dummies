@@ -52,9 +52,9 @@ class Tokenizer:
         # Bring those strings together to form a single string with all of the averaged tokens
         averaged_string = []
         for word_index in range(0, len(split_input_string)):
-            # Setting variables
+            # Setticng variables
             nltk_tag = tokenized_nltk[word_index][1]
-            pattern_tag = tokenized_pattern.split()[word_index].split('/')[1]
+            pattern_tag = tokenized_pattern.split( ' ' )[word_index].split('/')[1]
             nlpnet_tag = tokenized_nlpnet[0][word_index][1]
             tags = []
 

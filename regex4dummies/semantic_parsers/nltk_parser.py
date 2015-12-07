@@ -338,7 +338,7 @@ class NLTK:
                         if len(base_sentence[len(base_sentence) - 1].split()) > len(test_sentence[len(test_sentence) - 1].split()):
                             # If other patterns have been detected
                             if patterns != []:
-                                sentence_information[base_sentence[len(base_sentence) - 1]] = base_sentence[0 : len(base_sentence) - 1]
+                                sentence_information[base_sentence[len(base_sentence) - 1]] = base_sentence[: len(base_sentence) - 1]
                                 sentence_information[base_sentence[len(base_sentence) - 1]].append(2)
                                 sentence_information[base_sentence[len(base_sentence) - 1]].append(fuzz.ratio(base_sentence[len(base_sentence) - 1], test_sentence[len(test_sentence) - 1]))
 
@@ -346,7 +346,6 @@ class NLTK:
                                 if test_sentence[len(test_sentence) - 1] not in patterns and base_sentence[len(base_sentence) - 1] not in patterns:
                                     patterns += [base_sentence[len(base_sentence) - 1]]
 
-                                    #sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ] = base_sentence[ 0 : len( base_sentence ) - 1 ]
                                 elif base_sentence[len(base_sentence) - 1] in patterns:
                                     # Updating reliability score
                                     try:
@@ -366,15 +365,15 @@ class NLTK:
 
                                 # Adding applicability score
                                 try:
-                                    sentence_information[ base_sentence[len(base_sentence) - 1]][5] = fuzz.ratio(base_sentence[len(base_sentence) - 1], test_sentence[len(test_sentence) - 1])
+                                    sentence_information[base_sentence[len(base_sentence) - 1]][5] = fuzz.ratio(base_sentence[len(base_sentence) - 1], test_sentence[len(test_sentence) - 1])
                                 except:
-                                    sentence_information[ base_sentence[len(base_sentence) - 1]].append(fuzz.ratio(base_sentence[len(base_sentence) - 1], test_sentence[len(test_sentence) - 1]))
+                                    sentence_information[base_sentence[len(base_sentence) - 1]].append(fuzz.ratio(base_sentence[len(base_sentence) - 1], test_sentence[len(test_sentence) - 1]))
                         else:
                             # If there are patterns already found
                             if patterns != []:
-                                sentence_information[ test_sentence[len(test_sentence) - 1]] = test_sentence[0 : len(test_sentence) - 1]
-                                sentence_information[ test_sentence[len( test_sentence) - 1]].append(2)
-                                sentence_information[ test_sentence[len( test_sentence) - 1]].append(fuzz.ratio(base_sentence[len(base_sentence) - 1], test_sentence[len(test_sentence) - 1]))
+                                sentence_information[test_sentence[len(test_sentence) - 1]] = test_sentence[0 : len(test_sentence) - 1]
+                                sentence_information[test_sentence[len(test_sentence) - 1]].append(2)
+                                sentence_information[test_sentence[len(test_sentence) - 1]].append(fuzz.ratio(base_sentence[len(base_sentence) - 1], test_sentence[len(test_sentence) - 1]))
 
                                 # If the test patterns are not in the already found patterns
                                 if test_sentence[len(test_sentence) - 1] not in patterns and base_sentence[len(base_sentence) - 1] not in patterns:
@@ -391,7 +390,7 @@ class NLTK:
                             elif patterns == []:
                                 patterns += [test_sentence[len(test_sentence) - 1]]
 
-                                sentence_information[test_sentence[len(test_sentence) - 1]] = test_sentence[0 : len(test_sentence) - 1]
+                                sentence_information[test_sentence[len(test_sentence) - 1]] = test_sentence[: len(test_sentence) - 1]
                                 # Updating reliability score
                                 try:
                                     sentence_information[test_sentence[len(test_sentence) - 1]][4] += 1

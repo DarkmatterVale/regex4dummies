@@ -25,7 +25,6 @@ class NLPNET:
         # Initializing variables
         self.nlpnet_normalizer = Normalizer()
 
-
     def tokenize(self, tokenize_string):
         """
         Returns the tokenized version of tokenize_string, which is just
@@ -60,10 +59,9 @@ class NLPNET:
         # Setting the path that the nlpnet dependency was downloaded to
         path = re.sub(r"\'", "", re.sub(r"\[", '', str(stdin.split('\n')[0].split(',')[0])))
         path = path.split(r"/")
-        path = '/'.join(path[0 : len(path) - 1 ]) + '/nlpnet_dependency/dependency'
+        path = '/'.join(path[: len(path) - 1]) + '/nlpnet_dependency/dependency'
 
         return path
-
 
     def use_nlpnet(self, base_string, test_string, pattern_arg):
         """
@@ -141,7 +139,6 @@ class NLPNET:
             #print "[ Prep Phrases ] : " + str( prepositional_phrases )
             """
 
-
             # Deciding whether the sentence/pattern should be added
             add_sentence = True
             for sentence in test_sentence_info:
@@ -178,7 +175,6 @@ class NLPNET:
 
                         break
 
-
         return subject, verb, object, prepositional_phrases.split("...")
 
     def normalize_sentence_info(self, sentence_info):
@@ -211,7 +207,7 @@ class NLPNET:
                         if len(base_sentence[len(base_sentence) - 1].split()) > len(test_sentence[len(test_sentence) - 1].split()):
                             # If other patterns have been detected
                             if patterns != []:
-                                sentence_information[base_sentence[len(base_sentence) - 1]] = base_sentence[0 : len(base_sentence) - 1]
+                                sentence_information[base_sentence[len(base_sentence) - 1]] = base_sentence[: len(base_sentence) - 1]
                                 sentence_information[base_sentence[len(base_sentence) - 1]].append(2)
                                 sentence_information[base_sentence[len(base_sentence) - 1]].append(fuzz.ratio(base_sentence[len(base_sentence) - 1], test_sentence[len(test_sentence) - 1]))
 
@@ -219,7 +215,6 @@ class NLPNET:
                                 if test_sentence[len(test_sentence) - 1] not in patterns and base_sentence[len(base_sentence) - 1] not in patterns:
                                     patterns += [base_sentence[len(base_sentence) - 1]]
 
-                                    #sentence_information[ base_sentence[ len( base_sentence ) - 1 ] ] = base_sentence[ 0 : len( base_sentence ) - 1 ]
                                 elif base_sentence[len(base_sentence) - 1] in patterns:
                                     # Updating reliability score
                                     try:
@@ -239,15 +234,15 @@ class NLPNET:
 
                                 # Adding applicability score
                                 try:
-                                    sentence_information[ base_sentence[len(base_sentence) - 1]][5] = fuzz.ratio(base_sentence[len(base_sentence) - 1], test_sentence[len(test_sentence) - 1])
+                                    sentence_information[base_sentence[len(base_sentence) - 1]][5] = fuzz.ratio(base_sentence[len(base_sentence) - 1], test_sentence[len(test_sentence) - 1])
                                 except:
-                                    sentence_information[ base_sentence[len(base_sentence) - 1]].append(fuzz.ratio(base_sentence[len(base_sentence) - 1], test_sentence[len(test_sentence) - 1]))
+                                    sentence_information[base_sentence[len(base_sentence) - 1]].append(fuzz.ratio(base_sentence[len(base_sentence) - 1], test_sentence[len(test_sentence) - 1]))
                         else:
                             # If there are patterns already found
                             if patterns != []:
-                                sentence_information[ test_sentence[len(test_sentence) - 1]] = test_sentence[0 : len(test_sentence) - 1]
-                                sentence_information[ test_sentence[len( test_sentence) - 1]].append(2)
-                                sentence_information[ test_sentence[len( test_sentence) - 1]].append(fuzz.ratio(base_sentence[len(base_sentence) - 1], test_sentence[len(test_sentence) - 1]))
+                                sentence_information[test_sentence[len(test_sentence) - 1]] = test_sentence[0 : len(test_sentence) - 1]
+                                sentence_information[test_sentence[len(test_sentence) - 1]].append(2)
+                                sentence_information[test_sentence[len(test_sentence) - 1]].append(fuzz.ratio(base_sentence[len(base_sentence) - 1], test_sentence[len(test_sentence) - 1]))
 
                                 # If the test patterns are not in the already found patterns
                                 if test_sentence[len(test_sentence) - 1] not in patterns and base_sentence[len(base_sentence) - 1] not in patterns:
@@ -264,7 +259,7 @@ class NLPNET:
                             elif patterns == []:
                                 patterns += [test_sentence[len(test_sentence) - 1]]
 
-                                sentence_information[test_sentence[len(test_sentence) - 1]] = test_sentence[0 : len(test_sentence) - 1]
+                                sentence_information[test_sentence[len(test_sentence) - 1]] = test_sentence[: len(test_sentence) - 1]
                                 # Updating reliability score
                                 try:
                                     sentence_information[test_sentence[len(test_sentence) - 1]][4] += 1
