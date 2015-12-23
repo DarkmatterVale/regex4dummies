@@ -3,7 +3,6 @@
 ![Build Status](https://travis-ci.org/DarkmatterVale/regex4dummies.svg?branch=master)
 [![Code Climate](https://codeclimate.com/github/DarkmatterVale/regex4dummies/badges/gpa.svg)](https://codeclimate.com/github/DarkmatterVale/regex4dummies)
 [![Issue Count](https://codeclimate.com/github/DarkmatterVale/regex4dummies/badges/issue_count.svg)](https://codeclimate.com/github/DarkmatterVale/regex4dummies)
-[![Coverage Status](https://coveralls.io/repos/DarkmatterVale/regex4dummies/badge.svg?branch=master&service=github)](https://coveralls.io/github/DarkmatterVale/regex4dummies?branch=master)
 
 Simple pattern finding in strings and natural language processing.
 
@@ -12,7 +11,9 @@ Are you looking for the homepage of the project? Go to https://darkmattervale.gi
 
 ###
 
-Features:
+
+## Features:
+
 - Automatic pattern detection ( semantic and literal )
 - Multiple parsers ( implementations of nltk, pattern, and nlpnet )
 - Keyword searching to find specific phrases
