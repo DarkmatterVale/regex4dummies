@@ -1,6 +1,11 @@
 # Changelog
 
-## ( Current ) v1.4.5: More bugs, string compare function
+## ( Current ) v1.4.6: Code refactoring, Download system rework
+
+- Brought code up to PEP8 standards
+- Redid download system. No more non-functional GUI; it now has automatic installation. In addition, the over size of the dependencies has decreased to ~700 MB from ~1.5 GB
+
+## v1.4.5: More bugs, string compare function
 
 - Fixed bug with NLTK verb phrase extractor
 - Added a string compare function

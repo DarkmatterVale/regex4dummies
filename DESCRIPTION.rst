@@ -4,6 +4,14 @@ regex4dummies: A Simple Way To Find Patterns
 .. image:: https://travis-ci.org/DarkmatterVale/regex4dummies.svg?branch=master
     :target: https://travis-ci.org/DarkmatterVale/regex4dummies
 
+.. image:: https://codeclimate.com/github/DarkmatterVale/regex4dummies/badges/gpa.svg
+    :target: https://codeclimate.com/github/DarkmatterVale/regex4dummies
+    :alt: Code Climate
+
+.. image:: https://codeclimate.com/github/DarkmatterVale/regex4dummies/badges/issue_count.svg
+    :target: https://codeclimate.com/github/DarkmatterVale/regex4dummies
+    :alt: Issue Count
+
 Simple pattern finding in strings and natural language processing. Checkout regex4dummies' website at https://darkmattervale.github.io/regex4dummies/
 
 
@@ -131,11 +139,10 @@ That's it! The nlpnet parser should now be able to be used.
 Patch Notes
 -------------
 
-v1.4.5: More bugs, string compare function
+v1.4.6: Code refactoring, Download system rework
 
-- Fixed bug with NLTK verb phrase extractor
-- Added a string compare function
-- Example application code refactoring
+- Brought code up to PEP8 standards
+- Redid download system. No more non-functional GUI; it uses automatic installation. In addition, the over size of the dependencies has decreased to ~700 MB from ~1.5 GB
 
 
 Contributing
