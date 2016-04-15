@@ -8,6 +8,8 @@ Simple pattern finding in strings and natural language processing.
 
 Are you looking for the homepage of the project? Go to https://darkmattervale.github.io/regex4dummies if so.
 
+If you are interested in maintaining this library, please let me know. I do not have time to maintain this at the moment.
+
 
 ###
 
